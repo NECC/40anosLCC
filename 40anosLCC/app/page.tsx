@@ -100,7 +100,7 @@ export default function Home() {
         className="absolute right-[18%] top-[65%] w-1.5 h-1.5 bg-[#00a8e8] rounded-full shadow-[0_0_8px_#00a8e8] z-10 pointer-events-none"
       />
       
-      {/* HEADER */}
+      {/* HEADER (Borda Mantida) */}
       <header className="relative z-10 flex items-center justify-between px-6 py-6 md:px-16 border-b border-white/5">
         <div className="flex items-center text-[#00a8e8]">
           <Image
@@ -154,10 +154,10 @@ export default function Home() {
         </button>
       </header>
 
-      {/* HERO SECTION REDIMENSIONADA */}
+      {/* HERO SECTION (Linha inferior por cima de História removida) */}
       <section
         id="inicio"
-        className="relative z-10 px-6 md:px-16 py-20 md:py-28 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16 max-w-[1600px] mx-auto border-b border-white/5"
+        className="relative z-10 px-6 md:px-16 py-20 md:py-28 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16 max-w-[1600px] mx-auto"
       >
         {/* Esquerda - Texto */}
         <div className="flex-1 max-w-lg w-full">
@@ -189,7 +189,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Direita - Logo 40 Anos Aumentado com Linha Divisória */}
+        {/* Direita - Logo 40 Anos */}
         <div className="flex-1 flex items-center justify-start md:justify-end w-full">
           <div className="flex items-center gap-6 md:gap-8">
             <Image
@@ -200,25 +200,25 @@ export default function Home() {
               className={`w-52 md:w-80 lg:w-[360px] h-auto opacity-90 ${blueFilterClass}`}
             />
             <div className="flex flex-col gap-2 pl-6 md:pl-8 border-l-2 border-[#00a8e8]">
-              <span className="text-2xl md:text-4xl lg:text-5xl font-light tracking-[0.25em] text-[#00a8e8]">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-[0.25em] text-[#00a8e8]">
                 ANOS
-              </span>
-              <span className="text-[10px] md:text-xs lg:text-sm font-mono tracking-[0.2em] text-gray-300 uppercase leading-relaxed">
+              </h2>
+              <p className="text-[10px] md:text-xs lg:text-sm font-mono tracking-[0.2em] text-gray-300 uppercase leading-relaxed">
                 Licenciatura em
                 <br />
                 Ciências da
                 <br />
                 Computação
-              </span>
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* HISTÓRIA SECTION */}
+      {/* HISTÓRIA SECTION (Linha inferior por cima de Programa removida) */}
       <section
         id="historia"
-        className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto border-b border-white/5"
+        className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto"
       >
         <h2
           className={`${spaceGrotesk.className} text-[#00a8e8] text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-8 md:mb-12`}
@@ -282,12 +282,11 @@ export default function Home() {
         </div>
       </section>
 
-{/* PROGRAMA SECTION */}
+      {/* PROGRAMA SECTION (Linha inferior por cima de Parceiros removida) */}
       <section
         id="programa"
-        className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto border-b border-white/5"
+        className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto"
       >
-        {/* Cabeçalho: Título "PROGRAMA" à esquerda e botão "Programa completo" à direita */}
         <div className="flex items-center justify-between mb-10 md:mb-16">
           <h2
             className={`${spaceGrotesk.className} text-[#00a8e8] text-xs md:text-sm font-bold tracking-[0.2em] uppercase`}
@@ -302,10 +301,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Grelha de 3 colunas com linhas horizontais (topo/fundo) e divisórias verticais entre cartões */}
         <div className="grid grid-cols-1 md:grid-cols-3 border-t border-b border-gray-800/50">
-          
-          {/* Card 1: Stands */}
           <div className="p-8 md:p-10 lg:p-12 border-b md:border-b-0 md:border-r border-gray-800/50 group">
             <h3
               className={`${spaceGrotesk.className} text-2xl md:text-3xl font-medium mb-6 text-white group-hover:text-[#00a8e8] transition-colors`}
@@ -321,7 +317,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Card 2: Palestras */}
           <div className="p-8 md:p-10 lg:p-12 border-b md:border-b-0 md:border-r border-gray-800/50 group">
             <h3
               className={`${spaceGrotesk.className} text-2xl md:text-3xl font-medium mb-6 text-white group-hover:text-[#00a8e8] transition-colors`}
@@ -336,7 +331,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Card 3: Workshops */}
           <div className="p-8 md:p-10 lg:p-12 group">
             <h3
               className={`${spaceGrotesk.className} text-2xl md:text-3xl font-medium mb-6 text-white group-hover:text-[#00a8e8] transition-colors`}
@@ -350,7 +344,6 @@ export default function Home() {
               ferramentas, os métodos e as ideias do dia a dia.
             </p>
           </div>
-
         </div>
       </section>
 
@@ -603,31 +596,80 @@ export default function Home() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="relative z-10 px-6 md:px-16 py-24 md:py-32 flex flex-col items-start md:items-center text-left md:text-center border-b border-white/5 max-w-[1600px] mx-auto">
-        <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-[#00a8e8] rounded-full blur-[150px] opacity-10 z-0 pointer-events-none"></div>
-        <p
-          className={`${dmMono.className} text-[#00a8e8] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-6`}
-        >
-          O próximo capítulo começa agora
-        </p>
-        <h2
-          className={`${manrope.className} text-4xl md:text-6xl font-medium tracking-tight mb-10 md:mb-12`}
-        >
-          40 anos de história.
-          <br className="hidden md:block" /> Uma visão para o futuro.
-        </h2>
-        <Link
-          href="#entrar"
-          className={`${dmMono.className} bg-[#00a8e8] hover:bg-[#0090c7] text-white px-8 py-4 md:py-5 text-sm font-semibold flex items-center justify-center gap-6 transition-all w-full md:w-auto`}
-        >
-          Participar no evento <span>→</span>
-        </Link>
+      <section className="relative z-10 px-6 md:px-16 py-28 md:py-36 flex flex-col items-center text-center max-w-[1600px] mx-auto">
+        {/* Grelha de Fundo com Fade Suave (Sem cortes retangulares) */}
+        <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:80px_80px] opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_50%,black_20%,transparent_100%)] pointer-events-none"></div>
+
+        {/* Brilho Radial Central Difuso */}
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.12, 0.22, 0.12],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-[#00a8e8] rounded-full blur-[180px] z-0 pointer-events-none"
+        />
+
+        {/* Partícula Flutuante 1 */}
+        <motion.div
+          animate={{
+            y: [0, -20, 10, 0],
+            x: [0, 15, -10, 0],
+            opacity: [0.3, 0.8, 0.4, 0.3],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute left-[20%] top-[30%] w-2 h-2 bg-[#00a8e8] rounded-full shadow-[0_0_12px_#00a8e8] z-10 pointer-events-none"
+        />
+
+        {/* Partícula Flutuante 2 */}
+        <motion.div
+          animate={{
+            y: [0, 20, -15, 0],
+            x: [0, -15, 10, 0],
+            opacity: [0.2, 0.7, 0.3, 0.2],
+          }}
+          transition={{
+            duration: 6.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.8,
+          }}
+          className="absolute right-[22%] top-[35%] w-2 h-2 bg-[#00a8e8] rounded-full shadow-[0_0_12px_#00a8e8] z-10 pointer-events-none"
+        />
+
+        {/* Conteúdo */}
+        <div className="relative z-10 flex flex-col items-center text-center">
+          <p
+            className={`${dmMono.className} text-[#00a8e8] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-4 md:mb-6`}
+          >
+            O próximo capítulo começa agora
+          </p>
+          <h2
+            className={`${manrope.className} text-4xl md:text-6xl font-medium tracking-tight mb-10 md:mb-12`}
+          >
+            40 anos de história.
+            <br className="hidden md:block" /> Uma visão para o futuro.
+          </h2>
+          <Link
+            href="#entrar"
+            className={`${dmMono.className} bg-[#00a8e8] hover:bg-[#0090c7] text-white px-8 py-4 md:py-5 text-sm font-semibold flex items-center justify-center gap-6 transition-all w-full md:w-auto`}
+          >
+            Participar no evento <span>→</span>
+          </Link>
+        </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER (Borda Mantida) */}
       <footer className="relative z-10 px-6 md:px-8 py-4 md:py-5 border-t border-white/5 max-w-[1600px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
-          {/* Logo Esquerda */}
           <div className="flex items-center">
             <Image
               src="/40AnosLogo2.svg"
@@ -638,11 +680,9 @@ export default function Home() {
             />
           </div>
 
-          {/* Links e Redes Sociais Direita */}
           <div
             className={`flex flex-col items-start md:items-end gap-2 text-xs md:text-sm text-gray-300 ${manrope.className}`}
           >
-            {/* Linha 1 de Links */}
             <div className="flex flex-wrap items-center gap-4 md:gap-8">
               <Link href="#" className="hover:text-white transition-colors">
                 Informação geral
@@ -655,7 +695,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Linha 2 de Links */}
             <div className="flex flex-wrap items-center gap-4 md:gap-8">
               <Link href="#" className="hover:text-white transition-colors">
                 Guia do participante
@@ -665,7 +704,6 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Ícones Sociais */}
             <div className="flex items-center gap-4 text-gray-400 pt-0.5">
               <Link
                 href="#"
