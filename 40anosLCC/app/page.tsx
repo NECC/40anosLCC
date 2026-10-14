@@ -17,7 +17,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#06131c] text-white font-sans relative overflow-x-hidden selection:bg-[#00a8e8] selection:text-white">
       {/* BACKGROUND ANIMAÇÃO: Grelha de Fundo */}
       <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:80px_80px] h-[100vh] opacity-40"></div>
-      
+
       {/* Brilho Radial Canto Superior Esquerdo */}
       <motion.div
         animate={{
@@ -33,7 +33,7 @@ export default function Home() {
         }}
         className="absolute left-[-10%] top-[15%] w-[600px] h-[600px] bg-[#00a8e8] rounded-full blur-[180px] z-0 pointer-events-none"
       />
-      
+
       {/* Brilho Radial Canto Superior Direito */}
       <motion.div
         animate={{
@@ -50,7 +50,7 @@ export default function Home() {
         }}
         className="absolute right-[-10%] top-[5%] w-[550px] h-[550px] bg-[#00a8e8] rounded-full blur-[180px] z-0 pointer-events-none"
       />
-      
+
       {/* Partícula Flutuante 1 (Lado Esquerdo) */}
       <motion.div
         animate={{
@@ -66,7 +66,7 @@ export default function Home() {
         }}
         className="absolute left-[12%] top-[22%] w-2 h-2 bg-[#00a8e8] rounded-full shadow-[0_0_12px_#00a8e8] z-10 pointer-events-none"
       />
-      
+
       {/* Partícula Flutuante 2 (Canto Superior Direito) */}
       <motion.div
         animate={{
@@ -83,7 +83,7 @@ export default function Home() {
         }}
         className="absolute right-[14%] top-[12%] w-2 h-2 bg-[#00a8e8] rounded-full shadow-[0_0_12px_#00a8e8] z-10 pointer-events-none"
       />
-      
+
       {/* Partícula Flutuante 3 (Lado Direito - Baixo) */}
       <motion.div
         animate={{
@@ -99,7 +99,7 @@ export default function Home() {
         }}
         className="absolute right-[18%] top-[65%] w-1.5 h-1.5 bg-[#00a8e8] rounded-full shadow-[0_0_8px_#00a8e8] z-10 pointer-events-none"
       />
-      
+
       {/* HEADER (Borda Mantida) */}
       <header className="relative z-10 flex items-center justify-between px-6 py-6 md:px-16 border-b border-white/5">
         <div className="flex items-center text-[#00a8e8]">
@@ -125,6 +125,11 @@ export default function Home() {
           </Link>
           <Link href="#empresas" className="hover:text-white transition-colors">
             Empresas
+          </Link>
+
+          {/* Link para a nova página About */}
+          <Link href="/about" className="hover:text-white transition-colors">
+            About
           </Link>
         </nav>
 
@@ -221,7 +226,7 @@ export default function Home() {
         className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto"
       >
         <h2
-          className={`${spaceGrotesk.className} text-[#00a8e8] text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-8 md:mb-12`}
+          className={`${spaceGrotesk.className} text-[#00a8e8] text-lg md:text-lg font-bold tracking-[0.2em] uppercase mb-8 md:mb-12`}
         >
           História
         </h2>
@@ -289,7 +294,7 @@ export default function Home() {
       >
         <div className="flex items-center justify-between mb-10 md:mb-16">
           <h2
-            className={`${spaceGrotesk.className} text-[#00a8e8] text-xs md:text-sm font-bold tracking-[0.2em] uppercase`}
+            className={`${spaceGrotesk.className} text-[#00a8e8] text-lg md:text-lg font-bold tracking-[0.2em] uppercase`}
           >
             PROGRAMA
           </h2>
@@ -353,7 +358,7 @@ export default function Home() {
         className="relative z-10 px-6 md:px-16 py-16 md:py-24 max-w-[1600px] mx-auto border-b border-white/5"
       >
         <h2
-          className={`${spaceGrotesk.className} text-[#00a8e8] text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-16 md:mb-20 text-left`}
+          className={`${spaceGrotesk.className} text-[#00a8e8] text-lg md:text-lg font-bold tracking-[0.2em] uppercase mb-16 md:mb-20 text-left`}
         >
           Parceiros
         </h2>
