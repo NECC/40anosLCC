@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
+import { motion } from "framer-motion";
 
 type Category =
   | "Todos"
@@ -125,6 +126,16 @@ const categories: Category[] = [
   "Networking",
 ];
 
+const staggerContainer: any = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const staggerItem: any = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
 export default function Programa() {
   const [activeCategory, setActiveCategory] = useState<Category>("Todos");
 
@@ -148,16 +159,14 @@ export default function Programa() {
 
       {/* Hero Section */}
       <section className="relative z-10 overflow-hidden py-16 md:py-24 border-b border-gray-800/40">
-        {/* Background Grid com Máscara e Gradiente de Fusão */}
-        {/* grid com máscara de desvanecimento no fundo */}
-        <div className="bg-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
-        {/* Gradiente extra na base da secção para fusão perfeita com o fundo */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
-        {/* Partículas a Piscar */}
+        
+        {/* CORREÇÃO AQUI: máscara elíptica na grelha tal como na tua Home e opacidade correta */}
+        <div className="bg-grid absolute inset-0 opacity-40 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
+        
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+        
         <span className="absolute top-[30%] left-[8%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
         <span className="absolute bottom-[20%] right-[12%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1.5s]" />
-
-        {/* Linha Laser/Scan Animada (de cima para baixo) */}
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
         <div className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 relative z-10">
@@ -177,7 +186,7 @@ export default function Programa() {
       </section>
 
       {/* Conteúdo Principal / Filtros e Lista */}
-      <section className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 py-12 md:py-16">
+      <section className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 py-12 md:py-16 relative z-10">
         {/* Filtros de Categoria */}
         <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12 border-b border-gray-800/50 pb-8">
           {categories.map((cat) => {
@@ -198,8 +207,14 @@ export default function Programa() {
           })}
         </div>
 
-        {/* Lista de Eventos */}
-        <div className="space-y-16 md:space-y-20">
+        {/* Lista de Eventos (Animados com Stagger Framer Motion) */}
+        <motion.div 
+          className="space-y-16 md:space-y-20"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, margin: "-10%" }}
+        >
           {/* DIA 1: 14 Novembro */}
           {day1Items.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -212,7 +227,9 @@ export default function Programa() {
 
               <div className="lg:col-span-9 divide-y divide-gray-800/50 border-t border-b border-gray-800/50">
                 {day1Items.map((item) => (
-                  <ScheduleRow key={item.id} item={item} />
+                  <motion.div key={item.id} variants={staggerItem}>
+                    <ScheduleRow item={item} />
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -230,7 +247,9 @@ export default function Programa() {
 
               <div className="lg:col-span-9 divide-y divide-gray-800/50 border-t border-b border-gray-800/50">
                 {day2Items.map((item) => (
-                  <ScheduleRow key={item.id} item={item} />
+                  <motion.div key={item.id} variants={staggerItem}>
+                    <ScheduleRow item={item} />
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -242,7 +261,7 @@ export default function Programa() {
               Nenhuma sessão encontrada para a categoria "{activeCategory}".
             </div>
           )}
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}
