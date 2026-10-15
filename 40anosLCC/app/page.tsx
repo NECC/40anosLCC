@@ -6,6 +6,40 @@ import Link from "next/link";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import { partnersData } from "@/data/parteners";
+// CARLOS FRAMER-MOTION NOT EMOTION, SEU NOOB
+import { motion } from "framer-motion"
+
+// Animações 
+const slideLeft: any = {
+  initial: { opacity: 0, x: -60 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: false, margin: "-25%" }, // <- margin: "-25%" faz começar mais tarde
+  transition: { duration: 0.5, ease: "easeOut" }, // <- duration: 0.5 faz ser mais rápida, para saberes carlitos
+};
+
+const zoomIn: any = {
+  initial: { opacity: 0, scale: 0.92 },
+  whileInView: { opacity: 1, scale: 1 },
+  viewport: { once: false, margin: "-25%" },
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+};
+
+const blurReveal: any = {
+  initial: { opacity: 0, y: 50, filter: "blur(10px)" },
+  whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+  viewport: { once: false, margin: "-25%" },
+  transition: { duration: 0.6, ease: "easeOut" },
+};
+
+const staggerContainer: any = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const staggerItem: any = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+};
 
 export default function Home() {
   return (
@@ -15,15 +49,23 @@ export default function Home() {
       </div>
 
       <section className="overflow-hidden lg:h-[70vh] md:h-[50vh] relative z-10">
-        {/* grid e elementos de animação */}
-        <div className="bg-grid absolute inset-0" />
+        {/* grid com máscara de desvanecimento no fundo */}
+        <div className="bg-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
+        {/* Gradiente extra na base da secção para fusão perfeita com o fundo */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
         <div className="absolute top-[55%] left-0 size-72 -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] md:size-96" />
         <div className="absolute top-0 right-0 size-80 translate-x-1/3 -translate-y-1/3 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] [animation-delay:3s] md:size-112" />
 
         <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
         <span className="absolute bottom-[20%] right-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
-
+{/*AQUI CARLOS*/}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-10%" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
         <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
           <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 ">
             <div className="w-full md:w-1/2 relative z-10">
@@ -38,7 +80,7 @@ export default function Home() {
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="#programa"
+                  href="/programa"
                   className="flex w-full items-center justify-between gap-4 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                 >
                   Ver programa <span>→</span>
@@ -62,9 +104,14 @@ export default function Home() {
             />
           </div>
         </div>
+        </motion.div>
+        {/*O primeiro acaba aqui */}
       </section>
-
-      <section className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16">
+      {/*AQUI O PROXIMO */}
+        <motion.section 
+        {...slideLeft}
+        className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16"
+      >
         <h2 className="font-heading mb-8 text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
           História
         </h2>
@@ -112,24 +159,34 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
-
+      </motion.section>
+{/*ACHO QUE A ESTE PONTO JA PECEBESTE COMO FUNCIONA */}
       <section className=" py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16">
-        <div className="mb-10 flex items-center justify-between md:mb-16">
+        {/*O "Programa" e o "Programa completo tambem precisa de animação" */}
+        <motion.div 
+          {...slideLeft}
+          className="mb-10 flex items-center justify-between md:mb-16"
+        >
           <h2 className="font-heading text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
             PROGRAMA
           </h2>
 
           <Link
-            href="#programa-completo"
+            href="/programa"
             className="font-mono flex items-center gap-3 border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
             Programa completo <span>→</span>
           </Link>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3">
-          <div className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12">
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, margin: "-25%" }}
+          className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3"
+        >
+          <motion.div variants={staggerItem} className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12">
             <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Stands
             </h3>
@@ -139,9 +196,9 @@ export default function Home() {
               estudantes, dar a conhecer a organização e encontrar quem pode vir
               a fazer parte da equipa.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12">
+          <motion.div variants={staggerItem} className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12">
             <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Palestras
             </h3>
@@ -150,9 +207,9 @@ export default function Home() {
               Uma sessão em auditório para apresentar o trabalho, a visão e os
               desafios da organização, perante uma plateia atenta e interessada.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="group p-8 md:p-10 lg:p-12">
+          <motion.div variants={staggerItem} className="group p-8 md:p-10 lg:p-12">
             <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Workshops
             </h3>
@@ -161,11 +218,14 @@ export default function Home() {
               Uma sessão prática, em grupos pequenos, para mostrar de perto as
               ferramentas, os métodos e as ideias do dia a dia.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
-      <section className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16">
+<motion.section 
+        {...zoomIn}
+        className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16"
+      >
         <h2 className="font-heading mb-16 text-left text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
           Parceiros
         </h2>
@@ -193,7 +253,7 @@ export default function Home() {
                   {tier}
                 </h3>
 
-                <div className="flex flex-wrap items-end justify-center gap-10 md:gap-16">
+                <div className="grid grid-cols-2 justify-items-center items-end gap-x-15 gap-y-12 md:flex md:flex-wrap md:justify-center md:gap-16">
                   {partners.map((partner) => (
                     <div
                       key={partner.name}
@@ -205,7 +265,7 @@ export default function Home() {
                           alt={partner.name}
                           width={100}
                           height={100}
-                          className="max-h-12 w-auto object-contain opacity-80 transition-opacity group-hover:opacity-100 md:max-h-32"
+                          className="max-h-12 w-auto object-contain opacity-40 transition-opacity group-hover:opacity-100 md:max-h-32"
                         />
                       </div>
 
@@ -219,30 +279,43 @@ export default function Home() {
             );
           })}
         </div>
-      </section>
-      <section className="relative py-16 text-white md:py-24 border-y-3 border-gray-800/50">
-        {/* grid e elementos de animação */}
-        <div className="bg-grid absolute inset-0" />
+      </motion.section>
+      <motion.section 
+        {...blurReveal}
+        className="relative py-20 text-white md:py-28 border-y border-gray-800/50 overflow-hidden"
+      >
+        <div className="bg-grid absolute inset-0 opacity-80 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
+
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#06151D] to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+
         <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
         <span className="absolute bottom-[20%] right-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
-        <div className="relative z-10 flex flex-col items-center text-center">
-          <p className="font-mono mb-4 text-[10px] font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-6 md:text-xs">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 mx-auto max-w-xl md:max-w-4xl">
+          <p className="font-mono mb-6 text-[11px] sm:text-xs tracking-[0.2em] text-[#00a8e8] uppercase">
             O próximo capítulo começa agora
           </p>
-          <h2 className="font-sans mb-10 text-4xl font-medium tracking-tight md:mb-12 md:text-6xl">
+
+          <h2 className="font-sans mb-10 text-3xl font-medium leading-tight tracking-tight text-white sm:text-4xl md:text-6xl md:leading-tight">
             40 anos de história.
-            <br className="hidden md:block" /> Uma visão para o futuro.
+            <br />
+            <span>Uma visão para o</span>
+            <br className="block md:hidden" />
+            <span> futuro.</span>
           </h2>
+
           <Link
             href="#entrar"
-            className="font-mono flex w-full items-center justify-center gap-6 bg-[#00a8e8] px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-[#0090c7] md:w-auto md:py-5"
+            className="font-mono flex w-full items-center justify-between bg-[#00a8e8] px-6 py-4 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto sm:min-w-80 md:text-sm"
           >
-            Participar no evento <span>→</span>
+            <span>Participar no evento</span>
+            <span>→</span>
           </Link>
         </div>
-      </section>
+      </motion.section>
+      {/*ESTE É O ULTIMO PORQUE NAO HA MAIS :D */}
       <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 pt-16 md:pt-24">
         <Footer />
       </div>

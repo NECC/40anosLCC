@@ -9,7 +9,7 @@ export default function Nav() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Programa", href: "" },
+    { name: "Programa", href: "/programa" },
     { name: "Empresas", href: "" },
     { name: "About", href: "/about" },
   ];
