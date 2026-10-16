@@ -157,32 +157,40 @@ export default function Programa() {
         <Nav />
       </div>
 
-      {/* Hero Section */}
-      <section className="relative z-10 overflow-hidden py-16 md:py-24 border-b border-gray-800/40">
-        
-        {/* CORREÇÃO AQUI: máscara elíptica na grelha tal como na tua Home e opacidade correta */}
+      <section className="relative z-10 overflow-hidden py-20 md:py-32 border-b border-gray-800/40">
         <div className="bg-grid absolute inset-0 opacity-40 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
-        
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
-        
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+
+        {/* Pontos Azuis (Efeito Estrelar Solto) */}
         <span className="absolute top-[30%] left-[8%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
         <span className="absolute bottom-[20%] right-[12%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1.5s]" />
+
+        {/* Linha Laser/Scan Animada */}
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
-        <div className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 relative z-10">
-          <p className="font-mono text-xs tracking-[0.2em] text-[#00a8e8] uppercase mb-4">
-            14-15 NOVEMBRO • BRAGA
+        {/* Animação do Texto do Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-10%" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16 relative z-10"
+        >
+          <p className="font-mono text-[10px] tracking-[0.2em] text-[#00a8e8] uppercase mb-6 flex items-center gap-3">
+            <span>14-15 Novembro</span>
+            <span className="w-1 h-1 bg-[#00a8e8] rounded-full"></span>
+            <span>12 Braga</span>
           </p>
 
-          <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight mb-6">
+          <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-medium tracking-tight mb-8">
             Programa
           </h1>
 
-          <p className="font-sans text-gray-400 text-sm md:text-base max-w-2xl leading-relaxed">
+          <p className="font-sans text-gray-400 text-sm md:text-lg max-w-2xl leading-relaxed">
             Dois dias para revisar a nossa história, partilhar conhecimento e
             imaginar o que vem a seguir.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* Conteúdo Principal / Filtros e Lista */}
@@ -208,7 +216,7 @@ export default function Programa() {
         </div>
 
         {/* Lista de Eventos (Animados com Stagger Framer Motion) */}
-        <motion.div 
+        <motion.div
           className="space-y-16 md:space-y-20"
           variants={staggerContainer}
           initial="hidden"
