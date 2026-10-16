@@ -179,7 +179,7 @@ export default function Programa() {
           <p className="font-mono text-[10px] tracking-[0.2em] text-[#00a8e8] uppercase mb-6 flex items-center gap-3">
             <span>14-15 Novembro</span>
             <span className="w-1 h-1 bg-[#00a8e8] rounded-full"></span>
-            <span>12 Braga</span>
+            <span>Braga</span>
           </p>
 
           <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-medium tracking-tight mb-8">
@@ -193,9 +193,44 @@ export default function Programa() {
         </motion.div>
       </section>
 
-      {/* Conteúdo Principal / Filtros e Lista */}
-      <section className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 py-12 md:py-16 relative z-10">
-        {/* Filtros de Categoria */}
+      {/* Conteúdo Principal / Mensagem Temporária */}
+      <section className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 py-12 md:py-24 relative z-10">
+        
+        {/* Mensagem "To be announced" */}
+        <motion.div
+          className="flex flex-col items-center justify-center text-center py-16"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, margin: "-10%" }}
+        >
+          <div className="w-20 h-20 rounded-full bg-[#00a8e8]/10 border border-[#00a8e8]/30 flex items-center justify-center mb-8">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#00a8e8"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h2 className="font-heading text-3xl md:text-5xl font-medium text-white mb-4">
+            To be announced
+          </h2>
+          <p className="font-sans text-gray-400 text-sm max-w-md">
+            Estamos a preparar um programa incrível para celebrar os 40 anos da LCC. Fica atento às novidades e aos horários oficiais.
+          </p>
+        </motion.div>
+
+        {/* ========================================================= */}
+        {/* CONTEÚDO ORIGINAL DO PROGRAMA (COMENTADO PARA USO FUTURO) */}
+        {/* ========================================================= */}
+        {/*
         <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12 border-b border-gray-800/50 pb-8">
           {categories.map((cat) => {
             const isActive = activeCategory === cat;
@@ -215,7 +250,6 @@ export default function Programa() {
           })}
         </div>
 
-        {/* Lista de Eventos (Animados com Stagger Framer Motion) */}
         <motion.div
           className="space-y-16 md:space-y-20"
           variants={staggerContainer}
@@ -223,7 +257,6 @@ export default function Programa() {
           whileInView="show"
           viewport={{ once: false, margin: "-10%" }}
         >
-          {/* DIA 1: 14 Novembro */}
           {day1Items.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-3">
@@ -243,7 +276,6 @@ export default function Programa() {
             </div>
           )}
 
-          {/* DIA 2: 15 Novembro */}
           {day2Items.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-3">
@@ -263,13 +295,13 @@ export default function Programa() {
             </div>
           )}
 
-          {/* Mensagem caso não haja resultados */}
           {day1Items.length === 0 && day2Items.length === 0 && (
             <div className="text-center py-16 text-gray-500 font-mono text-sm">
               Nenhuma sessão encontrada para a categoria "{activeCategory}".
             </div>
           )}
         </motion.div>
+        */}
       </section>
 
       {/* Footer */}
@@ -280,9 +312,7 @@ export default function Programa() {
   );
 }
 
-{
-  /* Componente para a linha individual do programa */
-}
+{/* Componente para a linha individual do programa */}
 function ScheduleRow({ item }: { item: ScheduleItem }) {
   return (
     <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:bg-white/[0.01] transition-colors px-2">

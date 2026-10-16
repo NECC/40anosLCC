@@ -85,13 +85,13 @@ export default function Home() {
                 >
                   Ver programa <span>→</span>
                 </Link>
-
+{/*}
                 <Link
                   href="#entrar"
                   className="flex w-full items-center justify-between gap-4 border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                 >
                   Entrar no evento <span>→</span>
-                </Link>
+                </Link>*/}
               </div>
             </div>
 
@@ -280,6 +280,7 @@ export default function Home() {
           })}
         </div>
       </motion.section>
+*/}
       <motion.section 
         {...blurReveal}
         className="relative py-20 text-white md:py-28 border-y border-gray-800/50 overflow-hidden"
@@ -305,7 +306,7 @@ export default function Home() {
             <br className="block md:hidden" />
             <span> futuro.</span>
           </h2>
-
+{/*
           <Link
             href="#entrar"
             className="font-mono flex w-full items-center justify-between bg-[#00a8e8] px-6 py-4 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto sm:min-w-80 md:text-sm"
@@ -313,9 +314,10 @@ export default function Home() {
             <span>Participar no evento</span>
             <span>→</span>
           </Link>
+*/}
         </div>
       </motion.section>
-      {ESTE É O ULTIMO PORQUE NAO HA MAIS :D */}
+      {/*ESTE É O ULTIMO PORQUE NAO HA MAIS :D*/}
       <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 pt-16 md:pt-24">
         <Footer />
       </div>
