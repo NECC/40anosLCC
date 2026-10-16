@@ -50,9 +50,9 @@ export default function Home() {
 
       <section className="overflow-hidden lg:h-[70vh] md:h-[50vh] relative z-10">
         {/* grid com máscara de desvanecimento no fundo */}
-        <div className="bg-grid absolute inset-0 [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]" />
+        <div className="bg-grid absolute inset-0 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)]" />
         {/* Gradiente extra na base da secção para fusão perfeita com o fundo */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
         <div className="absolute top-[55%] left-0 size-72 -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] md:size-96" />
         <div className="absolute top-0 right-0 size-80 translate-x-1/3 -translate-y-1/3 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] [animation-delay:3s] md:size-112" />
 
@@ -65,7 +65,8 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, margin: "-10%" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
+          className="mx-auto w-full max-w-400 relative z-10 flex justify-center items-center h-full">
+            
         <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
           <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 ">
             <div className="w-full md:w-1/2 relative z-10">
