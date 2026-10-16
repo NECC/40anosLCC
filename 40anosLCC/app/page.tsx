@@ -221,7 +221,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
-
+{/*}
 <motion.section 
         {...zoomIn}
         className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16"
@@ -315,7 +315,7 @@ export default function Home() {
           </Link>
         </div>
       </motion.section>
-      {/*ESTE É O ULTIMO PORQUE NAO HA MAIS :D */}
+      {ESTE É O ULTIMO PORQUE NAO HA MAIS :D */}
       <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 pt-16 md:pt-24">
         <Footer />
       </div>

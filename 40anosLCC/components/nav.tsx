@@ -13,7 +13,7 @@ export default function Nav() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Programa", href: "/programa" },
-    { name: "Empresas", href: "/empresas" },
+    //{ name: "Empresas", href: "/empresas" },
     { name: "About", href: "/about" },
   ];
 
@@ -50,12 +50,12 @@ export default function Nav() {
           })}
         </div>
 
-        <Link
-          href="/entrar"
-          className="hidden md:flex items-center gap-2 text-xs font-semibold tracking-widest text-gray-300 hover:text-white transition-colors"
+       {/* <Link
+          //href="/entrar"
+          //className="hidden md:flex items-center gap-2 text-xs font-semibold tracking-widest text-gray-300 hover:text-white transition-colors"
         >
           ENTRAR <span className="text-[#00a8e8]">→</span>
-        </Link>
+        </Link>*/}
 
         {/* BOTÃO MOBILE (Hamburger / Fechar) */}
         <button
