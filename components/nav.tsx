@@ -25,7 +25,7 @@ export default function Nav() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-[#06151D]/80 backdrop-blur-md">
       <nav className="mx-auto flex w-full max-w-400 items-center justify-between px-6 py-6 sm:px-10 lg:px-16">
         <Link href="/" onClick={closeMenu}>
-          <Image src="/logo_40anosLCC.svg" alt="40 Years Logo" width={48} height={48} />
+          <Image src="/Finallogo_40anosLCC.svg" alt="40 Years Logo" width={48} height={48} />
         </Link>
 
         {/* NAVEGAÇÃO DESKTOP (Escondida em Mobile) */}

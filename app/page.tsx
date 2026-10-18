@@ -102,7 +102,7 @@ export default function Home() {
               </div>
 
               <Image
-                src="/logo_40anosLCC.svg"
+                src="/Finallogo_40anosLCC.svg"
                 alt="40+ Logo"
                 width={200}
                 height={100}
