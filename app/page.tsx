@@ -68,7 +68,7 @@ export default function Home() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
           <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
-            <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 ">
+            <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 pt-32">
               <div className="w-full md:w-1/2 relative z-10">
                 <h1 className="font-heading mb-6 text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
                   Three days with the entire community and the companies that are part of this story.
