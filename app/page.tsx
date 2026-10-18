@@ -102,11 +102,11 @@ export default function Home() {
               </div>
 
               <Image
-                src="/Finallogo_40anosLCC.svg"
+                src="/logocomtexto4oLCC.svg"
                 alt="40+ Logo"
                 width={200}
-                height={100}
-                className="hidden h-auto md:block md:w-3/8 relative z-10"
+                height={300}
+                className="hidden h-auto lg:block lg:w-160 relative z-10"
               />
             </div>
           </div>
