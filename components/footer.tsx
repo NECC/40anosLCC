@@ -3,8 +3,8 @@ import Image from "next/image";
 import { FiGithub, FiInstagram } from "react-icons/fi";
 
 export default function Footer() {
-  const topLinks = ["Informação geral", "Reportar um problema", "Regulamento"];
-  const bottomLinks = ["Guia do participante", "Política de privacidade"];
+  const topLinks = ["General information", "Report an issue", "Regulations"];
+  const bottomLinks = ["Attendee guide", "Privacy policy"];
 
   return (
     <footer>
@@ -12,7 +12,7 @@ export default function Footer() {
         <Link href="/">
           <Image
             src="/40.svg"
-            alt="40 Anos"
+            alt="40 Years"
             width={56}
             height={56}
             className="w-10 md:w-14 h-auto opacity-90"
@@ -46,14 +46,14 @@ export default function Footer() {
 
           <div className="flex items-center gap-4 text-gray-400 pt-0.5">
             <Link
-              href="#"
+              href="https://www.instagram.com/necc.uminho/"
               className="hover:text-white transition-colors"
               aria-label="Instagram"
             >
               <FiInstagram size={20} />
             </Link>
             <Link
-              href="#"
+              href="https://github.com/NECC"
               className="hover:text-white transition-colors"
               aria-label="Github"
             >

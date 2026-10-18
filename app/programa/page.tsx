@@ -6,123 +6,123 @@ import Footer from "@/components/footer";
 import { motion } from "framer-motion";
 
 type Category =
-  | "Todos"
-  | "Palestras"
+  | "All"
+  | "Talks"
   | "Workshops"
-  | "Mesas-redondas"
+  | "Roundtables"
   | "Networking";
 
 interface ScheduleItem {
   id: string;
-  day: "14 Novembro" | "15 Novembro";
-  dayOfWeek: "Sexta-feira" | "Sábado";
+  day: "November 14" | "November 15";
+  dayOfWeek: "Friday" | "Saturday";
   startTime: string;
   endTime: string;
-  category: "Palestras" | "Workshops" | "Mesas-redondas" | "Networking";
+  category: "Talks" | "Workshops" | "Roundtables" | "Networking";
   title: string;
   speakers: string;
   location: string;
 }
 
 const scheduleData: ScheduleItem[] = [
-  // 14 NOVEMBRO
+  // NOVEMBER 14
   {
     id: "1",
-    day: "14 Novembro",
-    dayOfWeek: "Sexta-feira",
+    day: "November 14",
+    dayOfWeek: "Friday",
     startTime: "09:00",
     endTime: "09:30",
     category: "Networking",
-    title: "Receção e acreditação",
-    speakers: "Equipa LCC | Universidade do Minho",
-    location: "Átrio do DI",
+    title: "Registration and welcome",
+    speakers: "LCC Team | University of Minho",
+    location: "DI Atrium",
   },
   {
     id: "2",
-    day: "14 Novembro",
-    dayOfWeek: "Sexta-feira",
+    day: "November 14",
+    dayOfWeek: "Friday",
     startTime: "09:30",
     endTime: "10:30",
-    category: "Palestras",
-    title: "Quatro décadas a imaginar o futuro",
-    speakers: "Prof.ª Maria João Frade | Universidade do Minho",
-    location: "Auditório A1",
+    category: "Talks",
+    title: "Four decades of imagining the future",
+    speakers: "Prof.ª Maria João Frade | University of Minho",
+    location: "Auditorium A1",
   },
   {
     id: "3",
-    day: "14 Novembro",
-    dayOfWeek: "Sexta-feira",
+    day: "November 14",
+    dayOfWeek: "Friday",
     startTime: "11:00",
     endTime: "12:00",
-    category: "Palestras",
-    title: "Computação que transforma o mundo",
+    category: "Talks",
+    title: "Computing that transforms the world",
     speakers: "Miguel Martins | Critical TechWorks",
-    location: "Auditório A1",
+    location: "Auditorium A1",
   },
   {
     id: "4",
-    day: "14 Novembro",
-    dayOfWeek: "Sexta-feira",
+    day: "November 14",
+    dayOfWeek: "Friday",
     startTime: "14:30",
     endTime: "16:00",
-    category: "Mesas-redondas",
-    title: "Das primeiras linhas de código à IA",
-    speakers: "Painel de alumni | Bosch · Cegid · INL",
-    location: "Sala 1.05",
+    category: "Roundtables",
+    title: "From the first lines of code to AI",
+    speakers: "Alumni panel | Bosch · Cegid · INL",
+    location: "Room 1.05",
   },
 
-  // 15 NOVEMBRO
+  // NOVEMBER 15
   {
     id: "5",
-    day: "15 Novembro",
-    dayOfWeek: "Sábado",
+    day: "November 15",
+    dayOfWeek: "Saturday",
     startTime: "10:00",
     endTime: "12:00",
     category: "Workshops",
-    title: "Arquiteturas cloud à escala",
+    title: "Cloud architectures at scale",
     speakers: "Ana Ribeiro | OutSystems",
     location: "Lab 2.01",
   },
   {
     id: "6",
-    day: "15 Novembro",
-    dayOfWeek: "Sábado",
+    day: "November 15",
+    dayOfWeek: "Saturday",
     startTime: "10:00",
     endTime: "12:00",
     category: "Workshops",
-    title: "Sistemas inteligentes responsáveis",
+    title: "Responsible intelligent systems",
     speakers: "Rui Costa | Feedzai",
     location: "Lab 2.05",
   },
   {
     id: "7",
-    day: "15 Novembro",
-    dayOfWeek: "Sábado",
+    day: "November 15",
+    dayOfWeek: "Saturday",
     startTime: "12:30",
     endTime: "14:00",
     category: "Networking",
-    title: "Almoço da comunidade",
-    speakers: "Comunidade LCC | Empresas parceiras",
-    location: "Jardim do DI",
+    title: "Community lunch",
+    speakers: "LCC Community | Partner companies",
+    location: "DI Garden",
   },
   {
     id: "8",
-    day: "15 Novembro",
-    dayOfWeek: "Sábado",
+    day: "November 15",
+    dayOfWeek: "Saturday",
     startTime: "15:00",
     endTime: "16:00",
-    category: "Palestras",
-    title: "A próxima década começa hoje",
-    speakers: "Direção de Curso | Universidade do Minho",
-    location: "Auditório A1",
+    category: "Talks",
+    title: "The next decade starts today",
+    speakers: "Degree Steering Committee | University of Minho",
+    location: "Auditorium A1",
   },
 ];
 
 const categories: Category[] = [
-  "Todos",
-  "Palestras",
+  "All",
+  "Talks",
   "Workshops",
-  "Mesas-redondas",
+  "Roundtables",
   "Networking",
 ];
 
@@ -137,22 +137,22 @@ const staggerItem: any = {
 };
 
 export default function Programa() {
-  const [activeCategory, setActiveCategory] = useState<Category>("Todos");
+  const [activeCategory, setActiveCategory] = useState<Category>("All");
 
   const filteredSchedule = scheduleData.filter((item) =>
-    activeCategory === "Todos" ? true : item.category === activeCategory,
+    activeCategory === "All" ? true : item.category === activeCategory,
   );
 
   const day1Items = filteredSchedule.filter(
-    (item) => item.day === "14 Novembro",
+    (item) => item.day === "November 14",
   );
   const day2Items = filteredSchedule.filter(
-    (item) => item.day === "15 Novembro",
+    (item) => item.day === "November 15",
   );
 
   return (
     <main className="bg-[#06151D] min-h-screen text-white relative selection:bg-[#00a8e8] selection:text-white">
-      {/* Navegação */}
+      {/* Navigation */}
       <div className="mx-auto w-full max-w-400 px-4 sm:px-10 lg:px-16">
         <Nav />
       </div>
@@ -161,14 +161,14 @@ export default function Programa() {
         <div className="bg-grid absolute inset-0 opacity-40 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
 
-        {/* Pontos Azuis (Efeito Estrelar Solto) */}
+        {/* Blue Dots */}
         <span className="absolute top-[30%] left-[8%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
         <span className="absolute bottom-[20%] right-[12%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1.5s]" />
 
-        {/* Linha Laser/Scan Animada */}
+        {/* Animated Scan Line */}
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
-        {/* Animação do Texto do Hero */}
+        {/* Hero Text Animation */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -177,26 +177,25 @@ export default function Programa() {
           className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16 relative z-10"
         >
           <p className="font-mono text-[10px] tracking-[0.2em] text-[#00a8e8] uppercase mb-6 flex items-center gap-3">
-            <span>14-15 Novembro</span>
+            <span>November 14-15</span>
             <span className="w-1 h-1 bg-[#00a8e8] rounded-full"></span>
             <span>Braga</span>
           </p>
 
           <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-medium tracking-tight mb-8">
-            Programa
+            Schedule
           </h1>
 
           <p className="font-sans text-gray-400 text-sm md:text-lg max-w-2xl leading-relaxed">
-            Dois dias para revisar a nossa história, partilhar conhecimento e
-            imaginar o que vem a seguir.
+            Two days to revisit our history, share knowledge, and imagine what comes next.
           </p>
         </motion.div>
       </section>
 
-      {/* Conteúdo Principal / Mensagem Temporária */}
+      {/* Main Content / Temporary Message */}
       <section className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 py-12 md:py-24 relative z-10">
         
-        {/* Mensagem "To be announced" */}
+        {/* "To be announced" Message */}
         <motion.div
           className="flex flex-col items-center justify-center text-center py-16"
           variants={staggerContainer}
@@ -223,12 +222,12 @@ export default function Programa() {
             To be announced
           </h2>
           <p className="font-sans text-gray-400 text-sm max-w-md">
-            Estamos a preparar um programa incrível para celebrar os 40 anos da LCC. Fica atento às novidades e aos horários oficiais.
+            We are preparing an incredible schedule to celebrate 40 years of LCC. Stay tuned for updates and official timetables.
           </p>
         </motion.div>
 
         {/* ========================================================= */}
-        {/* CONTEÚDO ORIGINAL DO PROGRAMA (COMENTADO PARA USO FUTURO) */}
+        {/* ORIGINAL SCHEDULE CONTENT (COMMENTED OUT FOR FUTURE USE)   */}
         {/* ========================================================= */}
         {/*
         <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12 border-b border-gray-800/50 pb-8">
@@ -261,9 +260,9 @@ export default function Programa() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-3">
                 <h2 className="font-heading text-xl font-medium text-white mb-1">
-                  14 Novembro
+                  November 14
                 </h2>
-                <p className="font-sans text-xs text-gray-500">Sexta-feira</p>
+                <p className="font-sans text-xs text-gray-500">Friday</p>
               </div>
 
               <div className="lg:col-span-9 divide-y divide-gray-800/50 border-t border-b border-gray-800/50">
@@ -280,9 +279,9 @@ export default function Programa() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-3">
                 <h2 className="font-heading text-xl font-medium text-white mb-1">
-                  15 Novembro
+                  November 15
                 </h2>
-                <p className="font-sans text-xs text-gray-500">Sábado</p>
+                <p className="font-sans text-xs text-gray-500">Saturday</p>
               </div>
 
               <div className="lg:col-span-9 divide-y divide-gray-800/50 border-t border-b border-gray-800/50">
@@ -297,7 +296,7 @@ export default function Programa() {
 
           {day1Items.length === 0 && day2Items.length === 0 && (
             <div className="text-center py-16 text-gray-500 font-mono text-sm">
-              Nenhuma sessão encontrada para a categoria "{activeCategory}".
+              No sessions found for category "{activeCategory}".
             </div>
           )}
         </motion.div>
@@ -312,18 +311,18 @@ export default function Programa() {
   );
 }
 
-{/* Componente para a linha individual do programa */}
+{/* Component for individual schedule row */}
 function ScheduleRow({ item }: { item: ScheduleItem }) {
   return (
     <div className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:bg-white/[0.01] transition-colors px-2">
       <div className="flex items-start md:items-center gap-6 md:gap-10">
-        {/* Hora */}
+        {/* Time */}
         <div className="font-mono text-[#00a8e8] text-sm shrink-0 min-w-[60px]">
           <div className="font-medium">{item.startTime}</div>
           <div className="text-xs text-gray-500">{item.endTime}</div>
         </div>
 
-        {/* Detalhes da Sessão */}
+        {/* Session Details */}
         <div>
           <span className="font-mono text-[10px] tracking-widest text-[#00a8e8] uppercase block mb-1.5">
             {item.category}
@@ -335,7 +334,7 @@ function ScheduleRow({ item }: { item: ScheduleItem }) {
         </div>
       </div>
 
-      {/* Localização */}
+      {/* Location */}
       <div className="font-sans text-xs text-gray-500 md:text-right shrink-0 mt-2 md:mt-0">
         {item.location}
       </div>

@@ -31,7 +31,7 @@ const blurReveal: any = {
 // Animações para a grelha em Cascata (Stagger)
 const staggerContainer: any = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.15 } }, // Efeito Escada
+  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
 const staggerItem: any = {
@@ -48,15 +48,15 @@ type Empresa = {
   logo: string;
   totalDays: number;
   eventDays: number[];
-  instagramLink?: string; // Link para onde redirecionar (opcional)
+  instagramLink?: string;
 };
 
 const empresasData: Empresa[] = [
   {
     id: "01",
-    month: "JANEIRO",
+    month: "JANUARY",
     name: "Bosch",
-    description: "Engenharia para um mundo conectado.",
+    description: "Engineering for a connected world.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [12, 13, 25],
@@ -64,9 +64,9 @@ const empresasData: Empresa[] = [
   },
   {
     id: "02",
-    month: "FEVEREIRO",
+    month: "FEBRUARY",
     name: "Accenture",
-    description: "Inovação com impacto real.",
+    description: "Innovation with real impact.",
     logo: "/images/partners/bosch.svg",
     totalDays: 28,
     eventDays: [8, 14],
@@ -74,114 +74,113 @@ const empresasData: Empresa[] = [
   },
   {
     id: "03",
-    month: "MARÇO",
+    month: "MARCH",
     name: "NVIDIA",
-    description: "Computação que transforma indústrias.",
+    description: "Computing that transforms industries.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [3, 4, 20],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "04",
-    month: "ABRIL",
+    month: "APRIL",
     name: "Intel",
-    description: "Tecnologia no centro do progresso.",
+    description: "Technology at the heart of progress.",
     logo: "/images/partners/bosch.svg",
     totalDays: 30,
     eventDays: [10, 11, 12],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "05",
-    month: "MAIO",
+    month: "MAY",
     name: "Cisco",
-    description: "Ligar pessoas, sistemas e possibilidades.",
+    description: "Connecting people, systems, and possibilities.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [5, 19],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "06",
-    month: "JUNHO",
+    month: "JUNE",
     name: "SAP",
-    description: "Tecnologia que potencia negócios.",
+    description: "Technology that powers businesses.",
     logo: "/images/partners/bosch.svg",
     totalDays: 30,
     eventDays: [15, 16],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "07",
-    month: "JULHO",
+    month: "JULY",
     name: "Google Cloud",
-    description: "Infraestrutura para ideias à escala global.",
+    description: "Infrastructure for ideas at a global scale.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [8, 9, 22],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "08",
-    month: "AGOSTO",
+    month: "AUGUST",
     name: "Red Hat",
-    description: "Inovação aberta, construída em comunidade.",
+    description: "Open innovation, community built.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [12, 28],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "09",
-    month: "SETEMBRO",
+    month: "SEPTEMBER",
     name: "GitHub",
-    description: "Onde o mundo constrói software.",
+    description: "Where the world builds software.",
     logo: "/images/partners/bosch.svg",
     totalDays: 30,
     eventDays: [2, 3, 4],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "10",
-    month: "OUTUBRO",
+    month: "OCTOBER",
     name: "Cloudflare",
-    description: "Uma internet mais rápida e segura.",
+    description: "A faster, safer internet.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [18, 19],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "11",
-    month: "NOVEMBRO",
+    month: "NOVEMBER",
     name: "Stripe",
-    description: "Infraestrutura para a economia digital.",
+    description: "Infrastructure for the digital economy.",
     logo: "/images/partners/bosch.svg",
     totalDays: 30,
     eventDays: [10, 24, 25],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
   {
     id: "12",
-    month: "DEZEMBRO",
+    month: "DECEMBER",
     name: "Uphold",
-    description: "O futuro das finanças digitais.",
+    description: "The future of digital finance.",
     logo: "/images/partners/bosch.svg",
     totalDays: 31,
     eventDays: [5, 6, 12],
-        instagramLink: "https://www.instagram.com/necc.uminho/",
+    instagramLink: "https://www.instagram.com/necc.uminho/",
   },
 ];
 
 export default function Empresas() {
   const [selectedCompany, setSelectedCompany] = useState<Empresa | null>(null);
-  
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
   const closeModal = () => {
     setSelectedCompany(null);
-    setSelectedDay(null); // Limpa também o dia selecionado
+    setSelectedDay(null);
   };
 
   const closeDayPopup = () => setSelectedDay(null);
@@ -214,18 +213,17 @@ export default function Empresas() {
           className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16 relative z-10"
         >
           <p className="font-mono text-[10px] tracking-[0.2em] text-[#00a8e8] uppercase mb-6 flex items-center gap-3">
-            <span>12 MESES</span>
+            <span>12 MONTHS</span>
             <span className="w-1 h-1 bg-[#00a8e8] rounded-full"></span>
-            <span>12 LIGAÇÕES</span>
+            <span>12 CONNECTIONS</span>
           </p>
 
           <h1 className="font-heading text-5xl sm:text-6xl md:text-8xl font-medium tracking-tight mb-8">
-            Empresas
+            Companies
           </h1>
 
           <p className="font-sans text-gray-400 text-sm md:text-lg max-w-2xl leading-relaxed">
-            Um ano de celebração com organizações que cresceram connosco e continuam a
-            aproximar academia e indústria.
+            A year of celebration with organizations that grew with us and continue to bring academia and industry together.
           </p>
         </motion.div>
       </section>
@@ -268,7 +266,7 @@ export default function Empresas() {
                   )}
                   {/* Ícone indicativo de clique */}
                   <span className="absolute right-0 opacity-0 group-hover:opacity-100 transition-opacity text-[#00a8e8] font-mono text-xs hidden md:block">
-                    Ver datas →
+                    View dates →
                   </span>
                 </div>
 
@@ -320,7 +318,7 @@ export default function Empresas() {
 
               <div className="mb-8">
                 <p className="font-mono text-[#00a8e8] text-xs tracking-[0.2em] uppercase mb-2">
-                  Atividades em {selectedCompany.month}
+                  Activities in {selectedCompany.month}
                 </p>
                 <h3 className="font-heading text-3xl font-medium text-white flex items-center gap-4">
                   {selectedCompany.name}
@@ -328,7 +326,7 @@ export default function Empresas() {
               </div>
 
               <div className="grid grid-cols-7 gap-2 mb-4 text-center font-mono text-xs text-gray-500">
-                <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+                <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
               </div>
 
               {/* Grelha de Dias */}
@@ -339,7 +337,7 @@ export default function Empresas() {
                   return (
                     <div
                       key={day}
-                      onClick={() => isEventDay && handleDayClick(day)} // Apenas clica se for um dia de evento
+                      onClick={() => isEventDay && handleDayClick(day)}
                       className={`
                         aspect-square flex items-center justify-center font-sans text-sm rounded-sm transition-all
                         ${isEventDay 
@@ -358,10 +356,10 @@ export default function Empresas() {
               <div className="mt-8 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-[#00a8e8]/20 border border-[#00a8e8]/50 rounded-sm"></div>
-                  <span className="font-sans text-xs text-gray-400">Presença no campus</span>
+                  <span className="font-sans text-xs text-gray-400">Campus presence</span>
                 </div>
                 <span className="font-mono text-[9px] text-gray-500 tracking-wider">
-                  Clica no dia para ver atividade
+                  Click on a day to view activity
                 </span>
               </div>
             </motion.div>
@@ -396,10 +394,10 @@ export default function Empresas() {
               </div>
               
               <h4 className="font-heading text-xl text-white mb-2">
-                Atividade a {selectedDay} de {selectedCompany.month.toLowerCase()}
+                Activity on {selectedCompany.month} {selectedDay}
               </h4>
               <p className="font-sans text-sm text-gray-400 mb-6">
-                Serás redirecionado para o Instagram onde encontrarás todas as informações sobre esta atividade da {selectedCompany.name}.
+                You will be redirected to Instagram where you will find all information about this activity with {selectedCompany.name}.
               </p>
 
               <div className="flex gap-3 w-full">
@@ -407,7 +405,7 @@ export default function Empresas() {
                   onClick={closeDayPopup}
                   className="flex-1 font-mono text-xs py-3 border border-gray-600 text-gray-300 hover:bg-gray-800 transition-colors"
                 >
-                  VOLTAR
+                  BACK
                 </button>
                 <a 
                   href={selectedCompany.instagramLink || "#"} 
@@ -416,7 +414,7 @@ export default function Empresas() {
                   onClick={closeDayPopup}
                   className="flex-1 font-mono text-xs py-3 bg-[#00a8e8] text-white hover:bg-[#0090c7] transition-colors flex items-center justify-center"
                 >
-                  ABRIR LINK
+                  OPEN LINK
                 </a>
               </div>
             </motion.div>
