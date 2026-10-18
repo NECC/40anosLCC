@@ -14,21 +14,21 @@ import { FaArrowCircleRight } from "react-icons/fa";
 const slideLeft: any = {
   initial: { opacity: 0, x: -60 },
   whileInView: { opacity: 1, x: 0 },
-  viewport: { once: false, margin: "-25%" }, // <- margin: "-25%" faz começar mais tarde
+  viewport: { once: true, margin: "-25%" }, // <- margin: "-25%" faz começar mais tarde
   transition: { duration: 0.5, ease: "easeOut" }, // <- duration: 0.5 faz ser mais rápida, para saberes carlitos
 };
 
 const zoomIn: any = {
   initial: { opacity: 0, scale: 0.92 },
   whileInView: { opacity: 1, scale: 1 },
-  viewport: { once: false, margin: "-25%" },
+  viewport: { once: true, margin: "-25%" },
   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
 };
 
 const blurReveal: any = {
   initial: { opacity: 0, y: 50, filter: "blur(10px)" },
   whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
-  viewport: { once: false, margin: "-25%" },
+  viewport: { once: true, margin: "-25%" },
   transition: { duration: 0.6, ease: "easeOut" },
 };
 
@@ -64,7 +64,7 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-10%" }}
+          viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
           <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
@@ -92,17 +92,17 @@ export default function Home() {
                   >
                     Join the event <span>→</span>
                   </Link>*/}
-                  <div className="flex rounded-4xl w-full items-center justify-between gap-4 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm">
+                  <div className="flex rounded-lg w-full items-center justify-between gap-4 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm">
                     View Schedule <span><FaArrowCircleRight /></span>
                   </div>
-                  <div className="flex rounded-3xl w-full items-center justify-between gap-4 border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm">
+                  <div className="flex rounded-lg w-full items-center justify-between gap-4 border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm">
                     Join Event <span><FaArrowCircleRight /></span>
                   </div>
                 </div>
               </div>
 
               <Image
-                src="/40+.svg"
+                src="/logo_40anosLCC.svg"
                 alt="40+ Logo"
                 width={200}
                 height={100}
@@ -177,20 +177,24 @@ export default function Home() {
           <h2 className="font-heading text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
             PROGRAM
           </h2>
-
+{/*
           <Link
             href="/programa"
-            className="font-mono flex items-center gap-3 border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
+            className="font-mono rounded-lg flex items-center gap-3 border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
-            Full schedule <span>→</span>
+            Full schedule <span><FaArrowCircleRight /></span>
           </Link>
+*/}
+          <div className="font-mono rounded-lg flex items-center gap-3 border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm">
+            Full schedule <span><FaArrowCircleRight /></span>
+          </div>
         </motion.div>
 
         <motion.div 
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, margin: "-25%" }}
+          viewport={{ once: true, margin: "-25%" }}
           className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3"
         >
           <motion.div variants={staggerItem} className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12">
@@ -293,7 +297,7 @@ export default function Home() {
         {...blurReveal}
         className="relative py-20 text-white md:py-28 border-y border-gray-800/50 overflow-hidden"
       >
-        <div className="bg-grid absolute inset-0 opacity-80 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
+        <div className="bg-[#06151D] bg-grid absolute inset-0 opacity-80 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
 
         <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#06151D] to-transparent pointer-events-none z-10" />
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />

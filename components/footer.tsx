@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
         <Link href="/">
           <Image
-            src="/40.svg"
+            src="/logo_40anosLCC.svg"
             alt="40 Years"
             width={56}
             height={56}

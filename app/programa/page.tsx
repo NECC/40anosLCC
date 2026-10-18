@@ -172,7 +172,7 @@ export default function Programa() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-10%" }}
+          viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16 relative z-10"
         >
@@ -201,7 +201,7 @@ export default function Programa() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, margin: "-10%" }}
+          viewport={{ once: true, margin: "-10%" }}
         >
           <div className="w-20 h-20 rounded-full bg-[#00a8e8]/10 border border-[#00a8e8]/30 flex items-center justify-center mb-8">
             <svg
@@ -237,7 +237,7 @@ export default function Programa() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`font-mono text-xs px-4 py-2 border transition-all ${
+                className={`font-mono rounded-lg text-xs px-4 py-2 border transition-all ${
                   isActive
                     ? "bg-[#00a8e8] text-white border-[#00a8e8] font-semibold"
                     : "bg-[#040d14] text-gray-400 border-gray-800/80 hover:border-gray-600 hover:text-white"
@@ -254,7 +254,7 @@ export default function Programa() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, margin: "-10%" }}
+          viewport={{ once: true, margin: "-10%" }}
         >
           {day1Items.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

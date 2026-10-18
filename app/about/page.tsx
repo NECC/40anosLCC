@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { DM_Mono, Manrope, Space_Grotesk } from "next/font/google";
 import { motion } from "framer-motion";
-import Nav from "@/components/nav"; 
-import Footer from "@/components/footer"; 
+import Nav from "@/components/nav";
+import Footer from "@/components/footer";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 const dmMono = DM_Mono({ weight: ["400", "500"], subsets: ["latin"] });
 const manrope = Manrope({ subsets: ["latin"] });
@@ -15,14 +16,14 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 const slideLeft: any = {
   initial: { opacity: 0, x: -60 },
   whileInView: { opacity: 1, x: 0 },
-  viewport: { once: false, margin: "-25%" },
+  viewport: { once: true, margin: "-25%" },
   transition: { duration: 0.5, ease: "easeOut" },
 };
 
 const blurReveal: any = {
   initial: { opacity: 0, y: 50, filter: "blur(10px)" },
   whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
-  viewport: { once: false, margin: "-25%" },
+  viewport: { once: true, margin: "-25%" },
   transition: { duration: 0.6, ease: "easeOut" },
 };
 
@@ -30,19 +31,24 @@ export default function About() {
   return (
     <main className="bg-[#06151D] min-h-screen text-white relative selection:bg-[#00a8e8] selection:text-white overflow-x-hidden">
       {/* Navegação Global */}
-      <div className="mx-auto w-full max-w-400 px-4 sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-10 lg:px-16">
         <Nav />
       </div>
 
-      {/* HERO DA PÁGINA ABOUT */}
-      <section className="relative z-10 overflow-hidden py-16 md:py-24 border-b border-gray-800/40">
+      {/* HERO / OUR HISTORY SECTION (Layout de 2 Colunas em Desktop) */}
+      <section className="relative z-10 overflow-hidden pt-28 md:pt-36 pb-16 md:pb-24 border-b border-gray-800/40">
         {/* Background Grid com Máscara e Gradiente de Fusão */}
         <div className="bg-grid absolute inset-0 opacity-40 pointer-events-none [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
 
         {/* Brilhos Radiais Suaves */}
         <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15], x: [0, 20, 0], y: [0, -15, 0] }}
+          animate={{
+            scale: [1, 1.15, 1],
+            opacity: [0.15, 0.25, 0.15],
+            x: [0, 20, 0],
+            y: [0, -15, 0],
+          }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute left-[-10%] top-[10%] w-[600px] h-[600px] bg-[#00a8e8] rounded-full blur-[180px] z-0 pointer-events-none"
         />
@@ -54,22 +60,89 @@ export default function About() {
         {/* Linha Laser/Scan Animada */}
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
-        <div className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 relative z-10">
-          <div className="max-w-3xl">
-            <p className="font-mono text-xs tracking-[0.2em] text-[#00a8e8] uppercase mb-4">
-              ABOUT THE COURSE
-            </p>
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-medium tracking-tight mb-6">
-              Bachelor's Degree in Computer Science
-            </h1>
-            <p className="font-sans text-gray-400 text-sm md:text-base max-w-2xl leading-relaxed">
-              The Bachelor's Degree in Computer Science at the University of Minho prepares top-tier professionals capable of tackling the most demanding technological challenges of the present and the future.
-            </p>
+        <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 lg:px-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+            {/* Coluna Esquerda: Título Fixado/Em Destaque */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32">
+              <p className="font-mono text-xs tracking-[0.2em] text-[#00a8e8] uppercase mb-4">
+                OUR HISTORY
+              </p>
+              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight">
+                How It All Began
+              </h1>
+            </div>
+
+            {/* Coluna Direita: Texto da História */}
+            <div className="lg:col-span-7 space-y-6 font-sans text-gray-300 text-sm md:text-base lg:text-lg leading-relaxed">
+              <p>
+                It all started in 1986. Created by Ordinance No. 420/85, the
+                degree was born under the designation Mathematics and Computer
+                Science, with an initial four-and-a-half-year curriculum. It was
+                the second information technology program at the University of
+                Minho and immediately established its identity: approaching
+                computing from its mathematical foundations, refusing to reduce
+                it to the fleeting domain of temporary tools.
+              </p>
+              <p>
+                The first graduates completed their path in 1990/91. Five years
+                later, the curriculum underwent its first major revision,
+                integrating the rapid advances redefining applied mathematics
+                and computing.
+              </p>
+              <p>
+                In 2006, with the transition to the Bologna model, the degree
+                became the Bachelor's Degree in Computer Science, structured
+                into three years. Duration and name changed, but the founding
+                principle remained intact.
+              </p>
+              <p>
+                More recently, in 2021, the degree once again renewed its
+                curriculum matrix, integrating frontier areas such as Artificial
+                Intelligence and Machine Learning in a structured way, ensuring
+                that traditional theoretical rigor continues to power
+                technological innovation.
+              </p>
+              <p className="text-white font-medium pt-4 border-t border-gray-800/60">
+                Four decades and over a thousand graduates later, it is this
+                same DNA that continues to define us. Those who pass through
+                here don't just learn a language or a technology: they learn to
+                dissect and structure problems in a lasting way. That is why our
+                graduates adapt naturally to whatever comes next.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <motion.section {...slideLeft} className="relative z-10 px-6 sm:px-10 lg:px-16 py-12 max-w-400 mx-auto">
+      {/* ABOUT THE COURSE SECTION (Layout de 2 Colunas) */}
+      <motion.section
+        {...slideLeft}
+        className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 md:py-24 max-w-[1400px] mx-auto border-b border-gray-800/40"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+          <div className="lg:col-span-5">
+            <p className="font-mono text-xs tracking-[0.2em] text-[#00a8e8] uppercase mb-4">
+              ABOUT THE COURSE
+            </p>
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
+              Bachelor's Degree in Computer Science
+            </h2>
+          </div>
+          <div className="lg:col-span-7">
+            <p className="font-sans text-gray-300 text-base md:text-lg lg:text-xl leading-relaxed">
+              The Bachelor's Degree in Computer Science at the University of
+              Minho prepares top-tier professionals capable of tackling the most
+              demanding technological challenges of the present and the future.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* STATS SECTION */}
+      <motion.section
+        {...slideLeft}
+        className="relative z-10 px-6 sm:px-10 lg:px-16 py-12 max-w-[1400px] mx-auto"
+      >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-b border-gray-800/50 py-10">
           <div>
             <span className="font-heading text-3xl md:text-5xl text-[#00a8e8] font-light block mb-2">
@@ -107,7 +180,10 @@ export default function About() {
       </motion.section>
 
       {/* ÁREAS DE CONHECIMENTO */}
-      <motion.section {...slideLeft} className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 md:py-24 max-w-400 mx-auto">
+      <motion.section
+        {...slideLeft}
+        className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 md:py-24 max-w-[1400px] mx-auto"
+      >
         <h2 className="font-heading text-[#00a8e8] text-lg font-bold tracking-[0.2em] uppercase mb-12">
           Core Pillars
         </h2>
@@ -118,7 +194,9 @@ export default function About() {
               Algorithms & Theory
             </h3>
             <p className="font-sans text-gray-400 text-xs md:text-sm leading-relaxed">
-              A deep understanding of mathematical foundations, computational complexity, advanced algorithms, and high-performance data structures.
+              A deep understanding of mathematical foundations, computational
+              complexity, advanced algorithms, and high-performance data
+              structures.
             </p>
           </div>
 
@@ -127,7 +205,8 @@ export default function About() {
               Systems & Architecture
             </h3>
             <p className="font-sans text-gray-400 text-xs md:text-sm leading-relaxed">
-              Analysis and development of operating systems, communication networks, software engineering, and modern computer architectures.
+              Analysis and development of operating systems, communication
+              networks, software engineering, and modern computer architectures.
             </p>
           </div>
 
@@ -136,24 +215,32 @@ export default function About() {
               Artificial Intelligence & Data
             </h3>
             <p className="font-sans text-gray-400 text-xs md:text-sm leading-relaxed">
-              Exploration of machine learning, data analysis, computer graphics, and innovation-driven intelligent systems.
+              Exploration of machine learning, data analysis, computer graphics,
+              and innovation-driven intelligent systems.
             </p>
           </div>
         </div>
       </motion.section>
 
       {/* OBJETIVOS E PERFIL DE SAÍDA */}
-      <motion.section {...slideLeft} className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 md:py-20 max-w-400 mx-auto">
+      <motion.section
+        {...slideLeft}
+        className="relative z-10 px-6 sm:px-10 lg:px-16 py-16 md:py-20 max-w-[1400px] mx-auto"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
           <div>
             <h2 className="font-heading text-[#00a8e8] text-lg font-bold tracking-[0.2em] uppercase mb-6">
               Course Objectives
             </h2>
             <p className="font-sans text-gray-300 text-sm md:text-base leading-relaxed mb-6">
-              The course aims to provide students with a solid foundational education in Computer Science, combining rigorous theoretical concepts with a strong hands-on laboratory component.
+              The course aims to provide students with a solid foundational
+              education in Computer Science, combining rigorous theoretical
+              concepts with a strong hands-on laboratory component.
             </p>
             <p className="font-sans text-gray-400 text-xs md:text-sm leading-relaxed">
-              Graduates are empowered to design, implement, and maintain complex software systems with critical thinking and continuous adaptability to new technologies.
+              Graduates are empowered to design, implement, and maintain complex
+              software systems with critical thinking and continuous
+              adaptability to new technologies.
             </p>
           </div>
 
@@ -184,7 +271,7 @@ export default function About() {
       </motion.section>
 
       {/* CTA SECTION */}
-      <motion.section 
+      <motion.section
         {...blurReveal}
         className="relative py-20 text-white md:py-28 border-y border-gray-800/50 overflow-hidden"
       >
@@ -208,16 +295,18 @@ export default function About() {
 
           <Link
             href="/"
-            className="font-mono flex w-full items-center justify-between bg-[#00a8e8] px-6 py-4 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto sm:min-w-80 md:text-sm"
+            className="font-mono rounded-lg inline-flex items-center gap-3 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] md:text-sm"
           >
             <span>Back to homepage</span>
-            <span>→</span>
+            <span>
+              <FaArrowCircleRight />
+            </span>
           </Link>
         </div>
       </motion.section>
 
       {/* Footer */}
-      <div className="mx-auto w-full max-w-400 px-6 sm:px-10 lg:px-16 pt-12 md:pt-24">
+      <div className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-16 pt-12 md:pt-24">
         <Footer />
       </div>
     </main>
