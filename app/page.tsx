@@ -67,7 +67,7 @@ export default function Home() {
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
-          <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full">
+          <div className="mx-auto w-full max-w-400 relative z-10 flex justify-center items-center h-full">
             <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 pt-32">
               <div className="w-full md:w-1/2 relative z-10">
                 <h1 className="font-heading mb-6 text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
@@ -79,25 +79,19 @@ export default function Home() {
                 </p>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  {/*<Link
+                  <Link
                     href="/programa"
-                    className="flex w-full items-center justify-between gap-4 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
+                    className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                   >
-                    View Schedule <span>→</span>
+                    View Schedule <FaArrowCircleRight />
                   </Link>
-                  {/*
+
                   <Link
                     href="#entrar"
-                    className="flex w-full items-center justify-between gap-4 border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
+                    className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
-                    Join the event <span>→</span>
-                  </Link>*/}
-                  <div className="flex rounded-lg w-full items-center justify-between gap-4 bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm">
-                    View Schedule <span><FaArrowCircleRight /></span>
-                  </div>
-                  <div className="flex rounded-lg w-full items-center justify-between gap-4 border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm">
-                    Join Event <span><FaArrowCircleRight /></span>
-                  </div>
+                    Join Event <FaArrowCircleRight />
+                  </Link>
                 </div>
               </div>
 
