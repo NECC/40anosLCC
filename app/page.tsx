@@ -80,14 +80,14 @@ export default function Home() {
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
-                    href="/programa"
+                    href=""
                     className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                   >
                     View Schedule <FaArrowCircleRight />
                   </Link>
 
                   <Link
-                    href="#entrar"
+                    href=""
                     className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
                     Join Event <FaArrowCircleRight />
