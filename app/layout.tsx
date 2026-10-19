@@ -19,8 +19,10 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "40 Anos de LCC",
-  description: "Celebração dos 40 anos da Licenciatura em Ciências da Computação.",
+  title: "40 years of LCC",
+  icons: {
+    icon: "/Finallogo_40anosLCC.svg",
+  },
 };
 
 export default function RootLayout({
