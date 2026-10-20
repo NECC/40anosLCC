@@ -63,7 +63,7 @@ export default function Nav() {
             pathname === "/join" ? "text-white" : "text-gray-300"
           }`}
         >
-          JOIN
+          Join
           <FaArrowCircleRight />
         </Link>
 
@@ -133,7 +133,7 @@ export default function Nav() {
                 : "text-gray-300 hover:text-white"
             }`}
           >
-            JOIN
+            Join
             <FaArrowCircleRight />
           </Link>
         </div>

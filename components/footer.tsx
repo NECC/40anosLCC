@@ -24,7 +24,7 @@ export default function Footer() {
             {topLinks.map((link) => (
               <Link
                 key={link}
-                href="#"
+                href=""
                 className="hover:text-white transition-colors"
               >
                 {link}
@@ -36,7 +36,7 @@ export default function Footer() {
             {bottomLinks.map((link) => (
               <Link
                 key={link}
-                href="#"
+                href=""
                 className="hover:text-white transition-colors"
               >
                 {link}
