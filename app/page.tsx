@@ -295,7 +295,7 @@ export default function Home() {
           </h2>
 
           <Link
-            href="/join"
+            href=""
             className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
           >
             Join the event
