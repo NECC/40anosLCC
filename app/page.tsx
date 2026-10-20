@@ -2,60 +2,43 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { partnersData } from "@/data/parteners";
 import { motion } from "framer-motion";
 import { FaArrowCircleRight } from "react-icons/fa";
 
-// Animações
-const slideLeft: any = {
-  initial: { opacity: 0, x: -60 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, margin: "-25%" },
-  transition: { duration: 0.5, ease: "easeOut" },
-};
-
-
-const blurReveal: any = {
-  initial: { opacity: 0, y: 50, filter: "blur(10px)" },
-  whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
-  viewport: { once: true, margin: "-25%" },
-  transition: { duration: 0.6, ease: "easeOut" },
-};
-
-const staggerContainer: any = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.15 } },
-};
-
-const staggerItem: any = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
+import {
+  slideLeft,
+  blurReveal,
+  fadeInUp,
+  staggerContainer,
+  staggerItem,
+} from "@/lib/animations";
 
 export default function Home() {
   return (
     <main className="bg-[#06151D]">
-      <section className="overflow-hidden lg:h-[70vh] md:h-[50vh] relative z-10">
-        {/* grid com máscara de desvanecimento no fundo */}
+      {/* HERO */}
+      <section className="relative z-10 overflow-hidden md:h-[50vh] lg:h-[70vh]">
         <div className="bg-grid absolute inset-0 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)]" />
-        {/* Gradiente extra na base da secção para fusão perfeita com o fundo */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-linear-to-t from-[#06151D] to-transparent" />
+
         <div className="absolute top-[55%] left-0 size-72 -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] md:size-96" />
+
         <div className="absolute top-0 right-0 size-80 translate-x-1/3 -translate-y-1/3 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] [animation-delay:3s] md:size-112" />
 
         <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
-        <span className="absolute bottom-[20%] right-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
+
+        <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
+
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10 flex justify-center items-center h-full"
+          {...fadeInUp}
+          className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center px-2 sm:px-10 lg:px-16"
         >
-          <div className="mx-auto w-full max-w-400 relative z-10 flex justify-center items-center h-full">
-            <div className="flex flex-col items-center justify-between gap-12 py-20 md:flex-row md:gap-16 md:py-28 pt-32">
-              <div className="w-full md:w-1/2 relative z-10">
+          <div className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center">
+            <div className="flex flex-col items-center justify-between gap-12 pt-32 py-20 md:flex-row md:gap-16 md:py-28">
+              <div className="relative z-10 w-full md:w-1/2">
                 <h1 className="font-heading mb-6 text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
                   Three days with the entire community and the companies that
                   are part of this story.
@@ -67,17 +50,19 @@ export default function Home() {
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
-                    href=""
+                    href="/schedule"
                     className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                   >
-                    View Schedule <FaArrowCircleRight />
+                    View Schedule
+                    <FaArrowCircleRight />
                   </Link>
 
                   <Link
-                    href=""
+                    href="/join"
                     className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
-                    Join Event <FaArrowCircleRight />
+                    Join Event
+                    <FaArrowCircleRight />
                   </Link>
                 </div>
               </div>
@@ -87,16 +72,17 @@ export default function Home() {
                 alt="40+ Logo"
                 width={200}
                 height={300}
-                className="hidden h-auto lg:block lg:w-160 relative z-10"
+                className="relative z-10 hidden h-auto lg:block lg:w-160"
               />
             </div>
           </div>
         </motion.div>
       </section>
 
+      {/* HISTORY */}
       <motion.section
         {...slideLeft}
-        className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16"
+        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
       >
         <h2 className="font-heading mb-8 text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
           History
@@ -147,7 +133,8 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <section className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16">
+      {/* PROGRAM */}
+      <section className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16">
         <motion.div
           {...slideLeft}
           className="mb-10 flex items-center justify-between md:mb-16"
@@ -157,13 +144,11 @@ export default function Home() {
           </h2>
 
           <Link
-            href=""
-            className="font-mono rounded-lg flex items-center gap-3 border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
+            href="/schedule"
+            className="font-mono flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
             Full schedule
-            <span>
-              <FaArrowCircleRight />
-            </span>
+            <FaArrowCircleRight />
           </Link>
         </motion.div>
 
@@ -218,10 +203,10 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/*
-      <motion.section 
+      {/* PARTNERS
+      <motion.section
         {...zoomIn}
-        className="py-16 md:py-24 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16"
+        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
       >
         <h2 className="font-heading mb-16 text-left text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
           Partners
@@ -250,7 +235,7 @@ export default function Home() {
                   {tier}
                 </h3>
 
-                <div className="grid grid-cols-2 justify-items-center items-end gap-x-15 gap-y-12 md:flex md:flex-wrap md:justify-center md:gap-16">
+                <div className="grid grid-cols-2 items-end justify-items-center gap-x-15 gap-y-12 md:flex md:flex-wrap md:justify-center md:gap-16">
                   {partners.map((partner) => (
                     <div
                       key={partner.name}
@@ -279,25 +264,29 @@ export default function Home() {
       </motion.section>
       */}
 
+      {/* FINAL CTA */}
       <motion.section
         {...blurReveal}
-        className="relative py-20 text-white md:py-28 border-y border-gray-800/50 overflow-hidden"
+        className="relative overflow-hidden border-y border-gray-800/50 py-20 text-white md:py-28"
       >
-        <div className="bg-grid absolute inset-0 opacity-80 pointer-events-none mask-[radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-80 mask-[radial-gradient(ellipse_80%_80%_at_50%_50%,black_30%,transparent_100%)]" />
 
-        <div className="absolute inset-x-0 top-0 h-20 bg-linear-to-b from-[#06151D] to-transparent pointer-events-none z-10" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-[#06151D] to-transparent pointer-events-none z-10" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-20 bg-linear-to-b from-[#06151D] to-transparent" />
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20 bg-linear-to-t from-[#06151D] to-transparent" />
 
         <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
-        <span className="absolute bottom-[20%] right-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
+
+        <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
+
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
-        <div className="relative z-10 flex flex-col items-center text-center px-6 mx-auto max-w-xl md:max-w-4xl">
-          <p className="font-mono mb-6 text-[11px] sm:text-xs tracking-[0.2em] text-[#00a8e8] uppercase">
+        <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center px-6 text-center md:max-w-4xl">
+          <p className="font-mono mb-6 text-[11px] tracking-[0.2em] text-[#00a8e8] uppercase sm:text-xs">
             The next chapter starts now
           </p>
 
-          <h2 className="font-sans mb-10 text-3xl font-medium leading-tight tracking-tight text-white sm:text-4xl md:text-6xl md:leading-tight">
+          <h2 className="font-sans mb-10 text-3xl leading-tight font-medium tracking-tight text-white sm:text-4xl md:text-6xl md:leading-tight">
             40 years of history.
             <br />
             <span>A vision for the</span>
@@ -306,10 +295,11 @@ export default function Home() {
           </h2>
 
           <Link
-            href=""
+            href="/join"
             className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
           >
-            Join the event <FaArrowCircleRight />
+            Join the event
+            <FaArrowCircleRight />
           </Link>
         </div>
       </motion.section>
