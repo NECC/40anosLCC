@@ -7,8 +7,8 @@ export default function Footer() {
   const bottomLinks = ["Attendee guide", "Privacy policy"];
 
   return (
-    <footer>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
+    <footer className=" bg-[#06151D]">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 pt-8 pb-4 md:pt-12  md:pb-8">
         <Link href="/">
           <Image
             src="/Finallogo_40anosLCC.svg"

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Mono, Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/nav";
+import Footer from "@/components/footer";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -29,11 +31,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-PT">
+    <html>
       <body
         className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} antialiased`}
       >
+        <Nav />
         {children}
+        <Footer />
       </body>
     </html>
   );
