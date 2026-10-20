@@ -141,7 +141,7 @@ export default function Home() {
           </h2>
 
           <Link
-            href="/schedule"
+            href=""
             className="font-mono flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
             Full schedule
