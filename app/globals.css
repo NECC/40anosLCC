@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-manrope);
-  --font-heading: var(--font-space-grotesk);
+  --font-manrope: var(--font-manrope);
+  --font-space-grotesk: var(--font-space-grotesk);
   --font-mono: var(--font-dm-mono);
 
   --animate-blink: blink 2s ease-in-out infinite;
@@ -31,6 +31,3 @@
   background-size: 60px 60px;
 }
 
-body {
-  font-family: var(--font-sans), sans-serif;
-}

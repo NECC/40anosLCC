@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html>
       <body
-        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} antialiased`}
+        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} `}
       >
         <Nav />
         {children}

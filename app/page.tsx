@@ -36,21 +36,21 @@ export default function Home() {
           className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center px-2 sm:px-10 lg:px-16"
         >
           <div className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center">
-            <div className="flex flex-col items-center justify-between gap-12 pt-32 py-20 md:flex-row md:gap-16 md:py-28">
+            <div className="flex flex-col items-center justify-between gap-12 py-20 pt-32 md:flex-row md:gap-16 md:py-28">
               <div className="relative z-10 w-full md:w-1/2">
-                <h1 className="font-heading mb-6 text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
+                <h1 className="mb-6 font-space-grotesk text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
                   Three days with the entire community and the companies that
                   are part of this story.
                 </h1>
 
-                <p className="mb-8 text-[10px] tracking-[0.2em] text-gray-400 uppercase md:text-xs">
+                <p className="mb-8 font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase md:text-xs">
                   MARCH 1, 2 AND 3, 2026 • BRAGA
                 </p>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
                     href=""
-                    className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
+                    className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                   >
                     View Schedule
                     <FaArrowCircleRight />
@@ -58,7 +58,7 @@ export default function Home() {
 
                   <Link
                     href=""
-                    className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
+                    className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 font-manrope text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
                     Join Event
                     <FaArrowCircleRight />
@@ -82,12 +82,12 @@ export default function Home() {
         {...slideLeft}
         className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
       >
-        <h2 className="font-heading mb-8 text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
+        <h2 className="mb-8 font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
           History
         </h2>
 
         <div className="mb-12 max-w-2xl md:mb-16">
-          <p className="font-sans text-base leading-relaxed text-gray-300 md:text-xl">
+          <p className="font-manrope text-base leading-relaxed text-gray-300 md:text-xl">
             Since 1986, thousands of people have passed through our classrooms,
             labs, and projects. Every generation has added a new line to this
             story.
@@ -96,23 +96,23 @@ export default function Home() {
 
         <div className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3">
           <div className="flex flex-col justify-center border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <h3 className="font-heading mb-2 text-4xl font-light text-[#00a8e8] md:text-6xl">
+            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
               1986
             </h3>
 
-            <p className="font-sans text-xs text-gray-500 md:text-sm">
+            <p className="font-manrope text-xs text-gray-500 md:text-sm">
               The first chapter
             </p>
           </div>
 
           <div className="flex flex-col justify-center gap-8 border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <p className="font-sans border-b border-gray-800/50 pb-8 text-sm leading-relaxed text-gray-300">
+            <p className="border-b border-gray-800/50 pb-8 font-manrope text-sm leading-relaxed text-gray-300">
               The degree was born at a time when computing was beginning to
               reshape the world. At the University of Minho, it found a place to
               grow with rigor, curiosity, and ambition.
             </p>
 
-            <p className="font-sans text-sm leading-relaxed text-gray-300">
+            <p className="font-manrope text-sm leading-relaxed text-gray-300">
               Today, the same energy connects alumni, students, faculty,
               researchers, and companies in a community open to what has yet to
               be invented.
@@ -120,11 +120,11 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-end justify-center p-8 text-right md:p-12">
-            <h3 className="font-heading mb-2 text-4xl font-light text-[#00a8e8] md:text-6xl">
+            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
               2026
             </h3>
 
-            <p className="font-sans text-xs text-gray-500 md:text-sm">
+            <p className="font-manrope text-xs text-gray-500 md:text-sm">
               The future continues
             </p>
           </div>
@@ -136,13 +136,13 @@ export default function Home() {
           {...slideLeft}
           className="mb-10 flex items-center justify-between md:mb-16"
         >
-          <h2 className="font-heading text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
+          <h2 className="font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
             PROGRAM
           </h2>
 
           <Link
             href=""
-            className="font-mono flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
+            className="flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 font-mono text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
             Full schedule
             <FaArrowCircleRight />
@@ -160,11 +160,11 @@ export default function Home() {
             variants={staggerItem}
             className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
           >
-            <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
+            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Stands
             </h3>
 
-            <p className="font-sans text-xs leading-relaxed text-gray-400 md:text-sm">
+            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
               An open space throughout the event to connect with students,
               showcase the organization, and find future team members.
             </p>
@@ -174,13 +174,13 @@ export default function Home() {
             variants={staggerItem}
             className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
           >
-            <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
+            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Talks
             </h3>
 
-            <p className="font-sans text-xs leading-relaxed text-gray-400 md:text-sm">
-              An auditorium session to present the organization's work, vision,
-              and challenges before an attentive and engaged audience.
+            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
+              An auditorium session to present the organization&apos;s work,
+              vision, and challenges before an attentive and engaged audience.
             </p>
           </motion.div>
 
@@ -188,11 +188,11 @@ export default function Home() {
             variants={staggerItem}
             className="group p-8 md:p-10 lg:p-12"
           >
-            <h3 className="font-heading mb-6 text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
+            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
               Workshops
             </h3>
 
-            <p className="font-sans text-xs leading-relaxed text-gray-400 md:text-sm">
+            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
               A hands-on session in small groups to demonstrate everyday tools,
               methods, and ideas up close.
             </p>
@@ -205,7 +205,7 @@ export default function Home() {
         {...zoomIn}
         className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
       >
-        <h2 className="font-heading mb-16 text-left text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
+        <h2 className="mb-16 text-left font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
           Partners
         </h2>
 
@@ -226,7 +226,7 @@ export default function Home() {
             return (
               <div key={tier} className="text-center">
                 <h3
-                  className="font-heading mb-10 text-lg font-bold tracking-[0.3em] uppercase md:mb-12"
+                  className="mb-10 font-space-grotesk text-lg font-bold tracking-[0.3em] uppercase md:mb-12"
                   style={{ color: tierColors[tier] }}
                 >
                   {tier}
@@ -278,11 +278,11 @@ export default function Home() {
         <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
         <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center px-6 text-center md:max-w-4xl">
-          <p className="font-mono mb-6 text-[11px] tracking-[0.2em] text-[#00a8e8] uppercase sm:text-xs">
+          <p className="mb-6 font-mono text-[11px] tracking-[0.2em] text-[#00a8e8] uppercase sm:text-xs">
             The next chapter starts now
           </p>
 
-          <h2 className="font-sans mb-10 text-3xl leading-tight font-medium tracking-tight text-white sm:text-4xl md:text-6xl md:leading-tight">
+          <h2 className="mb-10 font-space-grotesk text-3xl leading-tight font-medium tracking-tight text-white sm:text-4xl md:text-6xl md:leading-tight">
             40 years of history.
             <br />
             <span>A vision for the</span>
@@ -292,7 +292,7 @@ export default function Home() {
 
           <Link
             href=""
-            className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
+            className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
           >
             Join the event
             <FaArrowCircleRight />
