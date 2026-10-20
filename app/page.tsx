@@ -16,7 +16,6 @@ import {
 export default function Home() {
   return (
     <main className="bg-[#06151D]">
-      {/* HERO */}
       <section className="relative z-10 overflow-hidden md:h-[50vh] lg:h-[70vh]">
         <div className="bg-grid absolute inset-0 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)]" />
 
@@ -50,7 +49,7 @@ export default function Home() {
 
                 <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
-                    href="/schedule"
+                    href=""
                     className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
                   >
                     View Schedule
@@ -58,7 +57,7 @@ export default function Home() {
                   </Link>
 
                   <Link
-                    href="/join"
+                    href=""
                     className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
                     Join Event
@@ -79,7 +78,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* HISTORY */}
       <motion.section
         {...slideLeft}
         className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
@@ -133,7 +131,6 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* PROGRAM */}
       <section className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16">
         <motion.div
           {...slideLeft}
@@ -264,7 +261,6 @@ export default function Home() {
       </motion.section>
       */}
 
-      {/* FINAL CTA */}
       <motion.section
         {...blurReveal}
         className="relative overflow-hidden border-y border-gray-800/50 py-20 text-white md:py-28"
