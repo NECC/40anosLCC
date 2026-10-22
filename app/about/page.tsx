@@ -69,14 +69,14 @@ export default function About() {
                 principle remained intact.
               </p>
               <p>
-                More recently, in 2021, the degree once again renewed its
+                More recently, in 2024, the degree once again renewed its
                 curriculum matrix, integrating frontier areas such as Artificial
                 Intelligence and Machine Learning in a structured way, ensuring
                 that traditional theoretical rigor continues to power
                 technological innovation.
               </p>
               <p>
-                Four decades and over a thousand graduates later, it is this
+                Four decades and over two thousand graduates later, it is this
                 same DNA that continues to define us. Those who pass through
                 here don't just learn a language or a technology: they learn to
                 dissect and structure problems in a lasting way. That is why our
