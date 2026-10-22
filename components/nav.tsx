@@ -10,7 +10,7 @@ export default function Nav() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [{ name: "Home", href: "/" }];
+  const navLinks = [{ name: "Home", href: "/" }, { name: "About", href: "/about" }];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -25,7 +25,6 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#06151D]/80 backdrop-blur-md">
       <nav className="mx-auto flex w-full max-w-400 items-center justify-between px-2 py-3 sm:px-10 lg:px-16">
-        {/* LOGO */}
         <Link href="/" onClick={closeMenu}>
           <Image
             src="/Finallogo_40anosLCC.svg"
