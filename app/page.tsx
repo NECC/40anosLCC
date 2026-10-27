@@ -44,7 +44,7 @@ export default function Home() {
                 </h1>
 
                 <p className="mb-8 font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase md:text-xs">
-                  MARCH 1, 2 AND 3, 2026 • BRAGA
+                  MARCH 1, 2 AND 3, 2027 • BRAGA
                 </p>
 
                 <div className="flex flex-col gap-3 sm:flex-row">
@@ -121,7 +121,7 @@ export default function Home() {
 
           <div className="flex flex-col items-end justify-center p-8 text-right md:p-12">
             <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
-              2026
+              2027
             </h3>
 
             <p className="font-manrope text-xs text-gray-500 md:text-sm">
