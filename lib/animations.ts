@@ -2,9 +2,15 @@
 import type { Transition, Variants } from "framer-motion";
 
 const defaultTransition: Transition = {
-  duration: 0.6,
+  duration: 0.4,
   ease: "easeOut",
 };
+
+export const animateAllAtOnce = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.4, ease: "easeOut" },
+} as const; // O "as const" resolve o erro de tipagem
 
 export const fadeInUp: Variants = {
   initial: {
@@ -67,3 +73,5 @@ export const staggerItem: Variants = {
     transition: defaultTransition,
   },
 };
+
+
