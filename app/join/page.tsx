@@ -66,17 +66,6 @@ export default function JoinPage() {
               placeholder="you@example.com"
             />
 
-            <FormInput
-              id="password"
-              name="password"
-              label="Password"
-              icon={<FiLock size={18} />}
-              type="password"
-              autoComplete="new-password"
-              required
-              placeholder="Create a password"
-            />
-
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8">
               <CheckboxInput
                 id="computer-science-student"
