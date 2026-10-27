@@ -1,5 +1,5 @@
 {
-  "name": "nome-do-projeto",
+  "name": "lcc-birthday",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,7 +15,8 @@
     "prisma": "^7.10.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "react-icons": "^5.7.0"
+    "react-icons": "^5.7.0",
+    "resend": "^6.34.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
