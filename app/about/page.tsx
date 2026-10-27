@@ -134,7 +134,7 @@ export default function About() {
       {/* 4. OBJECTIVES & CAREER */}
       <motion.section
         {...animateAllAtOnce}
-        className="relative z-10 px-2 sm:px-10 lg:px-16 py-12 md:py-16 max-w-400 mx-auto border-b border-gray-800/40 transform-gpu"
+        className="relative z-10 px-2 sm:px-10 lg:px-16 py-12 md:py-16 max-w-400 mx-auto transform-gpu"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
           <div>
@@ -179,10 +179,10 @@ export default function About() {
         </div>
       </motion.section>
 
-      {/* 5. OUR HISTORY (Com Brilhos Radiais Superiores) */}
+      {/* 5. OUR HISTORY (Overflow-hidden removido para não cortar o brilho) */}
       <motion.section
         {...animateAllAtOnce}
-        className="relative z-10 overflow-hidden px-2 sm:px-10 lg:px-16 py-16 md:py-32 max-w-400 mx-auto transform-gpu"
+        className="relative z-10 px-2 sm:px-10 lg:px-16 py-16 md:py-32 max-w-400 mx-auto transform-gpu"
       >
         {/* Brilho Radial - Canto Superior Esquerdo */}
         <div className="absolute top-[10%] left-[-10%] size-120 animate-glow rounded-full bg-[#00a8e8]/20 blur-[100px] pointer-events-none z-0" />
@@ -204,7 +204,7 @@ export default function About() {
             </h2>
           </div>
 
-          {/* Texto Centrado / Contido */}
+          {/* Texto Centrado / Contido Limpo (Sem borders adicionais) */}
           <div className="space-y-6 font-manrope text-base leading-relaxed text-gray-300 md:text-lg">
             <p>
               It all started in 1986. Created by Ordinance No. 420/85, the
@@ -215,26 +215,26 @@ export default function About() {
               computing from its mathematical foundations, refusing to reduce
               it to the fleeting domain of temporary tools.
             </p>
-            <p className="pt-6 border-t border-gray-800/60 font-medium text-white">
+            <p>
               The first graduates completed their path in 1990/91. Five years
               later, the curriculum underwent its first major revision,
               integrating the rapid advances redefining applied mathematics
               and computing.
             </p>
-            <p className="pt-6 border-t border-gray-800/60 font-medium text-white">
+            <p>
               In 2006, with the transition to the Bologna model, the degree
               became the Bachelor's Degree in Computer Science, structured
               into three years. Duration and name changed, but the founding
               principle remained intact.
             </p>
-            <p className="pt-6 border-t border-gray-800/60 font-medium text-white">
+            <p>
               More recently, in 2024, the degree once again renewed its
               curriculum matrix, integrating frontier areas such as Artificial
               Intelligence and Machine Learning in a structured way, ensuring
               that traditional theoretical rigor continues to power
               technological innovation.
             </p>
-            <p className="pt-6 border-t border-gray-800/60 font-medium text-white">
+            <p>
               Four decades and over two thousand graduates later, it is this
               same DNA that continues to define us. Those who pass through
               here don't just learn a language or a technology: they learn to
