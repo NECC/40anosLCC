@@ -7,7 +7,7 @@ import { slideLeft, animateAllAtOnce } from "@/lib/animations";
 
 export default function About() {
   return (
-    <main className="bg-[#06151D] min-h-screen text-white relative selection:bg-[#00a8e8] selection:text-white overflow-x-hidden">
+    <main className="bg-[#06151D] min-h-screen text-white relative selection:bg-[#00a8e8] selection:text-white">
       
       {/* 1. HERO SECTION: ABOUT THE COURSE */}
       <motion.section
