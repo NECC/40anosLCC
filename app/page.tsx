@@ -57,7 +57,7 @@ export default function Home() {
                   </Link>
 
                   <Link
-                    href=""
+                    href="/join"
                     className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 font-manrope text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
                   >
                     Join Event
@@ -265,7 +265,7 @@ export default function Home() {
         label="The next chapter starts now"
         title="40 years of history. A vision for the future."
         buttonText="Join the event"
-        href="/"
+        href="/join"
       />
     </main>
   );

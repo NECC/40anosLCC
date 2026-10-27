@@ -57,7 +57,7 @@ export default function Nav() {
         </div>
 
         <Link
-          href=""
+          href="/join"
           className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
             pathname === "/join" ? "text-white" : "text-gray-300"
           }`}
@@ -123,7 +123,7 @@ export default function Nav() {
           })}
 
           <Link
-            href=""
+            href="/join"
             onClick={closeMenu}
             tabIndex={isMobileMenuOpen ? 0 : -1}
             className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
