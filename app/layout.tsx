@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Mono, Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
+import LayoutContent from "@/components/layout-content";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -31,13 +30,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html>
+    <html lang="pt">
       <body
-        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} `}
+        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable}`}
       >
-        <Nav />
-        {children}
-        <Footer />
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );
