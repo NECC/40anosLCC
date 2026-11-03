@@ -3,7 +3,7 @@
 import { useState } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 
-export default function ScannerPage() {
+export default function BackOfficePage() {
   const [result, setResult] = useState("");
 
   return (
