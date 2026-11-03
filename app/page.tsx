@@ -9,7 +9,7 @@ import {
   slideLeft,
   fadeInUp,
   staggerContainer,
-  staggerItem,
+  staggerItem,  
 } from "@/lib/animations";
 import PromoSection from "@/components/promoSection";
 
@@ -29,7 +29,6 @@ export default function Home() {
 
         <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
 
-        <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
 
         <motion.div
           {...fadeInUp}
@@ -141,7 +140,7 @@ export default function Home() {
           </h2>
 
           <Link
-            href=""
+            href="/schedule"
             className="flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 font-mono text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
           >
             Full schedule

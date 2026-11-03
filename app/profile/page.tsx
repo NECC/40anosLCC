@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 
-export default function QRCodePage() {
+export default function ProfilePage() {
   const [qrCode, setQrCode] = useState("");
   const participantId = "participant-123";
 

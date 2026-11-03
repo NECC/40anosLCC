@@ -18,10 +18,7 @@
     0%, 100% { opacity: 0.15; }
     50%      { opacity: 1; }
   }
-  @keyframes scan {
-    from { top: 0; }
-    to   { top: 98%; }
-  }
+ 
 }
 
 @utility bg-grid {
