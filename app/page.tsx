@@ -1,265 +1,200 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { FaArrowCircleRight } from "react-icons/fa";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useRef } from "react";
 
-import {
-  slideLeft,
-  fadeInUp,
-  staggerContainer,
-  staggerItem,  
-} from "@/lib/animations";
+import { fadeInUp } from "@/lib/animations";
 import PromoSection from "@/components/promoSection";
+import { history } from "@/data/landing";
 
-export default function Home() {
+function HistoryTimeline() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 60%", "end 60%"],
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <main className="bg-[#06151D]">
-      <section className="relative z-10 overflow-hidden md:h-[50vh] lg:h-[70vh]">
-        <div className="bg-grid absolute inset-0 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)]" />
+    <section
+      ref={timelineRef}
+      className="relative mx-auto w-full max-w-400 px-4 py-24 sm:px-10 lg:px-16 lg:py-36"
+    >
+      {/* Timeline */}
+      <div className="relative">
+        {/* Background line */}
+        <div className="absolute top-0 bottom-0 left-[13px] w-px bg-gray-800 md:left-1/2 md:-translate-x-1/2" />
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-linear-to-t from-[#06151D] to-transparent" />
-
-        <div className="absolute top-[55%] left-0 size-72 -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] md:size-96" />
-
-        <div className="absolute top-0 right-0 size-80 translate-x-1/3 -translate-y-1/3 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] [animation-delay:3s] md:size-112" />
-
-        <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
-
-        <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
-
-
+        {/* Animated line */}
         <motion.div
-          {...fadeInUp}
-          className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center px-2 sm:px-10 lg:px-16"
-        >
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center">
-            <div className="flex flex-col items-center justify-between gap-12 py-20 pt-32 md:flex-row md:gap-16 md:py-28">
-              <div className="relative z-10 w-full md:w-1/2">
-                <h1 className="mb-6 font-space-grotesk text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
-                  Three days with the entire community and the companies that
-                  are part of this story.
-                </h1>
+          style={{ scaleY, transformOrigin: "top" }}
+          className="absolute top-0 bottom-0 left-[13px] w-[2px] bg-[#00a8e8] shadow-[0_0_15px_rgba(0,168,232,0.5)] md:left-1/2 md:-translate-x-1/2"
+        />
 
-                <p className="mb-8 font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase md:text-xs">
-                  MARCH 1, 2 AND 3, 2027 • BRAGA
-                </p>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href=""
-                    className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
-                  >
-                    View Schedule
-                    <FaArrowCircleRight />
-                  </Link>
-
-                  <Link
-                    href="/join"
-                    className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 font-manrope text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
-                  >
-                    Join Event
-                    <FaArrowCircleRight />
-                  </Link>
-                </div>
-              </div>
-
-              <Image
-                src="/logocomtexto4oLCC.svg"
-                alt="40+ Logo"
-                width={200}
-                height={300}
-                className="relative z-10 hidden h-auto lg:block lg:w-160"
-              />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      <motion.section
-        {...slideLeft}
-        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
-      >
-        <h2 className="mb-8 font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
-          History
-        </h2>
-
-        <div className="mb-12 max-w-2xl md:mb-16">
-          <p className="font-manrope text-base leading-relaxed text-gray-300 md:text-xl">
-            Since 1986, thousands of people have passed through our classrooms,
-            labs, and projects. Every generation has added a new line to this
-            story.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3">
-          <div className="flex flex-col justify-center border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
-              1986
-            </h3>
-
-            <p className="font-manrope text-xs text-gray-500 md:text-sm">
-              The first chapter
-            </p>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <p className="border-b border-gray-800/50 pb-8 font-manrope text-sm leading-relaxed text-gray-300">
-              The degree was born at a time when computing was beginning to
-              reshape the world. At the University of Minho, it found a place to
-              grow with rigor, curiosity, and ambition.
-            </p>
-
-            <p className="font-manrope text-sm leading-relaxed text-gray-300">
-              Today, the same energy connects alumni, students, faculty,
-              researchers, and companies in a community open to what has yet to
-              be invented.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-end justify-center p-8 text-right md:p-12">
-            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
-              2027
-            </h3>
-
-            <p className="font-manrope text-xs text-gray-500 md:text-sm">
-              The future continues
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      <section className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16">
-        <motion.div
-          {...slideLeft}
-          className="mb-10 flex items-center justify-between md:mb-16"
-        >
-          <h2 className="font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
-            PROGRAM
-          </h2>
-
-          <Link
-            href="/schedule"
-            className="flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 font-mono text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
-          >
-            Full schedule
-            <FaArrowCircleRight />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-25%" }}
-          className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3"
-        >
-          <motion.div
-            variants={staggerItem}
-            className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Stands
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              An open space throughout the event to connect with students,
-              showcase the organization, and find future team members.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={staggerItem}
-            className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Talks
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              An auditorium session to present the organization&apos;s work,
-              vision, and challenges before an attentive and engaged audience.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={staggerItem}
-            className="group p-8 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Workshops
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              A hands-on session in small groups to demonstrate everyday tools,
-              methods, and ideas up close.
-            </p>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* PARTNERS
-      <motion.section
-        {...zoomIn}
-        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
-      >
-        <h2 className="mb-16 text-left font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
-          Partners
-        </h2>
-
-        <div className="mx-auto max-w-5xl space-y-16 md:space-y-24">
-          {(["Gold", "Silver", "Bronze"] as const).map((tier) => {
-            const partners = partnersData.filter(
-              (partner) => partner.tier === tier,
-            );
-
-            if (partners.length === 0) return null;
-
-            const tierColors = {
-              Gold: "#D4AF37",
-              Silver: "#A9A9A9",
-              Bronze: "#CD7F32",
-            };
+        <div className="space-y-20 md:space-y-32">
+          {history.map((event, index) => {
+            const isLeft = event.side === "left";
 
             return (
-              <div key={tier} className="text-center">
-                <h3
-                  className="mb-10 font-space-grotesk text-lg font-bold tracking-[0.3em] uppercase md:mb-12"
-                  style={{ color: tierColors[tier] }}
+              <div
+                key={event.year}
+                className="relative grid grid-cols-[28px_minmax(0,1fr)] items-center gap-x-5 md:grid-cols-[1fr_56px_1fr] md:gap-x-8"
+              >
+                {/* Mobile card */}
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.1,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="col-start-2 row-start-1 md:hidden"
                 >
-                  {tier}
-                </h3>
+                  <TimelineCard event={event} index={index} />
+                </motion.div>
 
-                <div className="grid grid-cols-2 items-end justify-items-center gap-x-15 gap-y-12 md:flex md:flex-wrap md:justify-center md:gap-16">
-                  {partners.map((partner) => (
-                    <div
-                      key={partner.name}
-                      className="group flex flex-col items-center gap-3"
-                    >
-                      <div className="flex h-12 items-center justify-center md:h-20">
-                        <Image
-                          src={partner.image}
-                          alt={partner.name}
-                          width={100}
-                          height={100}
-                          className="max-h-12 w-auto object-contain opacity-40 transition-opacity group-hover:opacity-100 md:max-h-32"
-                        />
-                      </div>
+                {/* Desktop card */}
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    x: isLeft ? -60 : 60,
+                  }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`hidden md:block md:row-start-1 ${
+                    isLeft
+                      ? "md:col-start-1 md:pr-12"
+                      : "md:col-start-3 md:pl-12"
+                  }`}
+                >
+                  <TimelineCard event={event} index={index} />
+                </motion.div>
 
-                      <span className="font-mono text-[10px] tracking-widest text-gray-400 uppercase">
-                        {partner.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                {/* Timeline marker */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.2,
+                    type: "spring",
+                    stiffness: 200,
+                  }}
+                  className="z-10 col-start-1 row-start-1 flex justify-center md:col-start-2"
+                >
+                  <div className="relative flex h-7 w-7 items-center justify-center rounded-full border border-[#00a8e8] bg-[#06151D] shadow-[0_0_20px_rgba(0,168,232,0.2)]">
+                    <div className="h-2.5 w-2.5 rounded-full bg-[#00a8e8]" />
+
+                    <motion.div
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      whileInView={{ scale: 1.8, opacity: [0, 0.5, 0] }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 1.5,
+                        delay: 0.3,
+                      }}
+                      className="absolute inset-0 rounded-full border border-[#00a8e8]"
+                    />
+                  </div>
+                </motion.div>
               </div>
             );
           })}
         </div>
-      </motion.section>
-      */}
+      </div>
+    </section>
+  );
+}
 
+function TimelineCard({
+  event,
+  index,
+}: {
+  event: (typeof history)[number];
+  index: number;
+}) {
+  return (
+    <div className="relative py-7  md:py-8">
+      <h3 className="mb-4 font-space-grotesk text-5xl font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-[#00a8e8] md:text-7xl lg:text-8xl">
+        {event.year}
+      </h3>
+      <h4 className="mb-4 font-space-grotesk text-xl font-semibold text-gray-200 md:text-2xl">
+        {event.title}
+      </h4>
+      <p className="max-w-lg font-manrope text-sm leading-relaxed text-gray-400 md:text-base">
+        {event.description}
+      </p>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <main className="overflow-hidden bg-[#06151D]">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute top-0 right-0 h-150 w-150 translate-x-1/3 -translate-y-1/3 rounded-full bg-[#00a8e8]/10 blur-[150px]" />
+
+        <div className="relative mx-auto flex min-h-[75vh] w-full max-w-400 items-center px-4 pt-32 pb-20 sm:px-10 lg:px-16 lg:pt-40">
+          <div className="grid w-full items-center gap-12 md:grid-cols-[1.2fr_0.8fr] md:gap-8">
+            {/* Hero text */}
+            <motion.div {...fadeInUp} className="relative z-10">
+              <h1 className="mb-7 max-w-3xl font-space-grotesk text-4xl leading-[1.1] font-bold text-white sm:text-5xl lg:text-7xl">
+                Four decades of
+                <span className="block text-[#00a8e8]">Computer Science.</span>
+              </h1>
+
+              <p className="mb-10 max-w-xl font-manrope text-base leading-relaxed text-gray-400 md:text-lg">
+                Celebrating 40 years of knowledge, innovation and the
+                generations that shaped Computer Science at the University of
+                Minho.
+              </p>
+            </motion.div>
+
+            {/* Hero visual */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: 30 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{
+                duration: 1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="relative mx-auto flex w-full max-w-lg items-center justify-center"
+            >
+              <div className="relative z-10 flex aspect-square w-full items-center justify-center">
+                <Image
+                  src="/logocomtexto4oLCC.svg"
+                  alt="40 Years of Computer Science"
+                  width={600}
+                  height={600}
+                  priority
+                  className="h-auto w-full object-contain drop-shadow-[0_0_40px_rgba(0,168,232,0.15)]"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Animated history */}
+      <HistoryTimeline />
+
+      {/* Promo */}
       <PromoSection
         label="The next chapter starts now"
         title="40 years of history. A vision for the future."

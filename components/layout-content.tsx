@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 
-const blacklist = ["/profile", "/backoffice"];
+const blacklist = ["/profile", "/backoffice", "/sign-in"];
 
 export default function LayoutContent({
   children,
