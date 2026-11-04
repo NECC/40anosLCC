@@ -57,12 +57,12 @@ export default function Nav() {
         </div>
 
         <Link
-          href="/join"
+          href="/sign-in"
           className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
-            pathname === "/join" ? "text-white" : "text-gray-300"
+            pathname === "/sign-in" ? "text-white" : "text-gray-300"
           }`}
         >
-          Join
+          Sign In
           <FaArrowCircleRight />
         </Link>
 
@@ -123,7 +123,7 @@ export default function Nav() {
           })}
 
           <Link
-            href="/join"
+            href="/sign-in"
             onClick={closeMenu}
             tabIndex={isMobileMenuOpen ? 0 : -1}
             className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
@@ -132,7 +132,7 @@ export default function Nav() {
                 : "text-gray-300 hover:text-white"
             }`}
           >
-            Join
+            Sign In
             <FaArrowCircleRight />
           </Link>
         </div>

@@ -14,7 +14,7 @@ export async function GET() {
     console.error("Error fetching activities:", error);
 
     return NextResponse.json(
-      { error: "Erro ao obter as sessões." },
+      { error: "Error fetching activities" },
       { status: 500 },
     );
   }
