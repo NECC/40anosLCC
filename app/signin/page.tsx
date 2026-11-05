@@ -70,12 +70,9 @@ export default function SignInPage() {
             </button>
             <p className="font-manrope text-xs text-gray-400">
               New to the celebration?{" "}
-              <Link href="/join" className="text-[#65c8ed] underline-offset-4 hover:underline">
+              <Link href="/signup" className="text-[#65c8ed] underline-offset-4 hover:underline">
                 Create an account
               </Link>
-            </p>
-            <p className="font-manrope text-xs text-gray-500">
-              Sign-in is a frontend preview. No details are submitted.
             </p>
           </form>
         </div>
