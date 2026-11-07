@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PromoSection from "@/components/promoSection";
+import { navLinks } from "@/components/layout-content";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { slideLeft, animateAllAtOnce } from "@/lib/animations";
 
@@ -25,8 +26,6 @@ export default function About() {
         <span className="absolute top-[30%] left-[8%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] pointer-events-none" />
         <span className="absolute bottom-[20%] right-[12%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1.5s] pointer-events-none" />
 
-        {/* Linha Laser/Scan Animada */}
-        <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)] pointer-events-none" />
 
         <div className="mx-auto w-full max-w-400 px-2 sm:px-10 lg:px-16 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
@@ -250,7 +249,7 @@ export default function About() {
         label="Join the celebrations"
         title="Want to know more about the 40th Anniversary?"
         buttonText="Back to homepage"
-        href="/"
+        href={navLinks.Home}
       />
     </main>
   );
