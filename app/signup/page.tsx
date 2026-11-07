@@ -7,6 +7,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import { FiCalendar, FiLock, FiMail, FiUser } from "react-icons/fi";
 import CheckboxInput from "@/components/inputs/checkboxInput";
 import FormInput from "@/components/inputs/formInput";
+import { navLinks } from "@/components/layout-content";
 
 export default function JoinPage() {
   const [isComputerScienceStudent, setIsComputerScienceStudent] =
@@ -104,7 +105,7 @@ export default function JoinPage() {
             <p className="font-manrope text-xs text-gray-400">
               Already have an account?{" "}
               <Link
-                href="/signin"
+                href={navLinks.SignIn}
                 className="text-[#65c8ed] underline-offset-4 hover:underline"
               >
                 Sign in

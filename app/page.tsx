@@ -6,6 +6,7 @@ import { useRef } from "react";
 
 import { fadeInUp } from "@/lib/animations";
 import PromoSection from "@/components/promoSection";
+import { navLinks } from "@/components/layout-content";
 import { history } from "@/data/landing";
 
 function HistoryTimeline() {
@@ -199,7 +200,7 @@ export default function Home() {
         label="The next chapter starts now"
         title="40 years of history. A vision for the future."
         buttonText="Join the event"
-        href="/join"
+        href={navLinks.SignUp}
       />
     </main>
   );

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import PromoSection from "@/components/promoSection";
+import { navLinks } from "@/components/layout-content";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { slideLeft, animateAllAtOnce } from "@/lib/animations";
 
@@ -248,7 +249,7 @@ export default function About() {
         label="Join the celebrations"
         title="Want to know more about the 40th Anniversary?"
         buttonText="Back to homepage"
-        href="/"
+        href={navLinks.Home}
       />
     </main>
   );

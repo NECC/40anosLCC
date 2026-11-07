@@ -5,12 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { LinkNames, navLinks } from "./layout-content";
+
+const displayLinks: LinkNames[] = ["Home", "About", "Schedule"];
 
 export default function Nav() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [{ name: "Home", href: "/" }, { name: "About", href: "/about" } , { name: "Schedule", href: "/schedule" }];
+  const NavbarLinks = Object.entries(navLinks).filter(([linkName]) =>
+    displayLinks.includes(linkName as LinkNames),
+  );
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -25,7 +30,7 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#06151D]/80 backdrop-blur-md">
       <nav className="mx-auto flex w-full max-w-400 items-center justify-between px-2 py-3 sm:px-10 lg:px-16">
-        <Link href="/" onClick={closeMenu}>
+        <Link href={navLinks.Home} onClick={closeMenu}>
           <Image
             src="/Finallogo_40anosLCC.svg"
             alt="40 Years Logo"
@@ -35,31 +40,31 @@ export default function Nav() {
         </Link>
 
         <div className="hidden items-center gap-10 text-sm font-light text-gray-300 md:flex">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+          {NavbarLinks.map(([name, href]) => {
+              const isActive = pathname === href;
 
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`relative transition-colors hover:text-white ${
-                  isActive ? "text-white" : "text-gray-300"
-                }`}
-              >
-                {link.name}
+              return (
+                <Link
+                  key={name}
+                  href={href}
+                  className={`relative transition-colors hover:text-white ${
+                    isActive ? "text-white" : "text-gray-300"
+                  }`}
+                >
+                  {name}
 
-                {isActive && (
-                  <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#00a8e8]" />
-                )}
-              </Link>
-            );
-          })}
+                  {isActive && (
+                    <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#00a8e8]" />
+                  )}
+                </Link>
+              );
+            })}
         </div>
 
         <Link
-          href="/sign-in"
+          href={navLinks.SignIn}
           className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
-            pathname === "/sign-in" ? "text-white" : "text-gray-300"
+            pathname === "/signin" ? "text-white" : "text-gray-300"
           }`}
         >
           Sign In
@@ -104,26 +109,26 @@ export default function Nav() {
         aria-hidden={!isMobileMenuOpen}
       >
         <div className="flex flex-col gap-6 px-2 py-8 sm:px-10">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+          {NavbarLinks.map(([name, href]) => {
+              const isActive = pathname === href;
 
             return (
               <Link
-                key={link.name}
-                href={link.href}
+                key={name}
+                href={href}
                 onClick={closeMenu}
                 tabIndex={isMobileMenuOpen ? 0 : -1}
                 className={`font-heading text-2xl tracking-wide transition-colors ${
                   isActive ? "text-[#00a8e8]" : "text-gray-300 hover:text-white"
                 }`}
               >
-                {link.name}
+                {name}
               </Link>
             );
           })}
 
           <Link
-            href="/sign-in"
+            href={navLinks.SignIn}
             onClick={closeMenu}
             tabIndex={isMobileMenuOpen ? 0 : -1}
             className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${

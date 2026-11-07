@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { navLinks } from "@/components/layout-content";
 import type { FormEvent } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { FiLock, FiMail } from "react-icons/fi";
@@ -70,7 +71,7 @@ export default function SignInPage() {
             </button>
             <p className="font-manrope text-xs text-gray-400">
               New to the celebration?{" "}
-              <Link href="/signup" className="text-[#65c8ed] underline-offset-4 hover:underline">
+              <Link href={navLinks.SignUp} className="text-[#65c8ed] underline-offset-4 hover:underline">
                 Create an account
               </Link>
             </p>
