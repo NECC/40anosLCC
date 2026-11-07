@@ -10,6 +10,10 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  emailAndPassword: {
+    enabled: true,
+    disableSignUp: true,
+  },
   user: {
     additionalFields: {
       role: {
@@ -17,6 +21,15 @@ export const auth = betterAuth({
         required: true,
         defaultValue: "USER",
         input: false,
+      },
+      isStudent: {
+        type: "boolean",
+        required: true,
+        defaultValue: false,
+      },
+      studyYear: {
+        type: "number",
+        required: false,
       },
     },
   },
@@ -31,7 +44,8 @@ export const auth = betterAuth({
           from: process.env.AUTH_EMAIL_FROM ?? "LCC 40 Anos <onboarding@resend.dev>",
           to: email,
           subject: "Your LCC 40 Anos sign-in code",
-          text: `Your authentication code is ${otp}. It expires in 5 minutes.`,
+          // TODO: Add a proper email template for the verification code
+          html: `<p>Your verification code is <strong>${otp}</strong>. It expires in 5 minutes.</p>`,
         });
 
         if (error) {

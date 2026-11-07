@@ -2,15 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { FiLogOut, FiUser } from "react-icons/fi";
+import { authClient, useSession } from "@/lib/auth/auth-client";
 import { LinkNames, navLinks } from "./layout-content";
 
 const displayLinks: LinkNames[] = ["Home", "About", "Schedule"];
 
 export default function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const NavbarLinks = Object.entries(navLinks).filter(([linkName]) =>
@@ -18,6 +22,13 @@ export default function Nav() {
   );
 
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    closeMenu();
+    router.push(navLinks.Home);
+    router.refresh();
+  };
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
@@ -61,15 +72,53 @@ export default function Nav() {
             })}
         </div>
 
-        <Link
-          href={navLinks.SignIn}
-          className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
-            pathname === "/signin" ? "text-white" : "text-gray-300"
-          }`}
-        >
-          Sign In
-          <FaArrowCircleRight />
-        </Link>
+        <div className="hidden min-w-28 items-center justify-end gap-4 text-sm font-light md:flex">
+          {!isPending &&
+            (session ? (
+              <>
+                {session.user.role === "ADMIN" && (
+                  <>
+                    <Link
+                      href={navLinks.Backoffice}
+                      className="text-gray-300 transition-colors hover:text-white"
+                    >
+                      Backoffice
+                    </Link>
+                    <span
+                      aria-hidden="true"
+                      className="h-5 w-px bg-gray-700/80"
+                    />
+                  </>
+                )}
+                <Link
+                  href={navLinks.Profile}
+                  className="flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
+                >
+                  <FiUser aria-hidden="true" />
+                  {session.user.name}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="text-gray-400 transition-colors hover:text-white"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <FiLogOut aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <Link
+                href={navLinks.SignIn}
+                className={`flex items-center gap-2 transition-colors hover:text-white ${
+                  pathname === navLinks.SignIn ? "text-white" : "text-gray-300"
+                }`}
+              >
+                Sign In
+                <FaArrowCircleRight />
+              </Link>
+            ))}
+        </div>
 
         {/* BOTÃO MOBILE */}
         <button
@@ -127,19 +176,53 @@ export default function Nav() {
             );
           })}
 
-          <Link
-            href={navLinks.SignIn}
-            onClick={closeMenu}
-            tabIndex={isMobileMenuOpen ? 0 : -1}
-            className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
-              pathname === "/join"
-                ? "text-[#00a8e8]"
-                : "text-gray-300 hover:text-white"
-            }`}
-          >
-            Sign In
-            <FaArrowCircleRight />
-          </Link>
+          {!isPending &&
+            (session ? (
+              <>
+                {session.user.role === "ADMIN" && (
+                  <Link
+                    href={navLinks.Backoffice}
+                    onClick={closeMenu}
+                    tabIndex={isMobileMenuOpen ? 0 : -1}
+                    className="font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                  >
+                    Backoffice
+                  </Link>
+                )}
+                <Link
+                  href={navLinks.Profile}
+                  onClick={closeMenu}
+                  tabIndex={isMobileMenuOpen ? 0 : -1}
+                  className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                >
+                  <FiUser aria-hidden="true" />
+                  {session.user.name}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  tabIndex={isMobileMenuOpen ? 0 : -1}
+                  className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                >
+                  Sign Out
+                  <FiLogOut aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <Link
+                href={navLinks.SignIn}
+                onClick={closeMenu}
+                tabIndex={isMobileMenuOpen ? 0 : -1}
+                className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
+                  pathname === navLinks.SignIn
+                    ? "text-[#00a8e8]"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                Sign In
+                <FaArrowCircleRight />
+              </Link>
+            ))}
         </div>
       </div>
     </header>

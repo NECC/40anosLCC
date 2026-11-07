@@ -1,16 +1,43 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { navLinks } from "@/components/layout-content";
-import type { FormEvent } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 import { FiLock, FiMail } from "react-icons/fi";
 import FormInput from "@/components/inputs/formInput";
+import { useSession } from "@/lib/auth/auth-client";
 
 export default function SignInPage() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const router = useRouter();
+  const { refetch: refetchSession } = useSession();
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      await axios.post("/api/sign-in", {
+        email: String(formData.get("email") ?? ""),
+        password: String(formData.get("password") ?? ""),
+      });
+
+      await refetchSession();
+      router.push(navLinks.Profile);
+      router.refresh();
+    } catch (submissionError) {
+      setError(getErrorMessage(submissionError));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -64,11 +91,15 @@ export default function SignInPage() {
 
             <button
               type="submit"
-              className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:bg-[#0090c7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8]"
+              disabled={isSubmitting}
+              className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:bg-[#0090c7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Sign in
+              {isSubmitting ? "Signing in…" : "Sign in"}
               <FaArrowCircleRight aria-hidden="true" />
             </button>
+            {error && (
+              <p className="font-manrope text-sm text-red-400">{error}</p>
+            )}
             <p className="font-manrope text-xs text-gray-400">
               New to the celebration?{" "}
               <Link href={navLinks.SignUp} className="text-[#65c8ed] underline-offset-4 hover:underline">
@@ -80,4 +111,16 @@ export default function SignInPage() {
       </section>
     </main>
   );
+}
+
+function getErrorMessage(error: unknown) {
+  if (axios.isAxiosError<{ error?: string; message?: string }>(error)) {
+    return (
+      error.response?.data.message ??
+      error.response?.data.error ??
+      "Invalid email or password"
+    );
+  }
+
+  return "Unable to sign in";
 }

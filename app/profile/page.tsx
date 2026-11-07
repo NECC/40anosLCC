@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import QRCode from "qrcode";
 import { FaArrowLeft } from "react-icons/fa6";
+import { navLinks } from "@/components/layout-content";
 
 export default function ProfilePage() {
   const [qrCode, setQrCode] = useState("");
@@ -22,7 +23,7 @@ export default function ProfilePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-[#161E2E] px-6 text-white">
       <button
-        onClick={() => router.push("/")}
+        onClick={() => router.push(navLinks.Home)}
         className="absolute left-6 top-6 flex items-center gap-2 text-[#92B4D4] transition hover:text-white"
         aria-label="Voltar à página inicial"
       >
