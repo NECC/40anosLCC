@@ -167,27 +167,16 @@ export default function Home() {
               </p>
             </motion.div>
 
-            {/* Hero visual */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, x: 30 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{
-                duration: 1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="relative mx-auto flex w-full max-w-lg items-center justify-center"
-            >
-              <div className="relative z-10 flex aspect-square w-full items-center justify-center">
-                <Image
-                  src="/logocomtexto4oLCC.svg"
-                  alt="40 Years of Computer Science"
-                  width={600}
-                  height={600}
-                  priority
-                  className="h-auto w-full object-contain drop-shadow-[0_0_40px_rgba(0,168,232,0.15)]"
-                />
-              </div>
-            </motion.div>
+            <div className="relative z-10 flex aspect-square w-full items-center justify-center">
+              <Image
+                src="/logocomtexto4oLCC.svg"
+                alt="40 Years of Computer Science"
+                width={600}
+                height={600}
+                priority
+                className="h-auto w-full object-contain drop-shadow-[0_0_40px_rgba(0,168,232,0.15)]"
+              />
+            </div>
           </div>
         </div>
       </section>
