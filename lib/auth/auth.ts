@@ -41,15 +41,16 @@ export const auth = betterAuth({
       storeOTP: "hashed",
       async sendVerificationOTP({ email, otp }) {
         const { error } = await resend.emails.send({
-          from: process.env.AUTH_EMAIL_FROM ?? "LCC 40 Anos <onboarding@resend.dev>",
+          from: "LCC 40 Anos <loging@40lcc.di.uminho.pt>",
           to: email,
           subject: "Your LCC 40 Anos sign-in code",
-          // TODO: Add a proper email template for the verification code
           html: `<p>Your verification code is <strong>${otp}</strong>. It expires in 5 minutes.</p>`,
         });
 
         if (error) {
-          throw new Error(`Could not send authentication email: ${error.message}`);
+          throw new Error(
+            `Could not send authentication email: ${error.message}`,
+          );
         }
       },
     }),
