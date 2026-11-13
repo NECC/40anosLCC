@@ -43,7 +43,7 @@ export default function Nav() {
       <nav className="mx-auto flex w-full max-w-400 items-center justify-between px-2 py-3 sm:px-10 lg:px-16">
         <Link href={navLinks.Home} onClick={closeMenu}>
           <Image
-            src="/Finallogo_40anosLCC.svg"
+            src="/40.svg"
             alt="40 Years Logo"
             width={48}
             height={48}
@@ -109,12 +109,12 @@ export default function Nav() {
               </>
             ) : (
               <Link
-                href={navLinks.SignIn}
+                href={navLinks.Login}
                 className={`flex items-center gap-2 transition-colors hover:text-white ${
-                  pathname === navLinks.SignIn ? "text-white" : "text-gray-300"
+                  pathname === navLinks.Login ? "text-white" : "text-gray-300"
                 }`}
               >
-                Sign In
+                Login
                 <FaArrowCircleRight />
               </Link>
             ))}
@@ -210,16 +210,16 @@ export default function Nav() {
               </>
             ) : (
               <Link
-                href={navLinks.SignIn}
+                href={navLinks.Login}
                 onClick={closeMenu}
                 tabIndex={isMobileMenuOpen ? 0 : -1}
                 className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
-                  pathname === navLinks.SignIn
+                  pathname === navLinks.Login
                     ? "text-[#00a8e8]"
                     : "text-gray-300 hover:text-white"
                 }`}
               >
-                Sign In
+                Login
                 <FaArrowCircleRight />
               </Link>
             ))}

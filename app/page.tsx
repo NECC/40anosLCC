@@ -275,7 +275,7 @@ export default function Home() {
             <div className="w-full md:w-1/2">
               <motion.div {...rise(0)} className="mb-8 lg:hidden">
                 <Image
-                  src="/logocomtexto4oLCC.svg"
+                  src="/40plus.svg"
                   alt="40+ Logo"
                   width={200}
                   height={300}
@@ -314,7 +314,7 @@ export default function Home() {
                 </Link>
 
                 <Link
-                  href={navLinks.SignUp}
+                  href={navLinks.Login}
                   className="flex w-full items-center justify-center rounded-lg border border-white/15 px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:border-[#00a8e8]/60 hover:bg-[#00a8e8]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] sm:w-auto"
                 >
                   Join event
@@ -328,7 +328,7 @@ export default function Home() {
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Image
-                  src="/logocomtexto4oLCC.svg"
+                  src="/40plus.svg"
                   alt="40+ Logo"
                   width={200}
                   height={300}
@@ -363,7 +363,7 @@ export default function Home() {
         label="The next chapter starts now"
         title="40 years of history. A vision for the future."
         buttonText="Join the event"
-        href={navLinks.SignUp}
+        href={navLinks.Login}
       />
     </main>
   );

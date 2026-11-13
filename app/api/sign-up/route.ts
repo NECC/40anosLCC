@@ -1,45 +1,64 @@
 import { randomUUID } from "node:crypto";
-import { NextResponse } from "next/server";
+import { z } from "zod";
 import { auth } from "@/lib/auth/auth";
-import { validateSignUpDetails } from "@/lib/auth/auth-validation";
 import prisma from "@/lib/prisma";
+import { successResponse, errorResponse } from "@/lib/apiResponse";
+
+const signUpSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.email(),
+});
 
 export async function POST(request: Request) {
-  const body: unknown = await request.json().catch(() => null);
-
-  if (!validateSignUpDetails(body)) {
-    return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
-  }
-
-  const name = body.name.trim();
-  const email = body.email.trim().toLowerCase();
-
-  const existing = await prisma.user.findUnique({ where: { email } });
-
-  if (existing?.emailVerified) {
-    return NextResponse.json(
-      { error: "Já existe uma conta com este email. Faz sign in." },
-      { status: 409 },
-    );
-  }
-
   try {
+    const body = await request.json();
+
+    const result = signUpSchema.safeParse(body);
+
+    if (!result.success) {
+      return errorResponse("Invalid data", 400);
+    }
+
+    const name = result.data.name;
+    const email = result.data.email.toLowerCase();
+
+    const existing = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existing?.emailVerified) {
+      return errorResponse("An unexpected error occurred", 409);
+    }
+
     if (existing) {
-      await prisma.user.update({ where: { email }, data: { name } });
+      await prisma.user.update({
+        where: { email },
+        data: { name },
+      });
     } else {
       await prisma.user.create({
-        data: { id: randomUUID(), name, email, emailVerified: false },
+        data: {
+          id: randomUUID(),
+          name,
+          email,
+          emailVerified: false,
+        },
       });
     }
 
     await auth.api.sendVerificationOTP({
-      body: { email, type: "sign-in" },
+      body: {
+        email,
+        type: "sign-in",
+      },
       headers: request.headers,
     });
 
-    return NextResponse.json({ message: "Código enviado" });
+    return successResponse({
+      message: "Verification code sent",
+    });
   } catch (error) {
     console.error("Unable to sign up", error);
-    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+    return errorResponse("An unexpected error occurred", 500);
   }
 }
