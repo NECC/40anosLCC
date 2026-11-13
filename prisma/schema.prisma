@@ -19,8 +19,6 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   role          Role      @default(USER)
-  isStudent     Boolean   @default(false)
-  studyYear     Int?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
