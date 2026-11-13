@@ -52,24 +52,24 @@ export default function Nav() {
 
         <div className="hidden items-center gap-10 text-sm font-light text-gray-300 md:flex">
           {NavbarLinks.map(([name, href]) => {
-              const isActive = pathname === href;
+            const isActive = pathname === href;
 
-              return (
-                <Link
-                  key={name}
-                  href={href}
-                  className={`relative transition-colors hover:text-white ${
-                    isActive ? "text-white" : "text-gray-300"
-                  }`}
-                >
-                  {name}
+            return (
+              <Link
+                key={name}
+                href={href}
+                className={`relative transition-colors hover:text-white ${
+                  isActive ? "text-white" : "text-gray-300"
+                }`}
+              >
+                {name}
 
-                  {isActive && (
-                    <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#00a8e8]" />
-                  )}
-                </Link>
-              );
-            })}
+                {isActive && (
+                  <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#00a8e8]" />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="hidden min-w-28 items-center justify-end gap-4 text-sm font-light md:flex">
@@ -159,7 +159,7 @@ export default function Nav() {
       >
         <div className="flex flex-col gap-6 px-2 py-8 sm:px-10">
           {NavbarLinks.map(([name, href]) => {
-              const isActive = pathname === href;
+            const isActive = pathname === href;
 
             return (
               <Link

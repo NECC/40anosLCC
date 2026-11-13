@@ -1,35 +1,25 @@
 "use client";
 
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
-import { FiCalendar, FiHash, FiLock, FiMail, FiUser } from "react-icons/fi";
-import CheckboxInput from "@/components/inputs/checkboxInput";
+import { FiHash, FiMail, FiUser } from "react-icons/fi";
 import FormInput from "@/components/inputs/formInput";
 import { navLinks } from "@/components/layout-content";
-import { useSession } from "@/lib/auth/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 
 export default function JoinPage() {
   const router = useRouter();
-  const { refetch: refetchSession } = useSession();
-  const [isComputerScienceStudent, setIsComputerScienceStudent] =
-    useState(false);
-
   const [details, setDetails] = useState<{
     name: string;
     email: string;
-    password: string;
-    isStudent: boolean;
-    studyYear: number | null;
   } | null>(null);
-
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setIsSubmitting(true);
@@ -38,51 +28,38 @@ export default function JoinPage() {
     const signUpDetails = {
       name: String(formData.get("name") ?? ""),
       email: String(formData.get("email") ?? ""),
-      password: String(formData.get("password") ?? ""),
-      isStudent: isComputerScienceStudent,
-      studyYear: isComputerScienceStudent
-        ? Number(formData.get("studyYear"))
-        : null,
     };
 
-    try {
-      await axios.post("/api/sign-up", signUpDetails);
+    const res = await fetch("/api/sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(signUpDetails),
+    });
+    const data = await res.json().catch(() => ({}));
 
-      setDetails(signUpDetails);
-    } catch (submissionError) {
-      setError(getErrorMessage(submissionError));
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    setIsSubmitting(false);
+    if (!res.ok) return setError(data.error ?? "Unable to send code");
+    setDetails(signUpDetails);
+  }
 
-  const handleVerification = async (
-    event: React.SubmitEvent<HTMLFormElement>,
-  ) => {
+  async function handleVerification(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-
     if (!details) return;
-
     setError("");
     setIsSubmitting(true);
 
-    const formData = new FormData(event.currentTarget);
+    const otp = String(new FormData(event.currentTarget).get("otp") ?? "");
+    const { error } = await authClient.signIn.emailOtp({
+      email: details.email,
+      otp,
+    });
 
-    try {
-      await axios.post("/api/sign-up/verify", {
-        ...details,
-        otp: String(formData.get("otp") ?? ""),
-      });
+    setIsSubmitting(false);
+    if (error) return setError(error.message ?? "Invalid code");
 
-      await refetchSession();
-      router.push(navLinks.Profile);
-      router.refresh();
-    } catch (submissionError) {
-      setError(getErrorMessage(submissionError));
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    router.push(navLinks.Profile);
+    router.refresh();
+  }
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#06151D] text-white selection:bg-[#00a8e8] selection:text-white">
@@ -182,54 +159,6 @@ export default function JoinPage() {
                 placeholder="you@example.com"
               />
 
-              <FormInput
-                id="password"
-                name="password"
-                label="Password"
-                icon={<FiLock size={18} />}
-                type="password"
-                autoComplete="new-password"
-                minLength={8}
-                maxLength={128}
-                required
-                placeholder="At least 8 characters"
-              />
-
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8">
-                <CheckboxInput
-                  id="computer-science-student"
-                  name="computerScienceStudent"
-                  label="I'm a Computer Science student"
-                  checked={isComputerScienceStudent}
-                  onChange={(event) =>
-                    setIsComputerScienceStudent(event.target.checked)
-                  }
-                  className="mt-1"
-                />
-                <div
-                  aria-hidden={!isComputerScienceStudent}
-                  className={`relative grid min-w-0 transition-[grid-template-rows,opacity] duration-200 ease-out sm:grid-rows-[1fr] ${
-                    isComputerScienceStudent
-                      ? "grid-rows-[1fr] visible"
-                      : "pointer-events-none grid-rows-[0fr] hidden"
-                  }`}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-4 top-0 hidden h-full w-px bg-gray-700/70 sm:block"
-                  />
-                  <FormInput
-                    id="study-year"
-                    name="studyYear"
-                    label="Year of study"
-                    icon={<FiCalendar size={18} />}
-                    options={["1", "2", "3"]}
-                    placeholder="Select year"
-                    disabled={!isComputerScienceStudent}
-                    required={isComputerScienceStudent}
-                  />
-                </div>
-              </div>
               <p className="font-manrope text-xs text-gray-400">
                 Already have an account?{" "}
                 <Link
@@ -240,34 +169,20 @@ export default function JoinPage() {
                 </Link>
               </p>
               {error && (
-                <p className="font-manrope text-sm text-red-400">An error occurred while processing your request.</p>
+                <p className="font-manrope text-sm text-red-400">{error}</p>
               )}
-              <div className="flex flex-col-reverse gap-3 sm:flex-row">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex flex-1 items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:bg-[#0090c7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isSubmitting ? "Loading..." : "Join the celebration"}
-                  <FaArrowCircleRight aria-hidden="true" />
-                </button>
-              </div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:bg-[#0090c7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmitting ? "Sending…" : "Join the celebration"}
+                <FaArrowCircleRight aria-hidden="true" />
+              </button>
             </form>
           )}
         </div>
       </section>
     </main>
   );
-}
-
-function getErrorMessage(error: unknown) {
-  if (axios.isAxiosError<{ error?: string; message?: string }>(error)) {
-    return (
-      error.response?.data.message ??
-      error.response?.data.error ??
-      "Unable to process the request"
-    );
-  }
-
-  return error instanceof Error ? error.message : "Something went wrong";
 }

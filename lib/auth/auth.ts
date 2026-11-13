@@ -10,10 +10,6 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  emailAndPassword: {
-    enabled: true,
-    disableSignUp: true,
-  },
   user: {
     additionalFields: {
       role: {
@@ -21,15 +17,6 @@ export const auth = betterAuth({
         required: true,
         defaultValue: "USER",
         input: false,
-      },
-      isStudent: {
-        type: "boolean",
-        required: true,
-        defaultValue: false,
-      },
-      studyYear: {
-        type: "number",
-        required: false,
       },
     },
   },
@@ -39,6 +26,7 @@ export const auth = betterAuth({
       expiresIn: 300,
       allowedAttempts: 3,
       storeOTP: "hashed",
+      disableSignUp: true,
       async sendVerificationOTP({ email, otp }) {
         const { error } = await resend.emails.send({
           from: "LCC 40 Anos <loging@40lcc.di.uminho.pt>",

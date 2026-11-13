@@ -49,7 +49,7 @@ export default function FormInput(props: FormInputProps) {
         defaultValue={
           controlProps.value === undefined ? (defaultValue ?? (placeholder ? "" : undefined)) : undefined
         }
-        className={`${fieldClassName} [color-scheme:dark]`}
+        className={`${fieldClassName} scheme-dark`}
       >
         {placeholder && (
           <option value="" disabled>
