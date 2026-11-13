@@ -38,10 +38,8 @@ export async function POST(request: Request) {
     } else {
       await prisma.user.create({
         data: {
-          id: randomUUID(),
           name,
           email,
-          emailVerified: false,
         },
       });
     }
