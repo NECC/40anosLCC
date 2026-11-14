@@ -135,22 +135,34 @@ export default function SchedulePage() {
                       </p>
                     </div>
 
-                    <div>
-                      <h2 className="font-space-grotesk text-xl font-medium text-white md:text-2xl">
-                        {a.title}
-                      </h2>
+                    <div className="flex flex-row gap-2">
+                      <div>
+                        <h2 className="font-space-grotesk text-xl font-medium text-white md:text-2xl">
+                          {a.title}
+                        </h2>
 
-                      <p className="mt-1 font-manrope text-sm text-gray-500">
-                        {typeLabels[a.type] ?? a.type}
-                        {a.speakers.length > 0 &&
-                          ` with ${a.speakers.join(", ")}`}
-                      </p>
-
-                      {a.description && (
-                        <p className="mt-4 max-w-prose font-manrope text-sm leading-relaxed text-gray-400">
-                          {a.description}
+                        <p className="mt-1 font-manrope text-sm text-gray-500">
+                          {typeLabels[a.type] ?? a.type}
+                          {a.speakers.length > 0 &&
+                            ` with ${a.speakers.map((s) => s.name).join(", ")}`}
                         </p>
-                      )}
+
+                        {a.description && (
+                          <p className="mt-4 max-w-prose font-manrope text-sm leading-relaxed text-gray-400">
+                            {a.description}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex gap-2 mt-3">
+                        {a.speakers.map((s, i) => (
+                          <img
+                            key={s.id}
+                            src={s.photo}
+                            alt={s.name}
+                            className="mt-2 h-18 w-18 object-cover ring-2 ring-[#00a8e8]"
+                          />
+                        ))}
+                      </div>
                     </div>
                   </li>
                 ))}

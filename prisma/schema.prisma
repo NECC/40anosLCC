@@ -71,13 +71,22 @@ model Verification {
 }
 
 model Activity {
-  id          String       @id @default(uuid())
+  id          String        @id @default(uuid())
   title       String
-  speakers    String[]
+  speakers    Speaker[]
   description String
   startDate   DateTime
   endDate     DateTime
   type        ActivityType
+}
+
+model Speaker {
+  id          String    @id @default(uuid())
+  name        String
+  bio         String
+  photo       String? 
+  createdAt   DateTime  @default(now())
+  activities  Activity[]
 }
 
 enum ActivityType {

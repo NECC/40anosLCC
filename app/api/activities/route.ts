@@ -4,6 +4,16 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const activities = await prisma.activity.findMany({
+      include: {
+        speakers: {
+          select: {
+            id: true,
+            name: true,
+            bio: true,
+            photo: true,
+          },
+        },
+      },
       orderBy: {
         startDate: "asc",
       },
