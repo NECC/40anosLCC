@@ -7,11 +7,18 @@ export type Partner = {
 export type Activity = {
   id: string;
   title: string;
-  speakers: string[];
+  speakers: Speaker[];
   description: string;
   startDate: string;
   endDate: string;
   type: ActivityType;
+};
+
+export type Speaker = {
+  id: string;
+  name: string;
+  bio: string;
+  photo?: string;
 };
 
 type ActivityType = "WORKSHOP" | "TALK";
