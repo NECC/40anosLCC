@@ -10,7 +10,10 @@ export default function Nav() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [{ name: "Home", href: "/" }, { name: "About", href: "/about" }];
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+  ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
@@ -21,6 +24,9 @@ export default function Nav() {
       document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
+
+  // Só depois de todos os Hooks é que podemos fazer o return null
+  if (pathname === "/join") return null;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#06151D]/80 backdrop-blur-md">
@@ -56,9 +62,10 @@ export default function Nav() {
           })}
         </div>
 
+        {/* LINK DESKTOP */}
         <Link
-          href=""
-          className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
+          href="/join"
+          className={`hidden items-center gap-2 text-sm font-light transition-colors hover:text-white md:flex ${
             pathname === "/join" ? "text-white" : "text-gray-300"
           }`}
         >
@@ -122,8 +129,9 @@ export default function Nav() {
             );
           })}
 
+          {/* LINK MOBILE */}
           <Link
-            href=""
+            href="/join"
             onClick={closeMenu}
             tabIndex={isMobileMenuOpen ? 0 : -1}
             className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
