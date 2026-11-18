@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, ActivityType } from "@/generated/prisma/client";
 
@@ -199,10 +198,7 @@ const activities: ActivitySeed[] = [
   },
 ];
 
-async function main() {
-  await prisma.activity.deleteMany();
-  await prisma.speaker.deleteMany();
-
+export async function setup() {
   const createdSpeakers = await prisma.speaker.createManyAndReturn({
     data: speakerNames.map((name) => ({ name, bio: "Insert bio here", photo: "https://img.magnific.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette_719432-3519.jpg?semt=ais_hybrid&w=740&q=80" })),
   });
@@ -229,6 +225,16 @@ async function main() {
       },
     });
   }
+}
+
+export async function teardown() {
+  await prisma.activity.deleteMany();
+  await prisma.speaker.deleteMany();
+}
+
+async function main() {
+  await teardown();
+  await setup();
 
   console.log("Seed completed successfully.");
 }
