@@ -25,7 +25,7 @@
     "react-dom": "19.3.0",
     "react-icons": "^5.7.0",
     "react-qr-barcode-scanner": "^2.1.28",
-    "resend": "^6.34.1",
+    "resend": "^6.38.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
