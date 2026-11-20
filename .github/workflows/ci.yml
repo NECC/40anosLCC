@@ -1,6 +1,7 @@
 name: Unit tests
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [main, dev]
 
@@ -16,8 +17,11 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DATABASE: bdaylcc
+          POSTGRES_DB: bdaylcc
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -35,12 +39,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Generate prisma files
-        run: npm prisma generate
-
-      - name: Apply prisma schema to the database
-        run: npm prisma push
 
       - name: Run tests
         run: npm test

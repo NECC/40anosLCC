@@ -1,9 +1,14 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config'
-import { playwright } from '@vitest/browser-playwright'
 import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  plugins: [tsconfigPaths(), react()],
+  plugins: [react()],
   test: {},
+  resolve: {
+    // Vitest can't parse tsconfig without using Vite.
+    alias: {
+      '@': fileURLToPath(new URL('./', import.meta.url)),
+    },
+  },
 })
