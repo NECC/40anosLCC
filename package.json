@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
+    "db-push": "prisma db push",
     "lint": "biome check",
     "test": "vitest"
   },

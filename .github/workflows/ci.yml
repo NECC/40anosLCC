@@ -15,18 +15,18 @@ jobs:
 
     services:
       postgres:
-        image: postgres
+        image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: bdaylcc
-        ports:
-          - 5432:5432
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres -d bdaylcc"
+          --health-interval 5s
           --health-timeout 5s
-          --health-retries 5
+          --health-retries 10
+        ports:
+          - "5432"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,7 +40,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Apply prisma schema to the database
+        run: npm run db-push
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/bdaylcc"
+
       - name: Run tests
         run: npm test
         env:
-          DATABASE_URL: 'postgres://postgres:postgres@postgres/bdaylcc'
+          DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/bdaylcc"

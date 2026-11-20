@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, expect, test } from 'vitest';
-import { setup, teardown } from '../prisma/seed';
+import { setup, teardown } from '../prisma/seed-data';
 import prisma from "../lib/prisma";
 
 beforeAll(async () => await setup());
