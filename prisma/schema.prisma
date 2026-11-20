@@ -9,6 +9,8 @@ datasource db {
 
 enum Role {
   ADMIN
+  STAFF
+  COMPANY
   USER
 }
 
@@ -19,10 +21,23 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   role          Role      @default(USER)
+  qrToken       String    @unique @default(uuid())
+  points        Int       @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
+
   sessions      Session[]
   accounts      Account[]
+
+  // Badges
+  earnedBadges  UserActivity[] @relation("ParticipantBadges")
+  scannedUsers  UserActivity[] @relation("StaffScans")
+
+
+  companyProfile Company?
+  companyVisits  CompanyVisit[]
+
+  @@index([points(sort: Desc)])
 }
 
 model Session {
@@ -71,25 +86,78 @@ model Verification {
 }
 
 model Activity {
-  id          String        @id @default(uuid())
-  title       String
-  speakers    Speaker[]
-  description String
-  startDate   DateTime
-  endDate     DateTime
-  type        ActivityType
+  id           String         @id @default(uuid())
+  title        String
+  speakers     Speaker[]
+  description  String
+  startDate    DateTime
+  endDate      DateTime
+  type         ActivityType
+  points       Int            @default(10)
+  badgeName    String?
+  badgeIcon    String?
+  isActive     Boolean        @default(true)
+
+  participants UserActivity[]
+}
+
+model UserActivity {
+  id           String   @id @default(uuid())
+  userId       String
+  activityId   String
+  scannedById  String
+  pointsEarned Int
+  createdAt    DateTime @default(now())
+
+  user         User     @relation("ParticipantBadges", fields: [userId], references: [id], onDelete: Cascade)
+  activity     Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  scannedBy    User     @relation("StaffScans", fields: [scannedById], references: [id])
+
+  @@unique([userId, activityId])
+  @@index([userId])
+  @@index([activityId])
+}
+
+model Company {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  logo        String?
+  points      Int            @default(20)
+  isActive    Boolean        @default(true)
+  userId      String         @unique
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now())
+
+  visits      CompanyVisit[]
+}
+
+model CompanyVisit {
+  id           String   @id @default(uuid())
+  userId       String
+  companyId    String
+  pointsEarned Int
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
 }
 
 model Speaker {
-  id          String    @id @default(uuid())
-  name        String
-  bio         String
-  photo       String? 
-  createdAt   DateTime  @default(now())
-  activities  Activity[]
+  id         String     @id @default(uuid())
+  name       String
+  bio        String
+  photo      String?
+  createdAt  DateTime   @default(now())
+  activities Activity[]
 }
 
 enum ActivityType {
   WORKSHOP
   TALK
+  NIGHT_ACTIVITY
 }

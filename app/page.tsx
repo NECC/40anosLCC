@@ -273,16 +273,6 @@ export default function Home() {
         <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-10 lg:px-16">
           <div className="flex flex-col items-center justify-between gap-12 py-20 pt-36 md:flex-row md:gap-16 md:py-32 md:pt-44">
             <div className="w-full md:w-1/2">
-              <motion.div {...rise(0)} className="mb-8 hidden lg:block">
-                <Image
-                  src="/40plus.svg"
-                  alt="40+ Logo"
-                  width={200}
-                  height={300}
-                  className="h-auto w-28 md:w-32"
-                />
-              </motion.div>
-
               <motion.h1
                 {...rise(0.1)}
                 className="max-w-2xl font-space-grotesk text-5xl leading-[1.05] font-bold tracking-tight text-balance text-white md:text-6xl lg:text-7xl"
