@@ -4,18 +4,19 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import {
   FaArrowLeft,
+  FaBuilding,
   FaCircleCheck,
   FaCircleExclamation,
   FaQrcode,
 } from "react-icons/fa6";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 
-interface ActivityOption {
+interface ScanTarget {
   id: string;
+  kind: "ACTIVITY" | "COMPANY";
   title: string;
-  type: "TALK" | "WORKSHOP" | "NIGHT_ACTIVITY";
+  category: string;
   points: number;
-  badgeName: string | null;
 }
 
 interface ScanFeedback {
@@ -24,43 +25,48 @@ interface ScanFeedback {
   participantName?: string;
   totalPoints?: number;
   pointsAwarded?: number;
-  activityTitle?: string;
+  targetTitle?: string;
 }
 
 export function ScannerClient() {
-  const [activities, setActivities] = useState<ActivityOption[]>([]);
-  const [selectedActivityId, setSelectedActivityId] = useState("");
-  const [isLoadingActivities, setIsLoadingActivities] = useState(true);
+  const [role, setRole] = useState<"ADMIN" | "STAFF" | "COMPANY" | null>(null);
+  const [targets, setTargets] = useState<ScanTarget[]>([]);
+  const [selectedKey, setSelectedKey] = useState("");
+  const [warning, setWarning] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [feedback, setFeedback] = useState<ScanFeedback | null>(null);
-
-  // Ref para bloquear imediatamente disparos repetidos do onUpdate da câmara
   const isLockedRef = useRef(false);
 
-  // 1. Carrega as atividades ativas ao abrir o backoffice
   useEffect(() => {
     let cancelled = false;
 
     fetch("/api/staff/scan")
       .then(async (res) => {
-        if (!res.ok) {
-          throw new Error("Sem permissão ou erro ao carregar atividades.");
-        }
+        if (!res.ok) throw new Error("Sem permissão.");
         return res.json();
       })
-      .then((data: { activities: ActivityOption[] }) => {
-        if (!cancelled) {
-          setActivities(data.activities || []);
-          if (data.activities?.length > 0) {
-            setSelectedActivityId(data.activities[0].id);
+      .then(
+        (data: {
+          role: "ADMIN" | "STAFF" | "COMPANY";
+          targets: ScanTarget[];
+          warning?: string;
+        }) => {
+          if (!cancelled) {
+            setRole(data.role);
+            setTargets(data.targets || []);
+            setWarning(data.warning || null);
+            if (data.targets?.length > 0) {
+              setSelectedKey(`${data.targets[0].kind}:${data.targets[0].id}`);
+            }
+            setIsLoading(false);
           }
-          setIsLoadingActivities(false);
         }
-      })
+      )
       .catch((err) => {
         console.error(err);
-        if (!cancelled) setIsLoadingActivities(false);
+        if (!cancelled) setIsLoading(false);
       });
 
     return () => {
@@ -68,9 +74,12 @@ export function ScannerClient() {
     };
   }, []);
 
-  // 2. Processa a leitura do QR Code e envia para o backend
+  const selectedTarget = targets.find(
+    (t) => `${t.kind}:${t.id}` === selectedKey
+  );
+
   const handleScan = async (scannedToken: string) => {
-    if (isLockedRef.current || !selectedActivityId) return;
+    if (isLockedRef.current || !selectedTarget) return;
     isLockedRef.current = true;
     setIsProcessing(true);
     setFeedback(null);
@@ -81,7 +90,8 @@ export function ScannerClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           qrToken: scannedToken,
-          activityId: selectedActivityId,
+          targetId: selectedTarget.id,
+          targetKind: selectedTarget.kind,
         }),
       });
 
@@ -99,31 +109,27 @@ export function ScannerClient() {
           participantName: payload.data.participant.name,
           totalPoints: payload.data.participant.points,
           pointsAwarded: payload.data.pointsAwarded,
-          activityTitle: payload.data.activityTitle,
+          targetTitle: payload.data.targetTitle,
         });
       }
     } catch {
       setFeedback({
         status: "error",
-        message: "Erro de ligação ao servidor. Verifica a internet.",
+        message: "Erro de ligação ao servidor.",
       });
     } finally {
       setIsProcessing(false);
     }
   };
 
-  // 3. Desbloqueia a câmara para o próximo participante
   const handleResetScanner = () => {
     setFeedback(null);
     isLockedRef.current = false;
   };
 
-  const selectedActivity = activities.find((a) => a.id === selectedActivityId);
-
   return (
     <main className="min-h-screen bg-[#051118] px-5 py-8 text-white">
       <div className="mx-auto flex w-full max-w-md flex-col gap-6">
-        {/* Topo */}
         <div className="flex items-center justify-between">
           <Link
             href="/profile"
@@ -134,7 +140,7 @@ export function ScannerClient() {
           </Link>
 
           <span className="rounded-md border border-[#00B4F0]/30 bg-[#00B4F0]/10 px-2.5 py-1 font-mono text-[11px] font-semibold tracking-wider text-[#00B4F0] uppercase">
-            Staff Scanner
+            {role ? `${role} Scanner` : "Scanner"}
           </span>
         </div>
 
@@ -147,63 +153,69 @@ export function ScannerClient() {
           </p>
         </div>
 
-        {/* Seletor de Atividade */}
         <section className="rounded-2xl border border-white/[0.08] bg-[#081A24] p-5">
-          <label
-            htmlFor="activity-select"
-            className="mb-2 block font-mono text-[11px] font-semibold tracking-wider text-[#00B4F0] uppercase"
-          >
-            1. Selecionar Atividade
-          </label>
-
-          {isLoadingActivities ? (
-            <p className="font-mono text-xs text-[#8BA3B5]">
-              A carregar atividades...
-            </p>
-          ) : activities.length === 0 ? (
+          {isLoading ? (
+            <p className="font-mono text-xs text-[#8BA3B5]">A carregar...</p>
+          ) : warning ? (
+            <p className="text-xs text-amber-400">{warning}</p>
+          ) : targets.length === 0 ? (
             <p className="text-xs text-amber-400">
-              Nenhuma atividade ativa encontrada na base de dados.
+              Nenhuma atividade ou banca ativa encontrada.
             </p>
+          ) : role === "COMPANY" && selectedTarget ? (
+            <div>
+              <span className="mb-2 flex items-center gap-2 font-mono text-[11px] font-semibold tracking-wider text-[#00B4F0] uppercase">
+                <FaBuilding />
+                <span>Banca da Empresa</span>
+              </span>
+              <div className="flex items-center justify-between rounded-xl border border-[#00B4F0]/30 bg-[#051118] px-4 py-3">
+                <span className="text-sm font-bold text-white">
+                  {selectedTarget.title}
+                </span>
+                <span className="font-mono text-xs font-bold text-[#00B4F0]">
+                  +{selectedTarget.points} pts
+                </span>
+              </div>
+            </div>
           ) : (
             <>
+              <label
+                htmlFor="target-select"
+                className="mb-2 block font-mono text-[11px] font-semibold tracking-wider text-[#00B4F0] uppercase"
+              >
+                1. Selecionar {role === "ADMIN" ? "Atividade ou Banca" : "Atividade"}
+              </label>
               <select
-                id="activity-select"
-                value={selectedActivityId}
+                id="target-select"
+                value={selectedKey}
                 onChange={(e) => {
-                  setSelectedActivityId(e.target.value);
+                  setSelectedKey(e.target.value);
                   handleResetScanner();
                 }}
                 className="w-full rounded-xl border border-white/10 bg-[#051118] px-3.5 py-3 text-sm text-white focus:border-[#00B4F0] focus:outline-none"
               >
-                {activities.map((activity) => (
-                  <option key={activity.id} value={activity.id}>
-                    [{activity.type.replace("_", " ")}] {activity.title} (+
-                    {activity.points} pts)
+                {targets.map((target) => (
+                  <option
+                    key={`${target.kind}:${target.id}`}
+                    value={`${target.kind}:${target.id}`}
+                  >
+                    [{target.category.replace("_", " ")}] {target.title} (+
+                    {target.points} pts)
                   </option>
                 ))}
               </select>
-
-              {selectedActivity && (
-                <div className="mt-3 flex items-center justify-between rounded-lg bg-[#051118]/70 px-3 py-2 text-xs text-[#8BA3B5]">
-                  <span>Recompensa:</span>
-                  <span className="font-mono font-bold text-[#00B4F0]">
-                    +{selectedActivity.points} pts • Badge Única
-                  </span>
-                </div>
-              )}
             </>
           )}
         </section>
 
-        {/* Área da Câmara (esconde temporariamente enquanto mostra o resultado) */}
-        {!feedback && selectedActivityId && (
+        {!feedback && selectedTarget && (
           <section className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#081A24] p-4">
             <div className="mb-3 flex items-center gap-2 font-mono text-[11px] font-semibold tracking-wider text-[#8BA3B5] uppercase">
               <FaQrcode className="text-[#00B4F0]" />
               <span>
                 {isProcessing
                   ? "A validar participante..."
-                  : "2. Apontar para o QR Code"}
+                  : "Apontar para o QR Code do participante"}
               </span>
             </div>
 
@@ -222,7 +234,6 @@ export function ScannerClient() {
           </section>
         )}
 
-        {/* Cartão de Resultado (Sucesso ou Erro/Duplicado) */}
         {feedback && (
           <section
             className={`rounded-2xl border p-6 ${
@@ -237,7 +248,6 @@ export function ScannerClient() {
               ) : (
                 <FaCircleExclamation className="shrink-0 text-2xl text-red-400" />
               )}
-
               <div>
                 <h2 className="text-lg font-bold text-white">
                   {feedback.status === "success"
@@ -257,9 +267,9 @@ export function ScannerClient() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8BA3B5]">Atividade:</span>
+                  <span className="text-[#8BA3B5]">Registo:</span>
                   <span className="font-medium text-slate-200">
-                    {feedback.activityTitle}
+                    {feedback.targetTitle}
                   </span>
                 </div>
                 <div className="flex justify-between border-t border-white/10 pt-2">

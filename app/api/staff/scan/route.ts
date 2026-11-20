@@ -1,39 +1,66 @@
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { Prisma } from "@/generated/prisma/client"; // Ajusta se o teu import do client Prisma for diferente
+import { Prisma } from "@/generated/prisma/client";
 import { auth } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
 
-// Helper para validar sessão e permissões de STAFF/ADMIN
-async function getAuthorizedStaff() {
+async function getAuthorizedScannerUser() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!session?.user?.id) {
-    return null;
-  }
+  if (!session?.user?.id) return null;
 
-  const staffUser = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id },
-    select: { id: true, name: true, role: true },
+    select: {
+      id: true,
+      name: true,
+      role: true,
+      companyProfile: {
+        select: { id: true, name: true, points: true, isActive: true },
+      },
+    },
   });
 
-  if (!staffUser || (staffUser.role !== "STAFF" && staffUser.role !== "ADMIN")) {
-    return null;
-  }
+  if (!user || user.role === "USER") return null;
 
-  return staffUser;
+  return user;
 }
 
-// 1. GET: Lista as atividades ativas para o seletor do scanner
+// 1. GET: Devolve as opções permitidas consoante a role
 export async function GET() {
   try {
-    const staff = await getAuthorizedStaff();
-    if (!staff) {
+    const scannerUser = await getAuthorizedScannerUser();
+    if (!scannerUser) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
+    // Caso COMPANY: devolve apenas a sua banca
+    if (scannerUser.role === "COMPANY") {
+      if (!scannerUser.companyProfile || !scannerUser.companyProfile.isActive) {
+        return NextResponse.json({
+          role: "COMPANY",
+          targets: [],
+          warning: "Esta conta COMPANY ainda não tem uma empresa associada ou ativa.",
+        });
+      }
+
+      return NextResponse.json({
+        role: "COMPANY",
+        targets: [
+          {
+            id: scannerUser.companyProfile.id,
+            kind: "COMPANY" as const,
+            title: `Banca ${scannerUser.companyProfile.name}`,
+            category: "COMPANY_STAND",
+            points: scannerUser.companyProfile.points,
+          },
+        ],
+      });
+    }
+
+    // Caso STAFF ou ADMIN: carrega atividades ativas
     const activities = await prisma.activity.findMany({
       where: { isActive: true },
       orderBy: { startDate: "asc" },
@@ -42,104 +69,164 @@ export async function GET() {
         title: true,
         type: true,
         points: true,
-        badgeName: true,
-        startDate: true,
-        endDate: true,
       },
     });
 
-    return NextResponse.json({ activities });
+    const activityTargets = activities.map((act) => ({
+      id: act.id,
+      kind: "ACTIVITY" as const,
+      title: act.title,
+      category: act.type,
+      points: act.points,
+    }));
+
+    // Se for ADMIN, inclui também todas as bancas de empresas ativas
+    let companyTargets: {
+      id: string;
+      kind: "COMPANY";
+      title: string;
+      category: string;
+      points: number;
+    }[] = [];
+
+    if (scannerUser.role === "ADMIN") {
+      const companies = await prisma.company.findMany({
+        where: { isActive: true },
+        orderBy: { name: "asc" },
+        select: { id: true, name: true, points: true },
+      });
+
+      companyTargets = companies.map((comp) => ({
+        id: comp.id,
+        kind: "COMPANY" as const,
+        title: `Banca ${comp.name}`,
+        category: "COMPANY_STAND",
+        points: comp.points,
+      }));
+    }
+
+    return NextResponse.json({
+      role: scannerUser.role,
+      targets: [...activityTargets, ...companyTargets],
+    });
   } catch (error) {
-    console.error("Error fetching staff activities:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    console.error("Error fetching scan targets:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-// 2. POST: Lê o qrToken do participante, atribui a badge única e soma os pontos
+// 2. POST: Atribui pontos/badge de Atividade ou de Banca de Empresa
 export async function POST(request: Request) {
   try {
-    const staff = await getAuthorizedStaff();
-    if (!staff) {
-      return NextResponse.json(
-        { error: "Acesso negado. Apenas Staff ou Admin." },
-        { status: 403 }
-      );
+    const scannerUser = await getAuthorizedScannerUser();
+    if (!scannerUser) {
+      return NextResponse.json({ error: "Acesso negado." }, { status: 403 });
     }
 
     const body = await request.json();
-    const { qrToken, activityId } = body as {
+    const { qrToken, targetId, targetKind } = body as {
       qrToken?: string;
-      activityId?: string;
+      targetId?: string;
+      targetKind?: "ACTIVITY" | "COMPANY";
     };
 
-    if (!qrToken || !activityId) {
+    if (!qrToken || !targetId || !targetKind) {
       return NextResponse.json(
-        { error: "QR Code ou atividade em falta." },
+        { error: "Dados de leitura incompletos." },
         { status: 400 }
       );
     }
 
-    // Executa tudo numa transação atómica
-    const result = await prisma.$transaction(async (tx) => {
-      // 1. Verifica se a atividade existe e está ativa
-      const activity = await tx.activity.findUnique({
-        where: { id: activityId },
-        select: {
-          id: true,
-          title: true,
-          points: true,
-          badgeName: true,
-          isActive: true,
-        },
-      });
+    // Validação rigorosa de permissões por role
+    if (scannerUser.role === "STAFF" && targetKind !== "ACTIVITY") {
+      return NextResponse.json(
+        { error: "Staff só pode atribuir pontos de atividades." },
+        { status: 403 }
+      );
+    }
 
-      if (!activity || !activity.isActive) {
-        throw new Error("ACTIVITY_INACTIVE");
+    if (scannerUser.role === "COMPANY") {
+      if (
+        targetKind !== "COMPANY" ||
+        scannerUser.companyProfile?.id !== targetId
+      ) {
+        return NextResponse.json(
+          { error: "Empresa só pode atribuir pontos da sua própria banca." },
+          { status: 403 }
+        );
       }
+    }
 
-      // 2. Procura o participante pelo qrToken
+    const result = await prisma.$transaction(async (tx) => {
       const participant = await tx.user.findUnique({
         where: { qrToken: qrToken.trim() },
-        select: { id: true, name: true, email: true, points: true },
+        select: { id: true, name: true, points: true },
       });
 
       if (!participant) {
         throw new Error("PARTICIPANT_NOT_FOUND");
       }
 
-      // 3. Tenta criar a badge (UserActivity).
-      // Se já existir, o PostgreSQL lança erro P2002 por causa de @@unique([userId, activityId])
-      await tx.userActivity.create({
-        data: {
-          userId: participant.id,
-          activityId: activity.id,
-          scannedById: staff.id,
-          pointsEarned: activity.points,
-        },
-      });
+      if (targetKind === "ACTIVITY") {
+        const activity = await tx.activity.findUnique({
+          where: { id: targetId },
+          select: { id: true, title: true, points: true, isActive: true },
+        });
 
-      // 4. Soma os pontos ao participante
-      const updatedUser = await tx.user.update({
-        where: { id: participant.id },
-        data: {
-          points: { increment: activity.points },
-        },
-        select: {
-          id: true,
-          name: true,
-          points: true,
-        },
-      });
+        if (!activity || !activity.isActive) {
+          throw new Error("TARGET_INACTIVE");
+        }
 
-      return {
-        participant: updatedUser,
-        activityTitle: activity.title,
-        badgeName: activity.badgeName || activity.title,
-        pointsAwarded: activity.points,
-      };
+        await tx.userActivity.create({
+          data: {
+            userId: participant.id,
+            activityId: activity.id,
+            scannedById: scannerUser.id,
+            pointsEarned: activity.points,
+          },
+        });
+
+        const updatedUser = await tx.user.update({
+          where: { id: participant.id },
+          data: { points: { increment: activity.points } },
+          select: { id: true, name: true, points: true },
+        });
+
+        return {
+          participant: updatedUser,
+          targetTitle: activity.title,
+          pointsAwarded: activity.points,
+        };
+      } else {
+        const company = await tx.company.findUnique({
+          where: { id: targetId },
+          select: { id: true, name: true, points: true, isActive: true },
+        });
+
+        if (!company || !company.isActive) {
+          throw new Error("TARGET_INACTIVE");
+        }
+
+        await tx.companyVisit.create({
+          data: {
+            userId: participant.id,
+            companyId: company.id,
+            pointsEarned: company.points,
+          },
+        });
+
+        const updatedUser = await tx.user.update({
+          where: { id: participant.id },
+          data: { points: { increment: company.points } },
+          select: { id: true, name: true, points: true },
+        });
+
+        return {
+          participant: updatedUser,
+          targetTitle: `Banca ${company.name}`,
+          pointsAwarded: company.points,
+        };
+      }
     });
 
     return NextResponse.json({
@@ -148,21 +235,17 @@ export async function POST(request: Request) {
       data: result,
     });
   } catch (error) {
-    // Tratamento explícito de erros de negócio e concorrência
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // P2002 = Unique constraint failed (@@unique([userId, activityId]))
-      if (error.code === "P2002") {
-        return NextResponse.json(
-          { error: "Este participante já recebeu a badge e pontos desta atividade." },
-          { status: 409 }
-        );
-      }
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      return NextResponse.json(
+        { error: "Este participante já recebeu os pontos/badge deste registo." },
+        { status: 409 }
+      );
     }
 
     if (error instanceof Error) {
-      if (error.message === "ACTIVITY_INACTIVE") {
+      if (error.message === "TARGET_INACTIVE") {
         return NextResponse.json(
-          { error: "Esta atividade não existe ou está inativa." },
+          { error: "Atividade ou banca inativa/inexistente." },
           { status: 404 }
         );
       }
@@ -175,9 +258,6 @@ export async function POST(request: Request) {
     }
 
     console.error("Error processing scan:", error);
-    return NextResponse.json(
-      { error: "Erro interno ao processar leitura." },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro interno ao processar leitura." }, { status: 500 });
   }
 }

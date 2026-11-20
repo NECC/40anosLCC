@@ -18,8 +18,7 @@ export default async function BackOfficePage() {
     select: { role: true },
   });
 
-  // Só STAFF e ADMIN podem aceder ao Backoffice/Scanner
-  if (!user || (user.role !== "STAFF" && user.role !== "ADMIN")) {
+  if (!user || user.role === "USER") {
     redirect("/profile");
   }
 

@@ -22,7 +22,7 @@ import { authClient } from "@/lib/auth/auth-client";
 interface ProfileData {
   qrToken: string;
   points: number;
-  role: "ADMIN" | "STAFF" | "USER";
+  role: "ADMIN" | "STAFF" | "USER" | "COMPANY";
   rank: number;
   stats: {
     sessions: string;
@@ -110,12 +110,16 @@ export default function ProfilePage() {
           </Link>
 
           <div className="flex items-center gap-3">
-            {(profile?.role === "STAFF" || profile?.role === "ADMIN") && (
+            {profile?.role && profile.role !== "USER" && (
               <Link
                 href="/backoffice"
                 className="inline-flex items-center gap-2 rounded-lg border border-[#00B4F0]/40 bg-[#00B4F0]/10 px-4 py-2 text-xs font-semibold text-[#00B4F0] transition hover:bg-[#00B4F0] hover:text-[#051118]"
               >
-                <span>Open Staff Scanner</span>
+                <span>
+                  {profile.role === "COMPANY"
+                    ? "Open Company Scanner"
+                    : "Open Scanner"}
+                </span>
               </Link>
             )}
 

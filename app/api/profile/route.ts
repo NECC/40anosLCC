@@ -57,7 +57,7 @@ export async function GET() {
     const [totalTalks, totalWorkshops, totalNightActivities] = await Promise.all([
       prisma.activity.count({ where: { type: "TALK" } }),
       prisma.activity.count({ where: { type: "WORKSHOP" } }),
-      prisma.activity.count({ where: { type: "NIGHT" } }),
+      prisma.activity.count({ where: { type: "NIGHT_ACTIVITY" } }),
     ]);
 
     const completedTalks = user.earnedBadges.filter(
@@ -69,7 +69,7 @@ export async function GET() {
     ).length;
 
     const completedNightActivities = user.earnedBadges.filter(
-      (b) => b.activity.type === "NIGHT"
+      (b) => b.activity.type === "NIGHT_ACTIVITY"
     ).length;
 
     return NextResponse.json({

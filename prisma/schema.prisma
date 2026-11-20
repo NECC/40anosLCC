@@ -10,6 +10,7 @@ datasource db {
 enum Role {
   ADMIN
   STAFF
+  COMPANY
   USER
 }
 
@@ -28,10 +29,15 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  // Badges
   earnedBadges  UserActivity[] @relation("ParticipantBadges")
   scannedUsers  UserActivity[] @relation("StaffScans")
 
-  @@index([points(sort: Desc)]) // Otimiza a query do Leaderboard
+
+  companyProfile Company?
+  companyVisits  CompanyVisit[]
+
+  @@index([points(sort: Desc)])
 }
 
 model Session {
@@ -107,10 +113,38 @@ model UserActivity {
   activity     Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
   scannedBy    User     @relation("StaffScans", fields: [scannedById], references: [id])
 
-  
   @@unique([userId, activityId])
   @@index([userId])
   @@index([activityId])
+}
+
+model Company {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  logo        String?
+  points      Int            @default(20)
+  isActive    Boolean        @default(true)
+  userId      String         @unique
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime       @default(now())
+
+  visits      CompanyVisit[]
+}
+
+model CompanyVisit {
+  id           String   @id @default(uuid())
+  userId       String
+  companyId    String
+  pointsEarned Int
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company      Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
 }
 
 model Speaker {
@@ -125,5 +159,5 @@ model Speaker {
 enum ActivityType {
   WORKSHOP
   TALK
-  NIGHT
+  NIGHT_ACTIVITY
 }
