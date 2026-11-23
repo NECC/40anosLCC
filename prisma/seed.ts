@@ -1,3 +1,4 @@
+import prisma from '@/lib/prisma';
 import { setup, teardown } from './seed-data';
 
 async function main() {
