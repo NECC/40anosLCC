@@ -71,13 +71,13 @@ export default function BackOfficePage() {
           ))}
         </select>
       </header>
-
-      <section className="relative mx-4 mb-[max(1rem,env(safe-area-inset-bottom))] flex-1 overflow-hidden rounded-3xl bg-black">
+      <section className="scanner-container relative mx-4 mb-[max(1rem,env(safe-area-inset-bottom))] flex-1 overflow-hidden rounded-3xl bg-black">
         {badgeId ? (
           <>
             <BarcodeScannerComponent
               width="100%"
               height="100%"
+              facingMode="environment"
               onUpdate={(_, result) => {
                 if (result) handleScan(result.getText());
               }}
@@ -101,8 +101,6 @@ export default function BackOfficePage() {
             qrCodeResult ? "bg-green-600" : "bg-red-600"
           }`}
         >
-       
-
           <p className="text-3xl font-extrabold leading-tight">
             {qrCodeResult
               ? "Badge atribuída com sucesso!"

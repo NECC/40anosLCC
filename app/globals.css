@@ -34,3 +34,14 @@
   background-size: 60px 60px;
 }
 
+.scanner-container > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.scanner-container video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
