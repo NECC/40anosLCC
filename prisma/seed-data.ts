@@ -198,9 +198,60 @@ const activities: ActivitySeed[] = [
   },
 ];
 
+type BadgeSeed = {
+  name: string;
+  description: string;
+  points: number;
+  image?: string;
+};
+
+const badges: BadgeSeed[] = [
+  {
+    name: "First Steps",
+    description: "Welcome to the 40 Years of Computer Science event!",
+    points: 10,
+  },
+  {
+    name: "Knowledge Seeker",
+    description: "Participate in your first talk.",
+    points: 15,
+  },
+  {
+    name: "Workshop Explorer",
+    description: "Participate in your first workshop.",
+    points: 20,
+  },
+  {
+    name: "Tech Enthusiast",
+    description: "Participate in five different activities.",
+    points: 30,
+  },
+  {
+    name: "Three Day Champion",
+    description: "Participate in activities across all three days.",
+    points: 50,
+  },
+  {
+    name: "Networking Master",
+    description: "Connect with other participants during the event.",
+    points: 20,
+  },
+  {
+    name: "40 Years of LCC",
+    description:
+      "Celebrate 40 years of Computer Science at the University of Minho.",
+    points: 40,
+  },
+];
+
 export async function setup() {
   const createdSpeakers = await prisma.speaker.createManyAndReturn({
-    data: speakerNames.map((name) => ({ name, bio: "Insert bio here", photo: "https://img.magnific.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette_719432-3519.jpg?semt=ais_hybrid&w=740&q=80" })),
+    data: speakerNames.map((name) => ({
+      name,
+      bio: "Insert bio here",
+      photo:
+        "https://img.magnific.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette_719432-3519.jpg?semt=ais_hybrid&w=740&q=80",
+    })),
   });
 
   const speakerIdByName = new Map(createdSpeakers.map((s) => [s.name, s.id]));
@@ -224,6 +275,22 @@ export async function setup() {
         },
       },
     });
+  }
+  for (const badge of badges) {
+    const existingBadge = await prisma.badge.findFirst({
+      where: { name: badge.name },
+    });
+
+    if (existingBadge) {
+      await prisma.badge.update({
+        where: { id: existingBadge.id },
+        data: badge,
+      });
+    } else {
+      await prisma.badge.create({
+        data: badge,
+      });
+    }
   }
 }
 

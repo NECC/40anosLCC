@@ -13,16 +13,17 @@ enum Role {
 }
 
 model User {
-  id            String    @id @default(uuid())
+  id            String      @id @default(uuid())
   name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  email         String      @unique
+  emailVerified Boolean     @default(false)
   image         String?
-  role          Role      @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  role          Role        @default(USER)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  badges        UserBadge[]
 }
 
 model Session {
@@ -71,7 +72,7 @@ model Verification {
 }
 
 model Activity {
-  id          String        @id @default(uuid())
+  id          String       @id @default(uuid())
   title       String
   speakers    Speaker[]
   description String
@@ -81,15 +82,37 @@ model Activity {
 }
 
 model Speaker {
-  id          String    @id @default(uuid())
-  name        String
-  bio         String
-  photo       String? 
-  createdAt   DateTime  @default(now())
-  activities  Activity[]
+  id         String     @id @default(uuid())
+  name       String
+  bio        String
+  photo      String?
+  createdAt  DateTime   @default(now())
+  activities Activity[]
 }
 
 enum ActivityType {
   WORKSHOP
   TALK
+}
+
+model Badge {
+  id          String  @id @default(uuid())
+  name        String
+  description String
+  points      Int
+  image       String?
+  users UserBadge[]
+}
+
+model UserBadge {
+  id       String   @id @default(uuid())
+  userId   String
+  badgeId  String
+  earnedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+  @@index([badgeId])
 }
