@@ -1,0 +1,18 @@
+{
+  "files": {
+    "includes": ["**", "!!.next", "!!out", "!next-env.d.ts"]
+  },
+  "formatter": {
+    "enabled": false
+  },
+  "assist": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "next": "recommended",
+      "react": "recommended"
+    }
+  }
+}
