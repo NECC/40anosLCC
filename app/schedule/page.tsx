@@ -24,20 +24,28 @@ export default function SchedulePage() {
   const [filter, setFilter] = useState("ALL");
   const [day, setDay] = useState("");
 
-  useEffect(() => {
-    axios
-      .get<Activity[]>("/api/activities")
-      .then(({ data }) => {
-        setActivities(data);
+  const loadActivities = async () => {
+    try {
+      const response = await axios.get<{ status: string; data: Activity[] }>(
+        "/api/activities",
+      );
+      console.log("Activities response:", response.data);
+      const activities = response.data.data;
 
-        const first = data.map((a) => getDay(a.startDate)).sort()[0];
-        if (first) setDay(first);
-      })
-      .catch((err) => {
-        console.error("Error fetching activities:", err);
-        setError(true);
-      })
-      .finally(() => setLoading(false));
+      setActivities(activities);
+
+      const first = activities.map((a) => getDay(a.startDate)).sort()[0];
+      if (first) setDay(first);
+    } catch (err) {
+      console.error("Error fetching activities:", err);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadActivities();
   }, []);
 
   const days = [...new Set(activities.map((a) => getDay(a.startDate)))].sort();
@@ -123,7 +131,7 @@ export default function SchedulePage() {
               <ol className="divide-y divide-white/10 border-y border-white/10">
                 {visible.map((a) => (
                   <li
-                    key={a.id}
+                    key={`${a.title}-${a.startDate}`}
                     className="grid gap-2 py-8 md:grid-cols-[110px_1fr] md:gap-8"
                   >
                     <div className="font-space-grotesk">
@@ -154,9 +162,9 @@ export default function SchedulePage() {
                         )}
                       </div>
                       <div className="flex gap-2 mt-3">
-                        {a.speakers.map((s, i) => (
+                        {a.speakers.map((s) => (
                           <img
-                            key={s.id}
+                            key={`${s.name}-${s.photo}`}
                             src={s.photo}
                             alt={s.name}
                             className="mt-2 h-18 w-18 object-cover ring-2 ring-[#00a8e8]"

@@ -1,13 +1,17 @@
-import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { errorResponse, successResponse } from "@/lib/apiResponse";
 
 export async function GET() {
   try {
     const activities = await prisma.activity.findMany({
-      include: {
+      select: {
+        title: true,
+        description: true,
+        startDate: true,
+        endDate: true,
+        type: true,
         speakers: {
           select: {
-            id: true,
             name: true,
             bio: true,
             photo: true,
@@ -19,13 +23,10 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(activities);
+    return successResponse(activities);
   } catch (error) {
     console.error("Error fetching activities:", error);
 
-    return NextResponse.json(
-      { error: "Error fetching activities" },
-      { status: 500 },
-    );
+    return errorResponse("An unexpected error occurred", 500);
   }
 }

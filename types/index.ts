@@ -5,7 +5,6 @@ export type Partner = {
 };
 
 export type Activity = {
-  id: string;
   title: string;
   speakers: Speaker[];
   description: string;
@@ -15,7 +14,6 @@ export type Activity = {
 };
 
 export type Speaker = {
-  id: string;
   name: string;
   bio: string;
   photo?: string;
