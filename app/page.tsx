@@ -2,12 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-} from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { useRef, useSyncExternalStore } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 
@@ -127,9 +122,7 @@ function HistoryTimeline() {
                     <div className="h-2.5 w-2.5 rounded-full bg-[#00a8e8] shadow-[0_0_12px_#00a8e8]" />
 
                     <motion.div
-                      initial={
-                        reduceMotion ? {} : { scale: 0.5, opacity: 0 }
-                      }
+                      initial={reduceMotion ? {} : { scale: 0.5, opacity: 0 }}
                       whileInView={
                         reduceMotion ? {} : { scale: 1.8, opacity: [0, 0.5, 0] }
                       }
@@ -273,16 +266,6 @@ export default function Home() {
         <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-10 lg:px-16">
           <div className="flex flex-col items-center justify-between gap-12 py-20 pt-36 md:flex-row md:gap-16 md:py-32 md:pt-44">
             <div className="w-full md:w-1/2">
-              <motion.div {...rise(0)} className="mb-8 hidden lg:block">
-                <Image
-                  src="/40plus.svg"
-                  alt="40+ Logo"
-                  width={200}
-                  height={300}
-                  className="h-auto w-28 md:w-32"
-                />
-              </motion.div>
-
               <motion.h1
                 {...rise(0.1)}
                 className="max-w-2xl font-space-grotesk text-5xl leading-[1.05] font-bold tracking-tight text-balance text-white md:text-6xl lg:text-7xl"
@@ -303,8 +286,11 @@ export default function Home() {
                 Three days in Braga to celebrate our history, our people and
                 what comes next.
               </motion.p>
-              
-              <motion.div {...rise(0.4)} className="mt-10 flex flex-col gap-3 sm:flex-row">
+
+              <motion.div
+                {...rise(0.4)}
+                className="mt-10 flex flex-col gap-3 sm:flex-row"
+              >
                 <Link
                   href="#history"
                   className="group flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-[#06151D] shadow-[0_0_30px_rgba(0,168,232,0.35)] transition-all hover:bg-[#33bbf0] hover:shadow-[0_0_45px_rgba(0,168,232,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] sm:w-auto"
@@ -322,10 +308,17 @@ export default function Home() {
               </motion.div>
             </div>
 
-            <motion.div {...rise(0.35)} className="relative hidden lg:block lg:w-160">
+            <motion.div
+              {...rise(0.35)}
+              className="relative hidden lg:block lg:w-160"
+            >
               <motion.div
                 animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 <Image
                   src="/40plus.svg"
