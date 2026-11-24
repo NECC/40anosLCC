@@ -10,7 +10,11 @@ export default function Nav() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [{ name: "Home", href: "/" }, { name: "About", href: "/about" }];
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Speakers", href: "/speakers" },
+  ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
