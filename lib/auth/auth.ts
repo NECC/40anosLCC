@@ -3,6 +3,7 @@ import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
 import { Resend } from "resend";
 import prisma from "@/lib/prisma";
+import { renderOtpEmail } from "./otp-email";
 
 const resend = new Resend(process.env.AUTH_RESEND_KEY);
 
@@ -32,8 +33,7 @@ export const auth = betterAuth({
           from: "LCC 40 Anos <loging@40lcc.di.uminho.pt>",
           to: email,
           subject: "Your LCC 40 Anos sign-in code",
-          html: `<p>Your verification code is <strong>${otp}</strong>. It expires in 5 minutes.</p>`,
-        });
+          html: renderOtpEmail(otp),});
 
         if (error) {
           throw new Error(
