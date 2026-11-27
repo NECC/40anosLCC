@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Mono, Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
+import LayoutContent from "@/components/layout-content";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -23,7 +22,7 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   title: "40 years of LCC",
   icons: {
-    icon: "/Finallogo_40anosLCC.svg",
+    icon: "/40.svg",
   },
 };
 
@@ -31,13 +30,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html>
+    <html lang="pt">
       <body
         className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} flex min-h-screen flex-col bg-[#06151D]`}
       >
-        <Nav />
-        {children}
-        <Footer />
+        <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );

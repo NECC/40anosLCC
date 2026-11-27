@@ -2,21 +2,33 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { FiLogOut, FiUser } from "react-icons/fi";
+import { authClient, useSession } from "@/lib/auth/auth-client";
+import { LinkNames, navLinks } from "./layout-content";
+
+const displayLinks: LinkNames[] = ["Home", "About", "Schedule", "Speakers"];
 
 export default function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Speakers", href: "/speakers" },
-  ];
+  const NavbarLinks = Object.entries(navLinks).filter(([linkName]) =>
+    displayLinks.includes(linkName as LinkNames),
+  );
 
   const closeMenu = () => setIsMobileMenuOpen(false);
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    closeMenu();
+    router.push(navLinks.Home);
+    router.refresh();
+  };
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
@@ -29,9 +41,9 @@ export default function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#06151D]/80 backdrop-blur-md">
       <nav className="mx-auto flex w-full max-w-400 items-center justify-between px-2 py-3 sm:px-10 lg:px-16">
-        <Link href="/" onClick={closeMenu}>
+        <Link href={navLinks.Home} onClick={closeMenu}>
           <Image
-            src="/Finallogo_40anosLCC.svg"
+            src="/40.svg"
             alt="40 Years Logo"
             width={48}
             height={48}
@@ -39,18 +51,18 @@ export default function Nav() {
         </Link>
 
         <div className="hidden items-center gap-10 text-sm font-light text-gray-300 md:flex">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+          {NavbarLinks.map(([name, href]) => {
+            const isActive = pathname === href;
 
             return (
               <Link
-                key={link.name}
-                href={link.href}
+                key={name}
+                href={href}
                 className={`relative transition-colors hover:text-white ${
                   isActive ? "text-white" : "text-gray-300"
                 }`}
               >
-                {link.name}
+                {name}
 
                 {isActive && (
                   <span className="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#00a8e8]" />
@@ -60,15 +72,53 @@ export default function Nav() {
           })}
         </div>
 
-        <Link
-          href=""
-          className={`hidden items-center gap-2  text-sm font-light text-gray-300 transition-colors hover:text-white md:flex ${
-            pathname === "/join" ? "text-white" : "text-gray-300"
-          }`}
-        >
-          Join
-          <FaArrowCircleRight />
-        </Link>
+        <div className="hidden min-w-28 items-center justify-end gap-4 text-sm font-light md:flex">
+          {!isPending &&
+            (session ? (
+              <>
+                {session.user.role === "ADMIN" && (
+                  <>
+                    <Link
+                      href={navLinks.Backoffice}
+                      className="text-gray-300 transition-colors hover:text-white"
+                    >
+                      Backoffice
+                    </Link>
+                    <span
+                      aria-hidden="true"
+                      className="h-5 w-px bg-gray-700/80"
+                    />
+                  </>
+                )}
+                <Link
+                  href={navLinks.Profile}
+                  className="flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
+                >
+                  <FiUser aria-hidden="true" />
+                  {session.user.name}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="text-gray-400 transition-colors hover:text-white"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <FiLogOut aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <Link
+                href={navLinks.Login}
+                className={`flex items-center gap-2 transition-colors hover:text-white ${
+                  pathname === navLinks.Login ? "text-white" : "text-gray-300"
+                }`}
+              >
+                Login
+                <FaArrowCircleRight />
+              </Link>
+            ))}
+        </div>
 
         {/* BOTÃO MOBILE */}
         <button
@@ -108,37 +158,71 @@ export default function Nav() {
         aria-hidden={!isMobileMenuOpen}
       >
         <div className="flex flex-col gap-6 px-2 py-8 sm:px-10">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+          {NavbarLinks.map(([name, href]) => {
+            const isActive = pathname === href;
 
             return (
               <Link
-                key={link.name}
-                href={link.href}
+                key={name}
+                href={href}
                 onClick={closeMenu}
                 tabIndex={isMobileMenuOpen ? 0 : -1}
                 className={`font-heading text-2xl tracking-wide transition-colors ${
                   isActive ? "text-[#00a8e8]" : "text-gray-300 hover:text-white"
                 }`}
               >
-                {link.name}
+                {name}
               </Link>
             );
           })}
 
-          <Link
-            href=""
-            onClick={closeMenu}
-            tabIndex={isMobileMenuOpen ? 0 : -1}
-            className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
-              pathname === "/join"
-                ? "text-[#00a8e8]"
-                : "text-gray-300 hover:text-white"
-            }`}
-          >
-            Join
-            <FaArrowCircleRight />
-          </Link>
+          {!isPending &&
+            (session ? (
+              <>
+                {session.user.role === "ADMIN" && (
+                  <Link
+                    href={navLinks.Backoffice}
+                    onClick={closeMenu}
+                    tabIndex={isMobileMenuOpen ? 0 : -1}
+                    className="font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                  >
+                    Backoffice
+                  </Link>
+                )}
+                <Link
+                  href={navLinks.Profile}
+                  onClick={closeMenu}
+                  tabIndex={isMobileMenuOpen ? 0 : -1}
+                  className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                >
+                  <FiUser aria-hidden="true" />
+                  {session.user.name}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  tabIndex={isMobileMenuOpen ? 0 : -1}
+                  className="flex items-center gap-2 font-heading text-2xl tracking-wide text-gray-300 transition-colors hover:text-white"
+                >
+                  Sign Out
+                  <FiLogOut aria-hidden="true" />
+                </button>
+              </>
+            ) : (
+              <Link
+                href={navLinks.Login}
+                onClick={closeMenu}
+                tabIndex={isMobileMenuOpen ? 0 : -1}
+                className={`flex items-center gap-2 font-heading text-2xl tracking-wide transition-colors ${
+                  pathname === navLinks.Login
+                    ? "text-[#00a8e8]"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                Login
+                <FaArrowCircleRight />
+              </Link>
+            ))}
         </div>
       </div>
     </header>

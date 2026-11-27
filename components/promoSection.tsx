@@ -33,8 +33,6 @@ export default function PromoSection({
 
       <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
 
-      <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
-
       <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center px-2 text-center sm:px-10 md:max-w-4xl">
         <p className="mb-6 font-mono text-[11px] tracking-[0.2em] text-[#00a8e8] uppercase sm:text-xs">
           {label}

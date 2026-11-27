@@ -19,9 +19,12 @@
     50%      { opacity: 1; }
   }
   @keyframes scan {
-    from { top: 0; }
-    to   { top: 98%; }
+  0%   { top: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
   }
+ 
 }
 
 @utility bg-grid {
@@ -29,5 +32,16 @@
     linear-gradient(to right, rgba(0, 168, 232, 0.08) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 168, 232, 0.08) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+
+.scanner-container > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.scanner-container video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 

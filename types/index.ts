@@ -27,3 +27,13 @@ export type Day = {
   month: string;
   speakers: Speaker[];
 };
+export type Activity = {
+  title: string;
+  speakers: Speaker[];
+  description: string;
+  startDate: string;
+  endDate: string;
+  type: ActivityType;
+};
+
+type ActivityType = "WORKSHOP" | "TALK";

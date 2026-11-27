@@ -2,270 +2,361 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { useRef, useSyncExternalStore } from "react";
 import { FaArrowCircleRight } from "react-icons/fa";
 
-import {
-  slideLeft,
-  fadeInUp,
-  staggerContainer,
-  staggerItem,
-} from "@/lib/animations";
 import PromoSection from "@/components/promoSection";
+import { navLinks } from "@/components/layout-content";
+import { history } from "@/data/landing";
 
-export default function Home() {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+type HistoryEvent = (typeof history)[number];
+
+function HistoryTimeline() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 60%", "end 60%"],
+  });
+
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <main className="bg-[#06151D]">
-      <section className="relative z-10 overflow-hidden md:h-[50vh] lg:h-[70vh]">
-        <div className="bg-grid absolute inset-0 mask-[linear-gradient(to_bottom,black_50%,transparent_100%)]" />
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-32 bg-linear-to-t from-[#06151D] to-transparent" />
-
-        <div className="absolute top-[55%] left-0 size-72 -translate-x-1/2 -translate-y-1/2 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] md:size-96" />
-
-        <div className="absolute top-0 right-0 size-80 translate-x-1/3 -translate-y-1/3 animate-glow rounded-full bg-[#00a8e8]/25 blur-[100px] [animation-delay:3s] md:size-112" />
-
-        <span className="absolute top-[20%] left-[10%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8]" />
-
-        <span className="absolute right-[10%] bottom-[20%] size-1.5 animate-blink rounded-full bg-[#00a8e8] shadow-[0_0_8px_#00a8e8] [animation-delay:1s]" />
-
-        <span className="absolute inset-x-0 h-px animate-scan bg-linear-to-r from-transparent via-[#00a8e8] to-transparent shadow-[0_0_12px_rgba(0,168,232,0.8)]" />
-
-        <motion.div
-          {...fadeInUp}
-          className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center px-2 sm:px-10 lg:px-16"
-        >
-          <div className="relative z-10 mx-auto flex h-full w-full max-w-400 items-center justify-center">
-            <div className="flex flex-col items-center justify-between gap-12 py-20 pt-32 md:flex-row md:gap-16 md:py-28">
-              <div className="relative z-10 w-full md:w-1/2">
-                <h1 className="mb-6 font-space-grotesk text-xl leading-snug font-medium text-white md:text-2xl md:leading-normal lg:text-3xl">
-                  Three days with the entire community and the companies that
-                  are part of this story.
-                </h1>
-
-                <p className="mb-8 font-mono text-[10px] tracking-[0.2em] text-gray-400 uppercase md:text-xs">
-                  MARCH 1, 2 AND 3, 2027 • BRAGA
-                </p>
-
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link
-                    href=""
-                    className="flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-xs font-semibold text-white transition-all hover:bg-[#0090c7] sm:w-auto md:text-sm"
-                  >
-                    View Schedule
-                    <FaArrowCircleRight />
-                  </Link>
-
-                  <Link
-                    href=""
-                    className="flex w-full items-center justify-between gap-4 rounded-lg border border-gray-800 bg-[#040d14] px-6 py-3.5 font-manrope text-xs font-semibold text-gray-300 transition-all hover:bg-gray-900/50 sm:w-auto md:text-sm"
-                  >
-                    Join Event
-                    <FaArrowCircleRight />
-                  </Link>
-                </div>
-              </div>
-
-              <Image
-                src="/logocomtexto4oLCC.svg"
-                alt="40+ Logo"
-                width={200}
-                height={300}
-                className="relative z-10 hidden h-auto lg:block lg:w-160"
-              />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      <motion.section
-        {...slideLeft}
-        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
-      >
-        <h2 className="mb-8 font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-12">
-          History
+    <section
+      id="history"
+      ref={timelineRef}
+      className="bg-[#06151D] relative mx-auto w-full max-w-400 scroll-mt-20 px-4 py-24 sm:px-10 lg:px-16 lg:py-40"
+    >
+      {/* Cabeçalho da secção */}
+      <div className="mb-20 flex flex-col items-center text-center md:mb-32">
+        <span className="font-manrope text-xs font-semibold tracking-[0.3em] text-[#00a8e8] uppercase">
+          Our history
+        </span>
+        <h2 className="mt-4 max-w-3xl font-space-grotesk text-4xl font-bold tracking-tight text-balance text-white md:text-6xl">
+          Four decades, one timeline.
         </h2>
+      </div>
 
-        <div className="mb-12 max-w-2xl md:mb-16">
-          <p className="font-manrope text-base leading-relaxed text-gray-300 md:text-xl">
-            Since 1986, thousands of people have passed through our classrooms,
-            labs, and projects. Every generation has added a new line to this
-            story.
-          </p>
-        </div>
+      {/* Timeline */}
+      <div className="relative">
+        {/* Background line (Desktop & Mobile) */}
+        <div className="absolute top-0 bottom-0 left-[13px] w-px bg-gray-800 md:left-1/2 md:-translate-x-1/2" />
 
-        <div className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3">
-          <div className="flex flex-col justify-center border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
-              1986
-            </h3>
-
-            <p className="font-manrope text-xs text-gray-500 md:text-sm">
-              The first chapter
-            </p>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-12">
-            <p className="border-b border-gray-800/50 pb-8 font-manrope text-sm leading-relaxed text-gray-300">
-              The degree was born at a time when computing was beginning to
-              reshape the world. At the University of Minho, it found a place to
-              grow with rigor, curiosity, and ambition.
-            </p>
-
-            <p className="font-manrope text-sm leading-relaxed text-gray-300">
-              Today, the same energy connects alumni, students, faculty,
-              researchers, and companies in a community open to what has yet to
-              be invented.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-end justify-center p-8 text-right md:p-12">
-            <h3 className="mb-2 font-space-grotesk text-4xl font-light text-[#00a8e8] md:text-6xl">
-              2027
-            </h3>
-
-            <p className="font-manrope text-xs text-gray-500 md:text-sm">
-              The future continues
-            </p>
-          </div>
-        </div>
-      </motion.section>
-
-      <section className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16">
+        {/* Animated line (Linha animada com scroll) */}
         <motion.div
-          {...slideLeft}
-          className="mb-10 flex items-center justify-between md:mb-16"
-        >
-          <h2 className="font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase">
-            PROGRAM
-          </h2>
+          style={{ scaleY: reduceMotion ? 1 : scaleY, transformOrigin: "top" }}
+          className="absolute top-0 bottom-0 left-[13px] w-[2px] bg-[#00a8e8] shadow-[0_0_15px_rgba(0,168,232,0.5)] md:left-1/2 md:-translate-x-1/2"
+        />
 
-          <Link
-            href=""
-            className="flex items-center gap-3 rounded-lg border border-gray-800/80 bg-transparent px-5 py-2.5 font-mono text-xs text-gray-300 transition-colors hover:border-gray-600 hover:text-white md:text-sm"
-          >
-            Full schedule
-            <FaArrowCircleRight />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-25%" }}
-          className="grid grid-cols-1 border-t border-b border-gray-800/50 md:grid-cols-3"
-        >
-          <motion.div
-            variants={staggerItem}
-            className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Stands
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              An open space throughout the event to connect with students,
-              showcase the organization, and find future team members.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={staggerItem}
-            className="group border-b border-gray-800/50 p-8 md:border-r md:border-b-0 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Talks
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              An auditorium session to present the organization&apos;s work,
-              vision, and challenges before an attentive and engaged audience.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={staggerItem}
-            className="group p-8 md:p-10 lg:p-12"
-          >
-            <h3 className="mb-6 font-space-grotesk text-2xl font-medium text-white transition-colors group-hover:text-[#00a8e8] md:text-3xl">
-              Workshops
-            </h3>
-
-            <p className="font-manrope text-xs leading-relaxed text-gray-400 md:text-sm">
-              A hands-on session in small groups to demonstrate everyday tools,
-              methods, and ideas up close.
-            </p>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* PARTNERS
-      <motion.section
-        {...zoomIn}
-        className="mx-auto w-full max-w-400 px-2 py-16 sm:px-10 md:py-24 lg:px-16"
-      >
-        <h2 className="mb-16 text-left font-space-grotesk text-lg font-bold tracking-[0.2em] text-[#00a8e8] uppercase md:mb-20">
-          Partners
-        </h2>
-
-        <div className="mx-auto max-w-5xl space-y-16 md:space-y-24">
-          {(["Gold", "Silver", "Bronze"] as const).map((tier) => {
-            const partners = partnersData.filter(
-              (partner) => partner.tier === tier,
-            );
-
-            if (partners.length === 0) return null;
-
-            const tierColors = {
-              Gold: "#D4AF37",
-              Silver: "#A9A9A9",
-              Bronze: "#CD7F32",
-            };
+        <div className="space-y-20 md:space-y-32">
+          {history.map((event, index) => {
+            const isLeft = index % 2 === 0;
 
             return (
-              <div key={tier} className="text-center">
-                <h3
-                  className="mb-10 font-space-grotesk text-lg font-bold tracking-[0.3em] uppercase md:mb-12"
-                  style={{ color: tierColors[tier] }}
+              <div
+                key={event.year}
+                className="relative grid grid-cols-[28px_minmax(0,1fr)] items-center gap-x-5 md:grid-cols-[1fr_56px_1fr] md:gap-x-8"
+              >
+                {/* Mobile card com animação whileInView */}
+                <motion.div
+                  initial={reduceMotion ? {} : { opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: 0.1,
+                    ease: EASE,
+                  }}
+                  className="col-start-2 row-start-1 md:hidden"
                 >
-                  {tier}
-                </h3>
+                  <TimelineCard event={event} />
+                </motion.div>
 
-                <div className="grid grid-cols-2 items-end justify-items-center gap-x-15 gap-y-12 md:flex md:flex-wrap md:justify-center md:gap-16">
-                  {partners.map((partner) => (
-                    <div
-                      key={partner.name}
-                      className="group flex flex-col items-center gap-3"
-                    >
-                      <div className="flex h-12 items-center justify-center md:h-20">
-                        <Image
-                          src={partner.image}
-                          alt={partner.name}
-                          width={100}
-                          height={100}
-                          className="max-h-12 w-auto object-contain opacity-40 transition-opacity group-hover:opacity-100 md:max-h-32"
-                        />
-                      </div>
+                {/* Desktop card com animação alternada (esquerda/direita) */}
+                <motion.div
+                  initial={
+                    reduceMotion
+                      ? {}
+                      : {
+                          opacity: 0,
+                          x: isLeft ? -60 : 60,
+                        }
+                  }
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: EASE,
+                  }}
+                  className={`hidden md:block md:row-start-1 ${
+                    isLeft
+                      ? "md:col-start-1 md:pr-12 text-left"
+                      : "md:col-start-3 md:pl-12 text-left"
+                  }`}
+                >
+                  <TimelineCard event={event} />
+                </motion.div>
 
-                      <span className="font-mono text-[10px] tracking-widest text-gray-400 uppercase">
-                        {partner.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                {/* Timeline marker centralizado com efeito de escala e ping */}
+                <motion.div
+                  initial={reduceMotion ? {} : { scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.2,
+                    type: "spring",
+                    stiffness: 200,
+                  }}
+                  className="z-10 col-start-1 row-start-1 flex justify-center md:col-start-2"
+                >
+                  <div className="relative flex h-7 w-7 items-center justify-center rounded-full border border-[#00a8e8] bg-[#06151D] shadow-[0_0_20px_rgba(0,168,232,0.2)]">
+                    <div className="h-2.5 w-2.5 rounded-full bg-[#00a8e8] shadow-[0_0_12px_#00a8e8]" />
+
+                    <motion.div
+                      initial={reduceMotion ? {} : { scale: 0.5, opacity: 0 }}
+                      whileInView={
+                        reduceMotion ? {} : { scale: 1.8, opacity: [0, 0.5, 0] }
+                      }
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 1.5,
+                        delay: 0.3,
+                      }}
+                      className="absolute inset-0 rounded-full border border-[#00a8e8]"
+                    />
+                  </div>
+                </motion.div>
               </div>
             );
           })}
         </div>
-      </motion.section>
-      */}
+      </div>
+    </section>
+  );
+}
 
+function TimelineCard({ event }: { event: HistoryEvent }) {
+  return (
+    <div className="relative py-2 md:py-4">
+      <h3 className="bg-[#00a8e8] bg-clip-text font-space-grotesk text-6xl lg:text-8xl leading-none font-bold tracking-tighter text-transparent tabular-nums">
+        {event.year}
+      </h3>
+      <h4 className="mt-4 font-space-grotesk text-xl font-semibold text-white md:text-2xl">
+        {event.title}
+      </h4>
+      <p className="mt-4 max-w-md font-manrope text-sm leading-relaxed text-gray-300 md:text-base">
+        {event.description}
+      </p>
+    </div>
+  );
+}
+
+const DAYS = [
+  { weekday: "Mon", day: "1" },
+  { weekday: "Tue", day: "2" },
+  { weekday: "Wed", day: "3" },
+];
+
+const EVENT_START = new Date(2027, 2, 1);
+const subscribe = () => () => {};
+const getDaysToGo = () =>
+  Math.ceil((EVENT_START.getTime() - Date.now()) / 86_400_000);
+
+function Countdown() {
+  const days = useSyncExternalStore(subscribe, getDaysToGo, () => null);
+  if (days === null || days <= 0) return null;
+
+  return (
+    <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+      <span className="size-2 animate-blink rounded-full bg-[#00a8e8]" />
+      <p className="font-space-grotesk text-lg font-medium text-[#00a8e8] md:text-xl">
+        <span className="text-3xl font-bold tabular-nums md:text-4xl">
+          {days}
+        </span>{" "}
+        {days === 1 ? "day to go" : "days to go"}
+      </p>
+    </div>
+  );
+}
+
+const BIT_COLUMNS = 14;
+
+function bitColumn(seed: number, length = 40) {
+  let s = seed * 2654435761;
+  const bits: string[] = [];
+  for (let i = 0; i < length; i++) {
+    s = (s * 1664525 + 1013904223) % 4294967296;
+    bits.push((s >>> 16) & 1 ? "1" : "0");
+  }
+  return bits.join("\n");
+}
+
+const BIT_STREAMS = Array.from({ length: BIT_COLUMNS }, (_, i) => {
+  const bits = bitColumn(i + 1);
+  return {
+    text: `${bits}\n${bits}`,
+    duration: 40 + (i % 5) * 12,
+    opacity: 0.07 + (i % 4) * 0.04,
+  };
+});
+
+function BinaryRain({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 flex justify-between overflow-hidden px-4 font-mono text-sm leading-6 text-[#00a8e8] select-none [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_65%,transparent)] sm:px-10 lg:px-16"
+    >
+      {BIT_STREAMS.map((stream, i) => (
+        <div
+          key={i}
+          className={i % 2 ? "hidden sm:block" : undefined}
+          style={{ opacity: stream.opacity }}
+        >
+          <motion.pre
+            animate={reduceMotion ? undefined : { y: ["0%", "-50%"] }}
+            transition={{
+              duration: stream.duration,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="whitespace-pre"
+          >
+            {stream.text}
+          </motion.pre>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function Home() {
+  const reduceMotion = useReducedMotion();
+  const rise = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.8, delay, ease: EASE },
+        };
+
+  return (
+    <main className="overflow-hidden bg-[#06151D]">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        {/* <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-linear-to-t from-[#06151D] to-transparent" /> */}
+        <BinaryRain reduceMotion={!!reduceMotion} />
+
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-1/2 right-[-4%] hidden -translate-y-1/2 font-space-grotesk text-[34rem] leading-none font-bold tracking-tighter text-transparent select-none [-webkit-text-stroke:1px_rgba(0,168,232,0.14)] lg:block"
+        >
+          40
+        </span>
+
+        <div className="relative z-10 mx-auto w-full max-w-400 px-4 sm:px-10 lg:px-16">
+          <div className="flex flex-col items-center justify-between gap-12 py-20 pt-36 md:flex-row md:gap-16 md:py-32 md:pt-44">
+            <div className="w-full md:w-1/2">
+              <motion.h1
+                {...rise(0.1)}
+                className="max-w-2xl font-space-grotesk text-5xl leading-[1.05] font-bold tracking-tight text-balance text-white md:text-6xl lg:text-7xl"
+              >
+                <span className="mb-6 block bg-[#00a8e8] bg-clip-text text-sm font-semibold tracking-widest text-transparent uppercase md:text-base">
+                  March 1, 2 and 3, 2027
+                </span>
+                Four decades of{" "}
+                <span className="bg-linear-to-r from-white via-[#8fdcff] to-[#00a8e8] bg-clip-text text-transparent">
+                  Computer Science.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                {...rise(0.18)}
+                className="mt-6 max-w-lg font-manrope text-base leading-relaxed text-gray-300 md:text-lg"
+              >
+                Three days in Braga to celebrate our history, our people and
+                what comes next.
+              </motion.p>
+
+              <motion.div
+                {...rise(0.4)}
+                className="mt-10 flex flex-col gap-3 sm:flex-row"
+              >
+                <Link
+                  href="#history"
+                  className="group flex w-full items-center justify-between gap-4 rounded-lg bg-[#00a8e8] px-6 py-3.5 font-manrope text-sm font-semibold text-[#06151D] shadow-[0_0_30px_rgba(0,168,232,0.35)] transition-all hover:bg-[#33bbf0] hover:shadow-[0_0_45px_rgba(0,168,232,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] sm:w-auto"
+                >
+                  View schedule
+                  <FaArrowCircleRight className="transition-transform group-hover:translate-x-1" />
+                </Link>
+
+                <Link
+                  href={navLinks.Login}
+                  className="flex w-full items-center justify-center rounded-lg border border-white/15 px-6 py-3.5 font-manrope text-sm font-semibold text-white transition-colors hover:border-[#00a8e8]/60 hover:bg-[#00a8e8]/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00a8e8] sm:w-auto"
+                >
+                  Join event
+                </Link>
+              </motion.div>
+            </div>
+
+            <motion.div
+              {...rise(0.35)}
+              className="relative hidden lg:block lg:w-160"
+            >
+              <motion.div
+                animate={reduceMotion ? undefined : { y: [0, -10, 0] }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <Image
+                  src="/40plus.svg"
+                  alt="40+ Logo"
+                  width={200}
+                  height={300}
+                  priority
+                  className="relative h-auto w-full"
+                />
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+
+        <Link
+          href="#history"
+          aria-label="Scroll to history"
+          className="absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 md:block"
+        >
+          <motion.span
+            animate={reduceMotion ? undefined : { y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex h-10 w-6 items-start justify-center rounded-full border border-white/25 pt-2"
+          >
+            <span className="h-2 w-px rounded-full bg-[#00a8e8]" />
+          </motion.span>
+        </Link>
+      </section>
+
+      {/* History */}
+      <HistoryTimeline />
+
+      {/* Promo */}
       <PromoSection
         label="The next chapter starts now"
         title="40 years of history. A vision for the future."
         buttonText="Join the event"
-        href="/"
+        href={navLinks.Login}
       />
     </main>
   );
