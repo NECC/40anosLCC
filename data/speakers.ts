@@ -1,0 +1,85 @@
+import { Day } from "@/types";
+
+export const eventDays: Day[] = [
+  {
+    id: "mar-1",
+    day: 1,
+    month: "Mar",
+    speakers: [
+      {
+        id: "ana-ribeiro",
+        name: "Ana Ribeiro",
+        role: "Staff Software Engineer",
+        company: "Company A",
+        talk: "Scaling systems beyond their limits",
+        time: "11:30",
+        bio: "Ana works on large-scale infrastructure and leads technical initiatives to improve the stability and performance of distributed systems. She champions good testing practices in open-source communities.",
+        socials: { github: "#", linkedin: "#", twitter: "#" },
+      },
+      {
+        id: "bruno-matos",
+        name: "Bruno Matos",
+        role: "Engineering Leader",
+        company: "Company B",
+        talk: "How to ship reliable software to millions",
+        time: "14:00",
+        bio: "Bruno leads engineering teams building products used by millions of people. His talk covers release practices, observability and the culture that keeps software reliable.",
+        socials: { github: "#", linkedin: "#", twitter: "#" },
+      },
+      {
+        id: "carla-neves",
+        name: "Carla Neves",
+        role: "Senior Software Engineer",
+        company: "Company C",
+        talk: "From friction to flow with Platform Engineering",
+        time: "15:00",
+        bio: "Carla builds internal platforms that let product teams ship faster with fewer surprises. She will share what worked, and what didn't, when making developer experience a first-class goal.",
+        socials: { linkedin: "#" },
+      },
+      {
+        id: "diogo-pires",
+        name: "Diogo Pires",
+        role: "CEO",
+        company: "Company D",
+        talk: "From student to CEO",
+        time: "17:00",
+        bio: "Diogo started his path in the same classrooms as many of you. He will talk about the decisions, detours and lucky breaks that took him from student to founder.",
+        socials: { linkedin: "#" },
+      },
+    ],
+  },
+  {
+    id: "mar-2",
+    day: 2,
+    month: "Mar",
+    speakers: [
+      {
+        id: "speaker-e",
+        name: "Speaker Name",
+        role: "Role",
+        company: "Company E",
+        talk: "Talk title",
+        time: "10:30",
+        bio: "Short speaker bio goes here.",
+        socials: { linkedin: "#" },
+      },
+    ],
+  },
+  {
+    id: "mar-3",
+    day: 3,
+    month: "Mar",
+    speakers: [
+      {
+        id: "speaker-f",
+        name: "Speaker Name",
+        role: "Role",
+        company: "Company F",
+        talk: "Talk title",
+        time: "10:30",
+        bio: "Short speaker bio goes here.",
+        socials: { github: "#", linkedin: "#" },
+      },
+    ],
+  },
+];

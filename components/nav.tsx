@@ -9,7 +9,7 @@ import { FiLogOut, FiUser } from "react-icons/fi";
 import { authClient, useSession } from "@/lib/auth/auth-client";
 import { LinkNames, navLinks } from "./layout-content";
 
-const displayLinks: LinkNames[] = ["Home", "About", "Schedule"];
+const displayLinks: LinkNames[] = ["Home", "About", "Schedule", "Speakers"];
 
 export default function Nav() {
   const pathname = usePathname();

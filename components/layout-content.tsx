@@ -10,7 +10,8 @@ export type LinkNames =
   | "Schedule"
   | "Login"
   | "Profile"
-  | "Backoffice";
+  | "Backoffice"
+  | "Speakers";
 
 export const navLinks: {
   [key in LinkNames]: string;
@@ -21,6 +22,7 @@ export const navLinks: {
   Login: "/login",
   Profile: "/profile",
   Backoffice: "/backoffice",
+  Speakers: "/speakers",
 };
 
 const blacklist = [navLinks.Profile, navLinks.Backoffice, navLinks.Login];

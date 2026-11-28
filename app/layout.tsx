@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="pt">
       <body
-        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable}`}
+        className={`${manrope.variable} ${spaceGrotesk.variable} ${dmMono.variable} flex min-h-screen flex-col bg-[#06151D]`}
       >
         <LayoutContent>{children}</LayoutContent>
       </body>
